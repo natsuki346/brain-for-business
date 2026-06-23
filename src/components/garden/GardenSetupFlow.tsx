@@ -150,7 +150,7 @@ export default function GardenSetupFlow({ lightTags, shadowTags, onComplete }: G
       className="flex flex-col px-6 pt-12"
       style={{
         position: 'fixed', inset: 0, zIndex: 200,
-        background: '#F5F0E8', maxWidth: 390, margin: '0 auto',
+        background: '#FFFFFF', maxWidth: 390, margin: '0 auto',
         overflowY: 'auto', paddingBottom: 80,
       }}
     >
@@ -164,7 +164,7 @@ export default function GardenSetupFlow({ lightTags, shadowTags, onComplete }: G
         </span>
       </div>
       <p className="text-sm mb-4" style={{ color: 'rgba(59,47,30,0.55)', flexShrink: 0 }}>
-        {isStep1 ? 'デイジーを動かして、自分だけの花畑を作ろう' : 'タネを動かして、自分の根っこを配置しよう'}
+        {isStep1 ? 'Positiveを動かして、自分だけの花畑を作ろう' : 'Negativeを動かして、自分の根っこを配置しよう'}
       </p>
 
       {/* 配置エリア：ボトムナビが出てくる位置まで画面下端いっぱいに広げる */}
@@ -219,7 +219,7 @@ export default function GardenSetupFlow({ lightTags, shadowTags, onComplete }: G
         style={{
           position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
           width: '100%', maxWidth: 390, zIndex: 100,
-          background: '#F5F0E8', padding: '12px 24px',
+          background: '#FFFFFF', padding: '12px 24px',
           height: 80, boxSizing: 'border-box',
           display: 'flex', alignItems: 'center',
         }}
@@ -229,7 +229,7 @@ export default function GardenSetupFlow({ lightTags, shadowTags, onComplete }: G
           disabled={saving}
           className="w-full h-full rounded-xl text-base font-bold flex items-center justify-center"
           style={{
-            background: '#4A7C59', color: '#F5F0E8', border: 'none',
+            background: '#4A7C59', color: '#FFFFFF', border: 'none',
             cursor: saving ? 'default' : 'pointer', opacity: saving ? 0.6 : 1,
           }}
         >

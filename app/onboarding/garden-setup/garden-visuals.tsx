@@ -3,6 +3,7 @@ import type {
   PointerEvent as ReactPointerEvent,
   MouseEvent as ReactMouseEvent,
 } from 'react'
+import { NEGATIVE, POSITIVE, withAlpha } from '@/src/styles/colors'
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  型
@@ -36,8 +37,9 @@ export type GardenData = {
 
 export const STORAGE_KEY = 'gardenSetup:placements'
 
-const FRUIT_TAG_COLORS = ['#E86848', '#E8A23A', '#E8C83A', '#9DBE5A', '#5E9E6A', '#5AAFAF', '#8B7FD4', '#C76FB0', '#E87090']
-const ROOT_TAG_COLORS  = ['#8B6914', '#A0522D', '#7A5C3E', '#9C7A4D', '#6B5B3A', '#8C6A5A', '#7E6651', '#A6824A', '#856044']
+// Positive（暖色・赤系）/ Negative（寒色・青系）の色相内で、個々のタグを見分けられるよう濃淡・色味を変えた9色パレット
+const FRUIT_TAG_COLORS = ['#E8604A', '#E0484A', '#D63B5C', '#C2393B', '#B8434F', '#9E2B3D', '#CC5C5C', '#A8324A', '#E0726B']
+const ROOT_TAG_COLORS  = ['#4F8FC0', '#2C5F88', '#3E6F9E', '#5A9BC9', '#1F4E73', '#6FA8D4', '#355F7E', '#4477A0', '#7BAFD1']
 
 export function colorForTag(tag: string): string {
   let hash = 0
@@ -89,16 +91,16 @@ export function TreeSVG() {
     >
       <defs>
         <linearGradient id="gs-sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#EAF2F5" />
-          <stop offset="100%" stopColor="#F5F0E8" />
+          <stop offset="0%"   stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor={POSITIVE.pale} />
         </linearGradient>
         <linearGradient id="gs-soil" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#E8DEC8" />
-          <stop offset="100%" stopColor="#CCBA96" />
+          <stop offset="0%"   stopColor={POSITIVE.pale} />
+          <stop offset="100%" stopColor={POSITIVE.soft} />
         </linearGradient>
         <linearGradient id="gs-trunk" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%"   stopColor="#A5764A" />
-          <stop offset="100%" stopColor="#6B4E1A" />
+          <stop offset="0%"   stopColor={POSITIVE.deep} />
+          <stop offset="100%" stopColor={POSITIVE.textDeep} />
         </linearGradient>
       </defs>
 
@@ -108,7 +110,7 @@ export function TreeSVG() {
 
       {/* 草テクスチャ */}
       {[35, 72, 122, 178, 242, 295, 342, 368].map((cx, i) => (
-        <ellipse key={i} cx={cx} cy={380} rx={3.5} ry={5.5} fill="#7AB878" opacity={0.28} />
+        <ellipse key={i} cx={cx} cy={380} rx={3.5} ry={5.5} fill={POSITIVE.base} opacity={0.28} />
       ))}
 
       {/* 幹 */}
@@ -156,8 +158,8 @@ export function RootsSVG({ rootNodes, mounted }: { rootNodes: RootNode[]; mounte
     >
       <defs>
         <linearGradient id="gs-undersoil" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stopColor="#CCBA96" />
-          <stop offset="100%" stopColor="#8B6F4E" />
+          <stop offset="0%"   stopColor={NEGATIVE.pale} />
+          <stop offset="100%" stopColor={NEGATIVE.soft} />
         </linearGradient>
       </defs>
 
@@ -166,11 +168,11 @@ export function RootsSVG({ rootNodes, mounted }: { rootNodes: RootNode[]; mounte
 
       {/* 土の中のテクスチャ */}
       {[[48, 60], [340, 110], [90, 220], [300, 280], [60, 380], [330, 410]].map(([cx, cy], i) => (
-        <circle key={i} cx={cx} cy={cy} r={2.5} fill="#5A3A0A" opacity={0.15} />
+        <circle key={i} cx={cx} cy={cy} r={2.5} fill={NEGATIVE.deep} opacity={0.15} />
       ))}
 
       {/* 幹から伸びる主根 */}
-      <line x1={W / 2} y1="0" x2={W / 2} y2="34" stroke="#6B4E1A" strokeWidth="10" strokeLinecap="round" />
+      <line x1={W / 2} y1="0" x2={W / 2} y2="34" stroke={NEGATIVE.deep} strokeWidth="10" strokeLinecap="round" />
 
       {/* 各根タグ・派生ノードへの根（マウント後のみ描画してSSRとの不一致を防ぐ） */}
       {mounted && rootNodes.map(node => {
@@ -185,7 +187,7 @@ export function RootsSVG({ rootNodes, mounted }: { rootNodes: RootNode[]; mounte
           <path
             key={node.id}
             d={`M${fromX},${fromY} Q${midX},${midY} ${toX},${toY}`}
-            stroke="#5A3A0A"
+            stroke={NEGATIVE.deep}
             strokeWidth={parent ? 2.5 : 4}
             fill="none"
             strokeLinecap="round"
@@ -227,14 +229,14 @@ export function RootNodeView({
     >
       <div style={{
         width: 10, height: 10, borderRadius: '50%',
-        background: isTop ? '#8B6914' : '#A9875F',
+        background: isTop ? NEGATIVE.deep : NEGATIVE.base,
         border: selected ? '2px solid #4A7C59' : '2px solid rgba(255,255,255,0.6)',
         boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
       }} />
       <span style={{
         fontSize: 10, marginTop: 3, padding: '2px 8px', borderRadius: 999,
         whiteSpace: 'nowrap', color: '#fff', fontWeight: 600,
-        background: isTop ? colorForRootTag(node.tag ?? node.label) : 'rgba(90,58,10,0.8)',
+        background: isTop ? colorForRootTag(node.tag ?? node.label) : withAlpha(NEGATIVE.deep, 0.8),
         outline: selected ? '2px solid #4A7C59' : 'none',
       }}>
         {isTop ? formatHashtag(node.label) : node.label}

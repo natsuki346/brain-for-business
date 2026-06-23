@@ -7,6 +7,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import { recordTagEvent } from '@/src/lib/supabase/events'
 import { useGrowthStage } from '@/src/components/tree/useGrowthStage'
 import TagConfirmScreen from '@/src/components/onboarding/TagConfirmScreen'
+import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
 
 type QuestionType = 'light' | 'shadow'
 
@@ -75,11 +76,11 @@ export default function OnboardingPage() {
       const allTags = [
         ...lightTags.map((text) => ({
           user_id: userId, text: text.replace(/^#+/, ''), type: 'light' as const,
-          color:   '#F5D78E',
+          color:   POSITIVE.pale,
         })),
         ...shadowTags.map((text, i) => ({
           user_id: userId, text: text.replace(/^#+/, ''), type: 'shadow' as const,
-          color:   '#D4B896',
+          color:   NEGATIVE.pale,
           seed_weight: shadowSeedWeights[i],
         })),
       ]
