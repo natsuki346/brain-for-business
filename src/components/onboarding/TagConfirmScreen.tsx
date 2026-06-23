@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import WhyModal from '@/src/components/onboarding/WhyModal'
 import SeedQuoteModal from '@/src/components/room/SeedQuoteModal'
 import GrowthWelcomeMessage from '@/src/components/tutorial/GrowthWelcomeMessage'
+import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
 
 type Props = {
   lightTags: string[]
@@ -27,14 +28,14 @@ export default function TagConfirmScreen({ lightTags, shadowTags }: Props) {
 
   const normalize = (text: string) => text.replace(/^#+/, '')
 
-  const Chip = ({ text, index, bg }: { text: string; index: number; bg: string }) => (
+  const Chip = ({ text, index, bg, color }: { text: string; index: number; bg: string; color: string }) => (
     <span
       style={{
         display: 'inline-block',
         padding: '8px 16px',
         borderRadius: 9999,
         background: bg,
-        color: '#3B2F1E',
+        color,
         fontSize: 14,
         fontWeight: 600,
         opacity: index < visibleCount ? 1 : 0,
@@ -52,7 +53,7 @@ export default function TagConfirmScreen({ lightTags, shadowTags }: Props) {
       style={{
         position: 'fixed', inset: 0, zIndex: 400,
         maxWidth: 390, margin: '0 auto',
-        background: '#F5F0E8',
+        background: '#FFFFFF',
         display: 'flex', flexDirection: 'column',
         padding: '0 24px 40px',
         overflowY: 'auto',
@@ -67,24 +68,24 @@ export default function TagConfirmScreen({ lightTags, shadowTags }: Props) {
         <div style={{ marginBottom: 32, textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 14 }}>
             <span style={{ fontSize: 20 }}>🌼</span>
-            <span style={{ fontSize: 15, fontWeight: 700, color: '#3B2F1E' }}>Daisy</span>
+            <span style={{ fontSize: 15, fontWeight: 700, color: '#3B2F1E' }}>Positive</span>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
             {lightTags.map((tag, i) => (
-              <Chip key={i} text={tag} index={i} bg="#F5D78E" />
+              <Chip key={i} text={tag} index={i} bg={POSITIVE.pale} color={POSITIVE.text} />
             ))}
           </div>
         </div>
 
-        {/* Shadow タグ */}
+        {/* Negative タグ */}
         <div style={{ marginBottom: 40, textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 14 }}>
             <span style={{ fontSize: 20 }}>🌱</span>
-            <span style={{ fontSize: 15, fontWeight: 700, color: '#3B2F1E' }}>Seed</span>
+            <span style={{ fontSize: 15, fontWeight: 700, color: '#3B2F1E' }}>Negative</span>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
             {shadowTags.map((tag, i) => (
-              <Chip key={i} text={tag} index={lightTags.length + i} bg="#D4B896" />
+              <Chip key={i} text={tag} index={lightTags.length + i} bg={NEGATIVE.pale} color={NEGATIVE.text} />
             ))}
           </div>
         </div>

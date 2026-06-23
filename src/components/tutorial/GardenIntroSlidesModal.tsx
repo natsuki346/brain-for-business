@@ -5,6 +5,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import DaisyBubble from '@/src/components/DaisyBubble'
 import BubbleDetailModal from '@/src/components/BubbleDetailModal'
 import { ACTION_POINTS, type ActionDepth } from '@/src/lib/growthPoint'
+import { NEGATIVE, NEGATIVE_STAGES } from '@/src/styles/colors'
 
 type GardenIntroSlidesModalProps = {
   onNext: () => void
@@ -22,7 +23,7 @@ const FRAME_STYLE: React.CSSProperties = {
   borderRadius: 16, overflow: 'clip',
   border: '1px solid rgba(139,115,85,0.18)',
   boxShadow: '0 4px 16px rgba(59,47,30,0.10)',
-  position: 'relative', background: '#F5F0E8',
+  position: 'relative', background: '#FFFFFF',
 }
 
 // Seedバブルのイラスト：DaisyBubbleと対になる「土の中で育つタネ」のシンプルな図
@@ -33,13 +34,13 @@ function SeedBubbleIllustration({ size }: { size: number }) {
       width={size} height={size} viewBox="0 0 100 100"
       style={{ display: 'block', flexShrink: 0 }}
     >
-      <circle cx="50" cy="50" r="50" fill="#D4B896" />
-      <ellipse cx="50" cy="64" rx="30" ry="9" fill="#8B6F47" opacity="0.3" />
+      <circle cx="50" cy="50" r="50" fill={NEGATIVE.pale} />
+      <ellipse cx="50" cy="64" rx="30" ry="9" fill={NEGATIVE.base} opacity="0.3" />
       <path
         d="M50 26 C63 31 63 58 50 70 C37 58 37 31 50 26 Z"
-        fill="#9DC08B"
+        fill={NEGATIVE.base}
       />
-      <path d="M50 30 L50 64" stroke="#6FA05A" strokeWidth="2" opacity="0.6" strokeLinecap="round" />
+      <path d="M50 30 L50 64" stroke={NEGATIVE.deep} strokeWidth="2" opacity="0.6" strokeLinecap="round" />
     </svg>
   )
 }
@@ -62,7 +63,7 @@ function MiniGardenScene() {
       style={{
         position: 'relative', width: '100%', maxWidth: 320, height: 360,
         margin: '4px auto 4px',
-        background: 'linear-gradient(180deg, #EFE6D6 0%, #E1D2B2 100%)',
+        background: 'linear-gradient(180deg, #FFFFFF 0%, #F0F0F0 100%)',
         borderRadius: 16,
         overflow: 'hidden',
       }}
@@ -129,10 +130,10 @@ function MiniBubbleGrowthPreview({ onFirstPlaybackDone }: { onFirstPlaybackDone?
 }
 
 const GROWTH_STAGES = [
-  { emoji: '🌱', label: 'タネ', bg: '#D4B896', ptRange: '0〜9pt' },
-  { emoji: '🌿', label: '芽',   bg: '#9DC08B', ptRange: '10〜19pt' },
-  { emoji: '🌼', label: '蕾',   bg: '#F5D78E', ptRange: '20〜29pt' },
-  { emoji: '🌸', label: '花',   bg: '#F5A8C0', ptRange: '30pt以上' },
+  { emoji: '🌱', label: 'タネ', bg: NEGATIVE_STAGES[0], ptRange: '0〜9pt' },
+  { emoji: '🌿', label: '芽',   bg: NEGATIVE_STAGES[1], ptRange: '10〜19pt' },
+  { emoji: '🌼', label: '蕾',   bg: NEGATIVE_STAGES[2], ptRange: '20〜29pt' },
+  { emoji: '🌸', label: '花',   bg: NEGATIVE_STAGES[3], ptRange: '30pt以上' },
 ]
 
 const POINT_ACTIONS: { icon: string; label: string; key: ActionDepth }[] = [
@@ -159,7 +160,7 @@ function GrowthStageList() {
           </div>
           <span style={{ fontSize: 13, fontWeight: 700, color: '#3B2F1E' }}>{label}</span>
           <span style={{
-            fontSize: 11, fontWeight: 600, color: '#8B6914',
+            fontSize: 11, fontWeight: 600, color: NEGATIVE.textDeep,
             background: bg, padding: '2px 8px', borderRadius: 99, marginLeft: 'auto',
           }}>
             {ptRange}
@@ -298,7 +299,7 @@ export default function GardenIntroSlidesModal({ onNext }: GardenIntroSlidesModa
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0px)' : 'translateY(16px)',
           transition: 'opacity 0.3s ease, transform 0.3s ease',
-          background: '#F5F0E8',
+          background: '#FFFFFF',
           borderRadius: 24,
           width: '100%', maxWidth: 358,
           height: '80svh', maxHeight: 680,

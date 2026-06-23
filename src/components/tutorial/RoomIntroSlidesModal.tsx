@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import RoomChat from '@/src/components/room/RoomChat'
 import SeedQuoteModal from '@/src/components/room/SeedQuoteModal'
 import DaisyBubble from '@/src/components/DaisyBubble'
+import { NEGATIVE } from '@/src/styles/colors'
 
 type RoomIntroSlidesModalProps = {
   onNext: () => void
@@ -16,13 +17,13 @@ function SeedBubbleIllustration({ size }: { size: number }) {
       width={size} height={size} viewBox="0 0 100 100"
       style={{ display: 'block', flexShrink: 0 }}
     >
-      <circle cx="50" cy="50" r="50" fill="#D4B896" />
-      <ellipse cx="50" cy="64" rx="30" ry="9" fill="#8B6F47" opacity="0.3" />
+      <circle cx="50" cy="50" r="50" fill={NEGATIVE.pale} />
+      <ellipse cx="50" cy="64" rx="30" ry="9" fill={NEGATIVE.base} opacity="0.3" />
       <path
         d="M50 26 C63 31 63 58 50 70 C37 58 37 31 50 26 Z"
-        fill="#9DC08B"
+        fill={NEGATIVE.base}
       />
-      <path d="M50 30 L50 64" stroke="#6FA05A" strokeWidth="2" opacity="0.6" strokeLinecap="round" />
+      <path d="M50 30 L50 64" stroke={NEGATIVE.deep} strokeWidth="2" opacity="0.6" strokeLinecap="round" />
     </svg>
   )
 }
@@ -40,8 +41,8 @@ const PREVIEW_HEIGHT  = BASE_HEIGHT * SCALE
 // 既存の本物のチャット画面（RoomChat）をそのまま縮小・非操作で埋め込むデモ
 function MiniRoomPreview({ type, onFirstPlaybackDone }: { type: 'light' | 'shadow'; onFirstPlaybackDone?: () => void }) {
   const info = type === 'light'
-    ? { title: 'Daisyの部屋', subtitle: '🌼 Daisy' }
-    : { title: 'Seedの部屋',  subtitle: '🌱 Seed' }
+    ? { title: 'Positiveの部屋', subtitle: '🌼 Positive' }
+    : { title: 'Negativeの部屋',  subtitle: '🌱 Negative' }
 
   // Seedルームでは「訪問時に名言が表示される」演出をループ実演する
   const [showQuoteDemo, setShowQuoteDemo] = useState(false)
@@ -77,7 +78,7 @@ function MiniRoomPreview({ type, onFirstPlaybackDone }: { type: 'light' | 'shado
         borderRadius: 16, overflow: 'clip',
         border: '1px solid rgba(139,115,85,0.18)',
         boxShadow: '0 4px 16px rgba(59,47,30,0.10)',
-        position: 'relative', background: '#F5F0E8',
+        position: 'relative', background: '#FFFFFF',
       }}
     >
       {/* position:relative にすることで、内部の SeedQuoteModal（position:absolute）の
@@ -152,7 +153,7 @@ export default function RoomIntroSlidesModal({ onNext }: RoomIntroSlidesModalPro
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0px)' : 'translateY(16px)',
           transition: 'opacity 0.3s ease, transform 0.3s ease',
-          background: '#F5F0E8',
+          background: '#FFFFFF',
           borderRadius: 24,
           width: '100%', maxWidth: 358,
           height: '80svh', maxHeight: 680,
@@ -177,13 +178,13 @@ export default function RoomIntroSlidesModal({ onNext }: RoomIntroSlidesModalPro
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16, textAlign: 'center' }}>
                 <div>
-                  <p style={{ fontSize: 16, fontWeight: 700, color: '#3B2F1E', margin: '0 0 4px' }}>🌼 Daisy</p>
+                  <p style={{ fontSize: 16, fontWeight: 700, color: '#3B2F1E', margin: '0 0 4px' }}>🌼 Positive</p>
                   <p style={{ fontSize: 15, color: 'rgba(59,47,30,0.65)', lineHeight: 1.6, margin: 0 }}>
                     あなたの好きやワクワクで繋がれる😊
                   </p>
                 </div>
                 <div>
-                  <p style={{ fontSize: 16, fontWeight: 700, color: '#3B2F1E', margin: '0 0 4px' }}>🌱 Seed</p>
+                  <p style={{ fontSize: 16, fontWeight: 700, color: '#3B2F1E', margin: '0 0 4px' }}>🌱 Negative</p>
                   <p style={{ fontSize: 15, color: 'rgba(59,47,30,0.65)', lineHeight: 1.6, margin: 0 }}>
                     あなたが持つ悩みで共に成長する💪🔥
                   </p>
@@ -195,10 +196,10 @@ export default function RoomIntroSlidesModal({ onNext }: RoomIntroSlidesModalPro
           {slideIndex === 1 && (
             <>
               <h2 style={{ fontSize: 19, fontWeight: 700, color: '#3B2F1E', lineHeight: 1.6, margin: '0 0 12px' }}>
-                🌼 Daisyルーム
+                🌼 Positiveルーム
               </h2>
               <p style={{ fontSize: 14, color: 'rgba(59,47,30,0.7)', lineHeight: 1.7, margin: '0 0 20px' }}>
-                Daisy（光）は、あなたの好きなことや<br />ワクワクすること。同じ光を持つ仲間と<br />気軽に言葉を交わせます
+                Positive（光）は、あなたの好きなことや<br />ワクワクすること。同じ光を持つ仲間と<br />気軽に言葉を交わせます
               </p>
               <MiniRoomPreview type="light" />
             </>
@@ -207,10 +208,10 @@ export default function RoomIntroSlidesModal({ onNext }: RoomIntroSlidesModalPro
           {slideIndex === 2 && (
             <>
               <h2 style={{ fontSize: 19, fontWeight: 700, color: '#3B2F1E', lineHeight: 1.6, margin: '0 0 12px' }}>
-                🌱 Seedルーム
+                🌱 Negativeルーム
               </h2>
               <p style={{ fontSize: 12.5, color: 'rgba(59,47,30,0.7)', lineHeight: 1.7, margin: '0 0 12px' }}>
-                Seed（影）は、あなたが抱える悩みや弱さ。<br />そこに向き合うことは、それ自体がすごいことです。
+                Negative（影）は、あなたが抱える悩みや弱さ。<br />そこに向き合うことは、それ自体がすごいことです。
               </p>
               <p style={{ fontSize: 13, color: '#4A7C59', fontWeight: 600, lineHeight: 1.7, margin: '0 0 20px' }}>
                 訪れるたびに、励ましの言葉が届きます🌱
