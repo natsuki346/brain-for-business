@@ -9,8 +9,8 @@ import { DUMMY_MESSAGES_COMMON } from './dummy-messages'
 type RoomType = 'light' | 'shadow'
 
 const ROOM_INFO: Record<RoomType, { icon: string; label: string }> = {
-  light:  { icon: '🌼', label: 'Daisy' },
-  shadow: { icon: '🌱', label: 'Seed' },
+  light:  { icon: '🌼', label: 'Positive' },
+  shadow: { icon: '🌱', label: 'Negative' },
 }
 
 export default function RoomChatSheet({
@@ -76,7 +76,7 @@ export default function RoomChatSheet({
       <div
         style={{
           position: 'relative', width: '100%', maxWidth: 390, height: '100%',
-          background: '#F5F0E8',
+          background: '#FFFFFF',
           transform: visible ? 'translateY(0)' : 'translateY(100%)',
           transition: 'transform 0.32s ease',
           overflow: 'hidden',

@@ -5,6 +5,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import { commitSessionPoints, maxDepth, type ActionDepth } from '@/src/lib/growthPoint'
 import { useTutorialStep } from '@/src/components/tutorial/useTutorialStep'
 import DaisyBubble from '@/src/components/DaisyBubble'
+import { POSITIVE } from '@/src/styles/colors'
 import RoomChatSheet from './RoomChatSheet'
 import SubTagListSheet, { type SelectedChannel } from './SubTagListSheet'
 
@@ -157,17 +158,17 @@ export default function LightRoomView() {
             preserveAspectRatio="none"
             style={{ display: 'block', width: '100%', height: TOTAL_HEIGHT, pointerEvents: 'none' }}
           >
-            <rect x={0} y={0} width={390} height={GROUND_LINE_Y} fill="#F5F0E8" />
-            <rect x={0} y={GROUND_LINE_Y} width={390} height={GRASS_HEIGHT} fill="#4A7C59" />
-            <rect x={0} y={GROUND_LINE_Y + GRASS_HEIGHT} width={390} height={SOIL_HEIGHT} fill="#8B6914" />
+            <rect x={0} y={0} width={390} height={GROUND_LINE_Y} fill="#FFFFFF" />
+            <rect x={0} y={GROUND_LINE_Y} width={390} height={GRASS_HEIGHT} fill={POSITIVE.base} />
+            <rect x={0} y={GROUND_LINE_Y + GRASS_HEIGHT} width={390} height={SOIL_HEIGHT} fill={POSITIVE.deep} />
             <rect
               x={0} y={GROUND_LINE_Y + GRASS_HEIGHT + SOIL_HEIGHT}
               width={390} height={TOTAL_HEIGHT - (GROUND_LINE_Y + GRASS_HEIGHT + SOIL_HEIGHT)}
-              fill="#C9A96E"
+              fill={POSITIVE.pale}
             />
           </svg>
         </div>
-        <div style={{ flex: 1, background: '#C9A96E' }} />
+        <div style={{ flex: 1, background: POSITIVE.pale }} />
 
         {/* カルーセル（Seed と同一構造） */}
         <div
@@ -200,7 +201,7 @@ export default function LightRoomView() {
                   <span style={{
                     position: 'absolute', top: LABEL_TOP, left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    fontSize: 11, fontWeight: 600, color: '#8B6914', background: '#F5D78E',
+                    fontSize: 11, fontWeight: 600, color: POSITIVE.text, background: POSITIVE.pale,
                     borderRadius: 999, padding: '2px 10px', whiteSpace: 'nowrap',
                   }}>
                     #{clean}

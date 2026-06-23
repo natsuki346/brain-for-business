@@ -36,7 +36,7 @@ export default function GrowthTransitionOverlay({
       style={{
         position: 'fixed', inset: 0, zIndex: 400,
         maxWidth: 390, margin: '0 auto',
-        background: '#F5F0E8',
+        background: '#FFFFFF',
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         justifyContent: 'center', padding: '40px 32px',
       }}
@@ -148,7 +148,7 @@ export default function GrowthTransitionOverlay({
           <div
             style={{
               width: '100%', maxWidth: 342,
-              background: '#F5F0E8',
+              background: '#FFFFFF',
               borderRadius: 20,
               padding: '28px 24px',
               textAlign: 'center',
@@ -180,7 +180,7 @@ export default function GrowthTransitionOverlay({
                 borderRadius: 9999,
                 border: 'none',
                 background: '#3B2F1E',
-                color: '#F5F0E8',
+                color: '#FFFFFF',
                 fontSize: 14,
                 fontWeight: 700,
                 cursor: 'pointer',

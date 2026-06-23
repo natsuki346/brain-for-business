@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { NEGATIVE } from '@/src/styles/colors'
 
 type ThanksModalProps = {
   onClose: () => void
@@ -49,13 +50,13 @@ export default function ThanksModal({ onClose }: ThanksModalProps) {
         <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.55)', margin: '0 0 24px', lineHeight: 1.65 }}>
           根に水が撒かれました。
           <br />
-          またSeedに来てくださいね。
+          またNegativeに来てくださいね。
         </p>
         <button
           onClick={close}
           style={{
             width: '100%', padding: '14px', borderRadius: 30, border: 'none',
-            background: '#8B6914', color: '#FFFFFF',
+            background: NEGATIVE.base, color: '#FFFFFF',
             fontSize: 14, fontWeight: 700, cursor: 'pointer',
           }}
         >とじる</button>

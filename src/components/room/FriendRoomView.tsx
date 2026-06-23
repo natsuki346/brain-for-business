@@ -58,7 +58,7 @@ export default function FriendRoomView() {
       <div style={{ textAlign: 'center', padding: '48px 24px', color: '#A09070', fontSize: 14 }}>
         <p>まだFriendがいません🌼</p>
         <p style={{ fontSize: 12, marginTop: 8 }}>
-          DaisyやSeedのルームで話しかけてみよう
+          PositiveやNegativeのルームで話しかけてみよう
         </p>
       </div>
     )
@@ -101,7 +101,7 @@ export default function FriendRoomView() {
               width: '100%',
               height: '100%',
               borderRadius: '50%',
-              border: '2px solid #F5F0E8',
+              border: '2px solid #FFFFFF',
               overflow: 'hidden',
               background: '#4A7C59',
               display: 'flex',
@@ -112,7 +112,7 @@ export default function FriendRoomView() {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={friend.avatar_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
-                <span style={{ color: '#F5F0E8', fontSize: 20, fontWeight: 'bold' }}>
+                <span style={{ color: '#FFFFFF', fontSize: 20, fontWeight: 'bold' }}>
                   {friend.username?.[0]?.toUpperCase()}
                 </span>
               )}

@@ -1,5 +1,7 @@
 'use client'
 
+import { NEGATIVE } from '@/src/styles/colors'
+
 type SeedGraphicProps = {
   // 成長ステージ（0〜6）：根の深さ・本数に反映
   stage: number
@@ -7,7 +9,7 @@ type SeedGraphicProps = {
   animate: boolean
 }
 
-const ROOT_COLOR = '#8B6F4E'
+const ROOT_COLOR = NEGATIVE.base
 
 // 主根の長さ（ステージ0〜6）
 const MAIN_ROOT_LENGTH = [0, 12, 20, 28, 36, 36, 36]
@@ -28,8 +30,8 @@ export default function SeedGraphic({ stage, animate }: SeedGraphicProps) {
   return (
     <svg width="60" height="100" viewBox="-30 -50 60 100" style={{ overflow: 'visible', display: 'block' }}>
       {/* タネ本体：土に埋まっても分かるよう、土より濃い色＋輪郭で表現 */}
-      <ellipse cx="0" cy="0" rx="18" ry="14" fill="#A47148" stroke="#6B4226" strokeWidth="1.5" />
-      <ellipse cx="-4" cy="-3" rx="8" ry="6" fill="#F5E1B8" />
+      <ellipse cx="0" cy="0" rx="18" ry="14" fill={NEGATIVE.deep} stroke={NEGATIVE.textDeep} strokeWidth="1.5" />
+      <ellipse cx="-4" cy="-3" rx="8" ry="6" fill={NEGATIVE.soft} />
 
       {/* 主根（ステージ1以上） */}
       {stage >= 1 && (

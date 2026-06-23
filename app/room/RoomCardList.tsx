@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/src/lib/supabase/client'
 import { getMatchingTags } from '@/src/lib/supabase/rooms'
 import { DaisyIcon } from '@/src/components/icons/DaisyIcon'
+import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
 
 type OwnTag = { id: string; text: string; type: 'light' | 'shadow' }
 
@@ -17,8 +18,8 @@ type RoomCard = {
 }
 
 const TYPE_STYLE: Record<'light' | 'shadow', { bg: string; accent: string; icon: string }> = {
-  light:  { bg: '#F5D78E', accent: '#8B6914', icon: '🌿' },
-  shadow: { bg: '#D4B896', accent: '#7A5C3E', icon: '🌱' },
+  light:  { bg: POSITIVE.pale, accent: POSITIVE.text, icon: '🌿' },
+  shadow: { bg: NEGATIVE.pale, accent: NEGATIVE.text, icon: '🌱' },
 }
 
 function RoomTypeIcon({ type }: { type: 'light' | 'shadow' }) {

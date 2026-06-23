@@ -3,21 +3,22 @@
 import { useEffect, useState } from 'react'
 import { TreeSVG, RootsSVG, useMounted, loadGardenData } from '@/app/onboarding/garden-setup/garden-visuals'
 import { DaisyIcon } from '@/src/components/icons/DaisyIcon'
+import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
 
 type RoomType = 'light' | 'shadow'
 
 const COPY: Record<RoomType, { icon: string; title: string; sub: string; visitBg: string }> = {
   light: {
     icon: '🍅',
-    title: 'Daisyを訪れてみますか？',
+    title: 'Positiveを訪れてみますか？',
     sub: '同じ実を持つ人たちの声が聞こえます',
-    visitBg: '#4A7C59',
+    visitBg: POSITIVE.base,
   },
   shadow: {
     icon: '🌱',
-    title: 'Seedを訪れてみますか？',
+    title: 'Negativeを訪れてみますか？',
     sub: '同じ根を持つ人だけが集まる、静かな場所です',
-    visitBg: '#8B6914',
+    visitBg: NEGATIVE.base,
   },
 }
 

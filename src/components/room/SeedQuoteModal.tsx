@@ -120,7 +120,7 @@ export default function SeedQuoteModal({ tagId, onClose, zIndex = 400, fixedQuot
       <div
         style={{
           width: '100%',
-          background: '#F5F0E8',
+          background: '#FFFFFF',
           borderRadius: 20,
           padding: '28px 24px 24px',
           opacity: visible ? 1 : 0,

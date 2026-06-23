@@ -13,21 +13,24 @@ import FirstChatVisitWelcomeFlow from '@/src/components/onboarding/FirstChatVisi
 import { useGrowthStage } from '@/src/components/tree/useGrowthStage'
 import { DaisyIcon } from '@/src/components/icons/DaisyIcon'
 import { supabase } from '@/src/lib/supabase/client'
+import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
 
 type RoomType = 'light' | 'shadow' | 'friend'
 
 const TAB_ORDER: RoomType[] = ['light', 'shadow', 'friend']
 
 const TAB_CONFIG: Record<RoomType, { label: string; icon: string }> = {
-  light:  { label: 'Daisy', icon: '🌼' },
-  shadow: { label: 'Seed', icon: '🌱' },
+  light:  { label: 'Positive', icon: '🌼' },
+  shadow: { label: 'Negative', icon: '🌱' },
   friend: { label: 'Friend', icon: '👥' },
 }
 
-const ACTIVE_BG     = '#4A7C59'
-const ACTIVE_TEXT   = '#F5F0E8'
-const INACTIVE_BG   = '#D4B896'
-const INACTIVE_TEXT = '#5C3A1E'
+// タブごとの配色（Positive=赤系／Negative=青系、Friendは既存配色を維持）
+const TAB_STYLES: Record<RoomType, { activeBg: string; activeText: string; inactiveBg: string; inactiveText: string }> = {
+  light:  { activeBg: POSITIVE.base, activeText: '#FFFFFF', inactiveBg: POSITIVE.pale, inactiveText: POSITIVE.text },
+  shadow: { activeBg: NEGATIVE.base, activeText: '#FFFFFF', inactiveBg: NEGATIVE.pale, inactiveText: NEGATIVE.text },
+  friend: { activeBg: '#4A7C59',     activeText: '#FFFFFF', inactiveBg: '#D4B896',     inactiveText: '#5C3A1E' },
+}
 
 type TutorialPhase = 'room_intro' | null
 
@@ -91,7 +94,7 @@ export default function RoomTabsPage({ type }: { type: RoomType }) {
     <div
       className="flex flex-col px-6 pt-16"
       style={{
-        background: '#F5F0E8', maxWidth: 390, margin: '0 auto',
+        background: '#FFFFFF', maxWidth: 390, margin: '0 auto',
         minHeight: '100svh', paddingBottom: 0,
       }}
     >
@@ -122,14 +125,15 @@ export default function RoomTabsPage({ type }: { type: RoomType }) {
       <div className="flex gap-2 mb-6" style={{ flexShrink: 0 }}>
         {TAB_ORDER.map(t => {
           const active = t === type
+          const s = TAB_STYLES[t]
           return (
             <button
               key={t}
               onClick={() => handleTabClick(t)}
               className="flex-1 py-3 rounded-xl text-sm font-bold"
               style={{
-                background: active ? ACTIVE_BG : INACTIVE_BG,
-                color: active ? ACTIVE_TEXT : INACTIVE_TEXT,
+                background: active ? s.activeBg : s.inactiveBg,
+                color: active ? s.activeText : s.inactiveText,
                 border: 'none', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
               }}

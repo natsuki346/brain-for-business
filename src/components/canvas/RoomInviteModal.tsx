@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { DaisyIcon } from '@/src/components/icons/DaisyIcon'
+import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
 
 type Step = 'light' | 'shadow'
 
@@ -73,7 +74,7 @@ export function RoomInviteModal({
               color: '#3B2F1E', fontSize: 16, fontWeight: 600,
               lineHeight: 1.65, margin: '0 0 28px',
             }}>
-              Daisyを訪れてみますか？
+              Positiveを訪れてみますか？
             </p>
             <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.55)', margin: '0 0 20px', lineHeight: 1.6 }}>
               あなたと同じアイデンティティを持つ人と<br />話せます！
@@ -83,7 +84,7 @@ export function RoomInviteModal({
                 onClick={() => go('/onboarding/room-visit/light')}
                 style={{
                   padding: '14px', borderRadius: 30, border: 'none',
-                  background: '#4A7C59', color: '#FFFFFF',
+                  background: POSITIVE.base, color: '#FFFFFF',
                   fontSize: 14, fontWeight: 700, cursor: 'pointer',
                 }}
               >訪れる</button>
@@ -107,7 +108,7 @@ export function RoomInviteModal({
               color: '#3B2F1E', fontSize: 16, fontWeight: 600,
               lineHeight: 1.65, margin: '0 0 28px',
             }}>
-              Seedも覗いてみますか？
+              Negativeも覗いてみますか？
             </p>
             <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.55)', margin: '0 0 20px', lineHeight: 1.6 }}>
               同じ境遇を持つ人と打ち明けられます！
@@ -117,7 +118,7 @@ export function RoomInviteModal({
                 onClick={() => go('/onboarding/room-visit/shadow')}
                 style={{
                   padding: '14px', borderRadius: 30, border: 'none',
-                  background: '#8B6914', color: '#FFFFFF',
+                  background: NEGATIVE.base, color: '#FFFFFF',
                   fontSize: 14, fontWeight: 700, cursor: 'pointer',
                 }}
               >覗く</button>

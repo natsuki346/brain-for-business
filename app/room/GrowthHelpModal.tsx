@@ -38,7 +38,7 @@ export default function GrowthHelpModal({ onClose, buttonText = 'とじる' }: {
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0px)' : 'translateY(16px)',
           transition: 'opacity 0.3s ease, transform 0.3s ease',
-          background: '#F5F0E8',
+          background: '#FFFFFF',
           borderRadius: 24,
           padding: '32px 24px',
           width: '100%', maxWidth: 340,
@@ -54,7 +54,7 @@ export default function GrowthHelpModal({ onClose, buttonText = 'とじる' }: {
         </p>
 
         <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.75)', lineHeight: 1.8, margin: '0 0 16px' }}>
-          DaisyやSeedは、あなたが部屋に訪れたり、誰かと言葉を交わすたびに、少しずつ育っていきます。
+          PositiveやNegativeは、あなたが部屋に訪れたり、誰かと言葉を交わすたびに、少しずつ育っていきます。
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>

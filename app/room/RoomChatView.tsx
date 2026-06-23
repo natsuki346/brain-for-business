@@ -10,8 +10,8 @@ import RoomChat from '@/src/components/room/RoomChat'
 import { DUMMY_MESSAGES_COMMON } from './dummy-messages'
 
 const ROOM_INFO: Record<'light' | 'shadow', { icon: string; label: string; backHref: string }> = {
-  light:  { icon: '🌼', label: 'Daisy', backHref: '/onboarding/room-visit/light' },
-  shadow: { icon: '🌱', label: 'Seed',  backHref: '/onboarding/room-visit/shadow' },
+  light:  { icon: '🌼', label: 'Positive', backHref: '/onboarding/room-visit/light' },
+  shadow: { icon: '🌱', label: 'Negative',  backHref: '/onboarding/room-visit/shadow' },
 }
 
 function RoomChatViewContent({ type }: { type: 'light' | 'shadow' }) {
@@ -69,7 +69,7 @@ function RoomChatViewContent({ type }: { type: 'light' | 'shadow' }) {
   return (
     <div style={{ height: '100svh', maxWidth: 390, margin: '0 auto' }}>
       {!ready ? (
-        <div className="flex flex-col" style={{ height: '100%', background: '#F5F0E8' }}>
+        <div className="flex flex-col" style={{ height: '100%', background: '#FFFFFF' }}>
           <p className="text-sm text-center" style={{ color: '#8B7355', marginTop: 24 }}>読み込み中...</p>
         </div>
       ) : (

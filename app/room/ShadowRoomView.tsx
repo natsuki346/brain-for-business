@@ -6,6 +6,7 @@ import { getStage, maxDepth, commitSessionPoints, type ActionDepth } from '@/src
 import { formatHashtag } from '@/app/onboarding/garden-setup/garden-visuals'
 import { useTutorialStep } from '@/src/components/tutorial/useTutorialStep'
 import { recordTagEvent } from '@/src/lib/supabase/events'
+import { NEGATIVE } from '@/src/styles/colors'
 import RoomChatSheet from './RoomChatSheet'
 import SubTagListSheet, { type SelectedChannel } from './SubTagListSheet'
 import SeedQuoteModal from '@/src/components/room/SeedQuoteModal'
@@ -16,10 +17,10 @@ type Tag = { id: string; text: string; growth_point: number; stage: number; seed
 function getSeedBubble(seedWeight: string | null): { emoji: string; bg: string; textColor: string } {
   const sw = parseFloat(String(seedWeight ?? ''))
   if (!isNaN(sw)) {
-    if (sw >= 7) return { emoji: '🌼', bg: '#F5D78E', textColor: '#7A5C00' }
-    if (sw >= 3) return { emoji: '🌿', bg: '#9DC08B', textColor: '#2D5A27' }
+    if (sw >= 7) return { emoji: '🌼', bg: NEGATIVE.base, textColor: NEGATIVE.textDeep }
+    if (sw >= 3) return { emoji: '🌿', bg: NEGATIVE.soft, textColor: NEGATIVE.text }
   }
-  return { emoji: '🌱', bg: '#D4B896', textColor: '#6B4E1A' }
+  return { emoji: '🌱', bg: NEGATIVE.pale, textColor: NEGATIVE.text }
 }
 
 const ITEM_WIDTH = 160
@@ -271,22 +272,22 @@ export default function ShadowRoomView({ onSeedChatDone }: { onSeedChatDone?: ()
             style={{ display: 'block', width: '100%', height: TOTAL_HEIGHT, pointerEvents: 'none' }}
           >
             {/* 地上エリア */}
-            <rect x={0} y={0} width={390} height={GROUND_LINE_Y} fill="#F5F0E8" />
+            <rect x={0} y={0} width={390} height={GROUND_LINE_Y} fill="#FFFFFF" />
             {/* 草ライン */}
-            <rect x={0} y={GROUND_LINE_Y} width={390} height={GRASS_HEIGHT} fill="#4A7C59" />
+            <rect x={0} y={GROUND_LINE_Y} width={390} height={GRASS_HEIGHT} fill={NEGATIVE.base} />
             {/* 土ライン */}
-            <rect x={0} y={GROUND_LINE_Y + GRASS_HEIGHT} width={390} height={SOIL_HEIGHT} fill="#8B6914" />
+            <rect x={0} y={GROUND_LINE_Y + GRASS_HEIGHT} width={390} height={SOIL_HEIGHT} fill={NEGATIVE.deep} />
             {/* 地下エリア */}
             <rect
               x={0} y={GROUND_LINE_Y + GRASS_HEIGHT + SOIL_HEIGHT}
               width={390} height={TOTAL_HEIGHT - (GROUND_LINE_Y + GRASS_HEIGHT + SOIL_HEIGHT)}
-              fill="#C9A96E"
+              fill={NEGATIVE.pale}
             />
           </svg>
         </div>
 
         {/* 地下エリアの続き：残りの高さを土色で埋める */}
-        <div style={{ flex: 1, background: '#C9A96E' }} />
+        <div style={{ flex: 1, background: NEGATIVE.pale }} />
 
         {/* タネカルーセル */}
         <div
@@ -303,7 +304,7 @@ export default function ShadowRoomView({ onSeedChatDone }: { onSeedChatDone?: ()
             const active   = i === activeIndex
             const isGrow   = growingTagId === tag.id
             const bubble   = getSeedBubble(tag.seed_weight)
-            const dispBubble = isGrow ? { emoji: '🌿', bg: '#9DC08B', textColor: '#2D5A27' } : bubble
+            const dispBubble = isGrow ? { emoji: '🌿', bg: NEGATIVE.soft, textColor: NEGATIVE.text } : bubble
             return (
               <button
                 key={tag.id}
@@ -319,7 +320,7 @@ export default function ShadowRoomView({ onSeedChatDone }: { onSeedChatDone?: ()
                   <span style={{
                     position: 'absolute', top: LABEL_TOP, left: '50%',
                     transform: 'translateX(-50%)',
-                    fontSize: 11, fontWeight: 600, color: '#8B6914', background: '#F5D78E',
+                    fontSize: 11, fontWeight: 600, color: NEGATIVE.text, background: NEGATIVE.pale,
                     borderRadius: 999, padding: '2px 10px', whiteSpace: 'nowrap',
                   }}>
                     {formatHashtag(tag.text)}
@@ -365,7 +366,7 @@ export default function ShadowRoomView({ onSeedChatDone }: { onSeedChatDone?: ()
                           position: 'absolute', left: (d - 2.5) * 9, top: 0,
                           width: 7, height: 10,
                           borderRadius: '50% 50% 50% 50% / 60% 60% 40% 40%',
-                          background: '#378ADD',
+                          background: NEGATIVE.base,
                           animationDelay: `${d * 60}ms`,
                         }}
                       />
