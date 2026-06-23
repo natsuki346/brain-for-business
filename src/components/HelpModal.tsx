@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ACTION_POINTS, type ActionDepth } from '@/src/lib/growthPoint'
+import { NEGATIVE, NEGATIVE_STAGES } from '@/src/styles/colors'
 
 interface HelpModalProps {
   onClose: () => void
@@ -16,17 +17,17 @@ const POINT_ACTIONS: { icon: string; label: string; key: ActionDepth }[] = [
 ]
 
 const STAGES = [
-  { emoji: '🌱', label: 'タネ', bg: '#D4B896', ptRange: '0〜9pt',   desc: 'まだ種の状態。ルームをのぞいてみよう。' },
-  { emoji: '🌿', label: '芽',   bg: '#9DC08B', ptRange: '10〜19pt', desc: '芽が出てきた。仲間と言葉を交わしていこう。' },
-  { emoji: '🌼', label: '蕾',   bg: '#F5D78E', ptRange: '20〜29pt', desc: '蕾になった。あとはただ、続けること。' },
-  { emoji: '🌸', label: '花',   bg: '#F5A8C0', ptRange: '30pt以上', desc: '満開になった。ありのままで、咲いている。' },
+  { emoji: '🌱', label: 'タネ', bg: NEGATIVE_STAGES[0], ptRange: '0〜9pt',   desc: 'まだ種の状態。ルームをのぞいてみよう。' },
+  { emoji: '🌿', label: '芽',   bg: NEGATIVE_STAGES[1], ptRange: '10〜19pt', desc: '芽が出てきた。仲間と言葉を交わしていこう。' },
+  { emoji: '🌼', label: '蕾',   bg: NEGATIVE_STAGES[2], ptRange: '20〜29pt', desc: '蕾になった。あとはただ、続けること。' },
+  { emoji: '🌸', label: '花',   bg: NEGATIVE_STAGES[3], ptRange: '30pt以上', desc: '満開になった。ありのままで、咲いている。' },
 ]
 
 const FLOW: { emoji: string; label: string; bg: string }[] = [
-  { emoji: '🌱', label: 'タネ', bg: '#D4B896' },
-  { emoji: '🌿', label: '芽',   bg: '#9DC08B' },
-  { emoji: '🌼', label: '蕾',   bg: '#F5D78E' },
-  { emoji: '🌸', label: '花',   bg: '#F5A8C0' },
+  { emoji: '🌱', label: 'タネ', bg: NEGATIVE_STAGES[0] },
+  { emoji: '🌿', label: '芽',   bg: NEGATIVE_STAGES[1] },
+  { emoji: '🌼', label: '蕾',   bg: NEGATIVE_STAGES[2] },
+  { emoji: '🌸', label: '花',   bg: NEGATIVE_STAGES[3] },
 ]
 
 const SECTIONS: { key: SectionKey; title: string }[] = [
@@ -70,7 +71,7 @@ function SectionContent({ sectionKey }: { sectionKey: SectionKey }) {
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
                 <span style={{ fontSize: 13, fontWeight: 700, color: '#3B2F1E' }}>{label}</span>
                 <span style={{
-                  fontSize: 11, fontWeight: 600, color: '#8B6914',
+                  fontSize: 11, fontWeight: 600, color: NEGATIVE.textDeep,
                   background: bg, padding: '2px 8px', borderRadius: 99,
                 }}>
                   {ptRange}
@@ -208,7 +209,7 @@ export default function HelpModal({ onClose }: HelpModalProps) {
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
       zIndex: 500, maxWidth: 390, margin: '0 auto',
-      background: '#F5F0E8', overflowY: 'auto',
+      background: '#FFFFFF', overflowY: 'auto',
     }}>
       <div style={{ padding: '52px 20px 40px' }}>
 

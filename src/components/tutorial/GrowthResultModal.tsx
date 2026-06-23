@@ -34,7 +34,7 @@ export default function GrowthResultModal({ onNext }: GrowthResultModalProps) {
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0px)' : 'translateY(16px)',
           transition: 'opacity 0.3s ease, transform 0.3s ease',
-          background: '#F5F0E8',
+          background: '#FFFFFF',
           borderRadius: 24,
           padding: '44px 32px',
           width: '100%', maxWidth: 340,

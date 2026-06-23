@@ -20,7 +20,7 @@ export default function GrowthWelcomeMessage({ onNext, zIndex = 300 }: GrowthWel
       style={{
         position: 'fixed', inset: 0, zIndex,
         maxWidth: 390, margin: '0 auto',
-        background: '#F5F0E8',
+        background: '#FFFFFF',
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
         padding: '0 32px',
