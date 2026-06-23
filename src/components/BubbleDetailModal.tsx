@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '@/src/lib/supabase/client'
 import BubbleGrowthIndicator from '@/src/components/BubbleGrowthIndicator'
 import { isBubbleDetailTooltipSeen, markBubbleDetailTooltipSeen } from '@/src/lib/onboarding'
+import { NEGATIVE, POSITIVE_STAGES, NEGATIVE_STAGES, POSITIVE } from '@/src/styles/colors'
 
 export interface BubbleDetailModalProps {
   tagId: string
@@ -33,11 +34,12 @@ type Journal = {
 
 type TourStep = 'saved' | 'journal' | 'back' | 'done'
 
-function getStageInfo(growthPoint: number): { emoji: string; label: string; bg: string } {
-  if (growthPoint >= 30) return { emoji: '🌸', label: '花',  bg: '#F5A8C0' }
-  if (growthPoint >= 20) return { emoji: '🌼', label: '蕾',  bg: '#F5D78E' }
-  if (growthPoint >= 10) return { emoji: '🌿', label: '芽',  bg: '#9DC08B' }
-  return                        { emoji: '🌱', label: 'タネ', bg: '#D4B896' }
+function getStageInfo(growthPoint: number, tagType: 'light' | 'shadow'): { emoji: string; label: string; bg: string } {
+  const stages = tagType === 'light' ? POSITIVE_STAGES : NEGATIVE_STAGES
+  if (growthPoint >= 30) return { emoji: '🌸', label: '花',  bg: stages[3] }
+  if (growthPoint >= 20) return { emoji: '🌼', label: '蕾',  bg: stages[2] }
+  if (growthPoint >= 10) return { emoji: '🌿', label: '芽',  bg: stages[1] }
+  return                        { emoji: '🌱', label: 'タネ', bg: stages[0] }
 }
 
 function formatDate(iso: string): string {
@@ -189,13 +191,14 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
   }
 
   const clean = tagText.replace(/^#+/, '')
-  const stageInfo = tagData ? getStageInfo(tagData.growth_point) : null
+  const stageInfo = tagData ? getStageInfo(tagData.growth_point, tagType) : null
   const savedCount = savedMessages.length + journals.length
+  const theme = tagType === 'light' ? POSITIVE : NEGATIVE
 
   return (
     <div style={{
       position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 400,
-      background: '#F5F0E8', overflowY: 'auto',
+      background: '#FFFFFF', overflowY: 'auto',
     }}>
       <div style={{ maxWidth: 390, margin: '0 auto', paddingBottom: 32 }}>
 
@@ -220,8 +223,8 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             <span style={{
-              background: tagType === 'light' ? '#F5D78E' : '#D4B896',
-              color: tagType === 'light' ? '#8B6914' : '#6b4c1e',
+              background: theme.pale,
+              color: theme.text,
               padding: '4px 12px', borderRadius: 20, fontSize: 14, fontWeight: 700,
             }}>#{clean}</span>
 
@@ -272,7 +275,7 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
 
             {/* 保存した言葉 */}
             <div style={{ padding: '0 20px 20px', position: 'relative' }}>
-              <h3 style={{ fontSize: 13, fontWeight: 700, color: '#8B6914', margin: '0 0 10px' }}>🔖 保存した言葉</h3>
+              <h3 style={{ fontSize: 13, fontWeight: 700, color: theme.text, margin: '0 0 10px' }}>🔖 保存した言葉</h3>
               {tourStep === 'saved' && (
                 <GuideTooltip
                   text="チャットで保存（ブックマーク）した言葉がここに集まります"
@@ -309,7 +312,7 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
 
             {/* メモ・ジャーナル */}
             <div style={{ padding: '0 20px 24px', position: 'relative' }}>
-              <h3 style={{ fontSize: 13, fontWeight: 700, color: '#8B6914', margin: '0 0 10px' }}>📝 メモ・ジャーナル</h3>
+              <h3 style={{ fontSize: 13, fontWeight: 700, color: theme.text, margin: '0 0 10px' }}>📝 メモ・ジャーナル</h3>
               {tourStep === 'journal' && (
                 <GuideTooltip
                   text="気づいたことや感じたことを自由に書き残せます"

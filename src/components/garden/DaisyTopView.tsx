@@ -1,6 +1,7 @@
 'use client'
 
 import type { PointerEvent } from 'react'
+import { POSITIVE } from '@/src/styles/colors'
 
 const PETAL_COUNT = 13
 const PETAL_ANGLE_STEP = 360 / PETAL_COUNT
@@ -60,19 +61,19 @@ export default function DaisyTopView({ cx, cy, size, label, onClick, onDelete, o
           <ellipse
             key={angle}
             cx="0" cy={-petalDist} rx={petalW} ry={petalH}
-            fill={i % 2 === 0 ? '#F5D060' : '#F0CA50'}
+            fill={i % 2 === 0 ? POSITIVE.base : POSITIVE.soft}
             transform={`rotate(${angle})`}
           />
         ))}
 
         {/* 花の中心：3重円 */}
-        <circle cx="0" cy="0" r={size * 0.19} fill="#C47A10" />
-        <circle cx="0" cy="0" r={size * 0.145} fill="#D98C18" />
-        <circle cx="0" cy="0" r={size * 0.10} fill="#E8A020" />
+        <circle cx="0" cy="0" r={size * 0.19} fill={POSITIVE.textDeep} />
+        <circle cx="0" cy="0" r={size * 0.145} fill={POSITIVE.deep} />
+        <circle cx="0" cy="0" r={size * 0.10} fill={POSITIVE.base} />
 
         {/* つぶつぶ */}
         {DOT_UNIT_VECTORS.map(({ dx, dy }, i) => (
-          <circle key={i} cx={dx * dotDist} cy={dy * dotDist} r={2} fill="#C47A10" opacity="0.7" />
+          <circle key={i} cx={dx * dotDist} cy={dy * dotDist} r={2} fill={POSITIVE.textDeep} opacity="0.7" />
         ))}
       </svg>
 
@@ -81,7 +82,7 @@ export default function DaisyTopView({ cx, cy, size, label, onClick, onDelete, o
         style={{
           position: 'absolute', left: '50%', top: -size * 0.6,
           transform: 'translate(-50%, -50%)',
-          background: '#F5D78E', color: '#8B6914',
+          background: POSITIVE.pale, color: POSITIVE.text,
           fontSize: 10, fontWeight: 600,
           borderRadius: 12, padding: '3px 10px',
           whiteSpace: 'nowrap',

@@ -1,5 +1,7 @@
 'use client'
 
+import { POSITIVE } from '@/src/styles/colors'
+
 const PETAL_ANGLES = [0, 36, 72, 108, 144, 180, 216, 252, 288, 324]
 
 // 起動時のスプラッシュ等で使う、丸い背景（バブル）なしの花びらだけのシンプルなデイジー。
@@ -23,7 +25,7 @@ export default function DaisyFlower({ size, animate }: { size: number; animate: 
         <g key={angle} transform={`rotate(${angle} 50 50)`}>
           <ellipse
             cx="50" cy="35" rx="6" ry="15"
-            fill="#FFE44D"
+            fill={POSITIVE.base}
             style={{
               transformOrigin: '50px 50px',
               opacity: animate ? undefined : 0,
@@ -35,7 +37,7 @@ export default function DaisyFlower({ size, animate }: { size: number; animate: 
         </g>
       ))}
       <circle
-        cx="50" cy="50" r="12" fill="#E8A020"
+        cx="50" cy="50" r="12" fill={POSITIVE.deep}
         style={{
           transformOrigin: '50px 50px',
           opacity: animate ? undefined : 0,
@@ -43,7 +45,7 @@ export default function DaisyFlower({ size, animate }: { size: number; animate: 
         }}
       />
       <circle
-        cx="50" cy="50" r="7" fill="#C47A10"
+        cx="50" cy="50" r="7" fill={POSITIVE.textDeep}
         style={{
           transformOrigin: '50px 50px',
           opacity: animate ? undefined : 0,

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { NEGATIVE } from '@/src/styles/colors'
 
 interface BubbleGrowthIndicatorProps {
   growthPoint: number
@@ -29,8 +30,8 @@ function getBarConfig(gp: number): BarConfig {
 
   if (stage === 'bloom') {
     return {
-      trackColor: '#F5A8C0',
-      fillColor:  '#F5A8C0',
+      trackColor: NEGATIVE.deep,
+      fillColor:  NEGATIVE.deep,
       progress:   1,
       label:      '満開に到達！🌸',
       leftEmoji:  '🌸',
@@ -40,8 +41,8 @@ function getBarConfig(gp: number): BarConfig {
 
   if (stage === 'bud') {
     return {
-      trackColor: '#F5D78E',
-      fillColor:  '#F5A8C0',
+      trackColor: NEGATIVE.base,
+      fillColor:  NEGATIVE.deep,
       progress:   (gp - 20) / 10,  // gp=20 → 0%, gp=30 → 100%
       label:      `次のステージまで あと${30 - gp}pt`,
       leftEmoji:  '🌼',
@@ -51,8 +52,8 @@ function getBarConfig(gp: number): BarConfig {
 
   if (stage === 'sprout') {
     return {
-      trackColor: '#9DC08B',
-      fillColor:  '#F5D78E',
+      trackColor: NEGATIVE.soft,
+      fillColor:  NEGATIVE.base,
       progress:   (gp - 10) / 10,  // gp=10 → 0%, gp=20 → 100%
       label:      `次のステージまで あと${20 - gp}pt`,
       leftEmoji:  '🌿',
@@ -61,8 +62,8 @@ function getBarConfig(gp: number): BarConfig {
   }
 
   return {
-    trackColor: '#D4B896',
-    fillColor:  '#9DC08B',
+    trackColor: NEGATIVE.pale,
+    fillColor:  NEGATIVE.soft,
     progress:   gp / 10,  // gp=0 → 0%, gp=10 → 100%
     label:      `次のステージまで あと${10 - gp}pt`,
     leftEmoji:  '🌱',

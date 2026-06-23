@@ -6,6 +6,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import BubbleDetailModal from '@/src/components/BubbleDetailModal'
 import HelpModal from '@/src/components/HelpModal'
 import DaisyBubble from '@/src/components/DaisyBubble'
+import { NEGATIVE, POSITIVE, withAlpha } from '@/src/styles/colors'
 
 type LightTag  = { id: string; text: string; growth_point: number; position_x?: number | null; position_y?: number | null }
 type ShadowTag = { id: string; text: string; growth_point: number; seed_weight: string | null; stage: string | null; position_x?: number | null; position_y?: number | null }
@@ -46,15 +47,15 @@ function getDaisyEmoji(gp: number): string {
 function getSeedBubble(stage: string | null, seedWeight: string | null): { emoji: string; bg: string; text: string } {
   const sw = parseFloat(String(seedWeight ?? ''))
   if (!isNaN(sw)) {
-    if (sw >= 7) return { emoji: '🌼', bg: '#F5D78E', text: '#7A5C00' }
-    if (sw >= 3) return { emoji: '🌿', bg: '#9DC08B', text: '#2D5A27' }
-    return { emoji: '🌱', bg: '#D4B896', text: '#6B4E1A' }
+    if (sw >= 7) return { emoji: '🌼', bg: NEGATIVE.base, text: NEGATIVE.textDeep }
+    if (sw >= 3) return { emoji: '🌿', bg: NEGATIVE.soft, text: NEGATIVE.text }
+    return { emoji: '🌱', bg: NEGATIVE.pale, text: NEGATIVE.text }
   }
   // 旧フォーマット：stage 文字列で判定
-  if (stage === 'bloom')                      return { emoji: '🌼', bg: '#F5D78E', text: '#7A5C00' }
-  if (stage === 'bud' || stage === 'budding') return { emoji: '🌿', bg: '#9DC08B', text: '#2D5A27' }
-  if (stage === 'sprout')                     return { emoji: '🌿', bg: '#9DC08B', text: '#2D5A27' }
-  return { emoji: '🌱', bg: '#D4B896', text: '#6B4E1A' }
+  if (stage === 'bloom')                      return { emoji: '🌼', bg: NEGATIVE.base, text: NEGATIVE.textDeep }
+  if (stage === 'bud' || stage === 'budding') return { emoji: '🌿', bg: NEGATIVE.soft, text: NEGATIVE.text }
+  if (stage === 'sprout')                     return { emoji: '🌿', bg: NEGATIVE.soft, text: NEGATIVE.text }
+  return { emoji: '🌱', bg: NEGATIVE.pale, text: NEGATIVE.text }
 }
 
 const BASE_SEED_SIZE  = 68
@@ -253,7 +254,7 @@ const DAISY_LEGEND = [
   { emoji: '🌼', label: 'つながれた' },
 ]
 const SEED_LEGEND = [
-  { emoji: '🌱', label: 'seed' },
+  { emoji: '🌱', label: 'negative' },
   { emoji: '🌿', label: 'sprout' },
   { emoji: '🌼', label: 'bloom' },
 ]
@@ -532,8 +533,8 @@ export default function GardenDisplay() {
     )
   }
 
-  const activeBg   = tab === 'light' ? '#F5D78E' : tab === 'shadow' ? '#D4B896' : '#B8D4E8'
-  const activeText = tab === 'light' ? '#7A5C00' : tab === 'shadow' ? '#6B4E1A' : '#2C5F7A'
+  const activeBg   = tab === 'light' ? POSITIVE.pale : tab === 'shadow' ? NEGATIVE.pale : '#B8D4E8'
+  const activeText = tab === 'light' ? POSITIVE.text : tab === 'shadow' ? NEGATIVE.text : '#2C5F7A'
   const legend     = tab === 'light' ? DAISY_LEGEND : tab === 'shadow' ? SEED_LEGEND : FRIEND_LEGEND
 
   return (
@@ -546,7 +547,7 @@ export default function GardenDisplay() {
           兄弟間でのみ比較されるため、このラッパーとバブルエリアは同じ親(この
           コンポーネントのルート)の直下の兄弟である必要がある。背景色がないと
           最前面でもバブルが透けて見えるため、ページ背景色を明示的に敷く。 */}
-      <div style={{ position: 'relative', zIndex: 50, background: '#F5F0E8', flexShrink: 0 }}>
+      <div style={{ position: 'relative', zIndex: 50, background: '#FFFFFF', flexShrink: 0 }}>
         {/* ── タイトル行 ── */}
         <div style={{
           padding: '44px 20px 8px', flexShrink: 0,
@@ -595,9 +596,9 @@ export default function GardenDisplay() {
         {/* ── タブ ── */}
         <div style={{ display: 'flex', padding: '0 20px', gap: 8, marginBottom: 12, flexShrink: 0 }}>
           {(['light', 'shadow', 'friend'] as TabType[]).map(t => {
-            const tabBg   = t === 'light' ? '#F5D78E' : t === 'shadow' ? '#D4B896' : '#B8D4E8'
-            const tabText = t === 'light' ? '#7A5C00' : t === 'shadow' ? '#6B4E1A' : '#2C5F7A'
-            const tabLabel = t === 'light' ? '🌼 Daisy' : t === 'shadow' ? '🌱 Seed' : '🤝 Friend'
+            const tabBg   = t === 'light' ? POSITIVE.pale : t === 'shadow' ? NEGATIVE.pale : '#B8D4E8'
+            const tabText = t === 'light' ? POSITIVE.text : t === 'shadow' ? NEGATIVE.text : '#2C5F7A'
+            const tabLabel = t === 'light' ? '🌼 Positive' : t === 'shadow' ? '🌱 Negative' : '🤝 Friend'
             return (
               <button
                 key={t}
@@ -693,7 +694,7 @@ export default function GardenDisplay() {
                   alignItems: 'center', justifyContent: 'center', gap: 2,
                   overflow: 'hidden',
                   boxShadow: isPulsing
-                    ? '0 0 20px rgba(74,124,89,0.55), 0 3px 10px rgba(0,0,0,0.1)'
+                    ? `0 0 20px ${withAlpha(tab === 'shadow' ? NEGATIVE.base : POSITIVE.base, 0.55)}, 0 3px 10px rgba(0,0,0,0.1)`
                     : '0 3px 10px rgba(0,0,0,0.1)',
                   opacity: visible ? 1 : 0,
                   transform: visible ? 'scale(1)' : 'scale(0.75)',
@@ -733,7 +734,7 @@ export default function GardenDisplay() {
                     </>
                   )
                 })() : tab === 'light' ? (
-                  /* Daisy バブル: SVG が背景ごと描画、テキストを下部に重ねる */
+                  /* Positive バブル: SVG が背景ごと描画、テキストを下部に重ねる */
                   <>
                     <DaisyBubble size={size} />
                     <span style={{
@@ -741,7 +742,7 @@ export default function GardenDisplay() {
                       bottom: Math.max(Math.round(size * 0.1), 4),
                       left: 0, right: 0, textAlign: 'center',
                       fontSize: clamp(Math.round(size * 0.13), 7, 11),
-                      fontWeight: 700, color: '#5A3800',
+                      fontWeight: 700, color: POSITIVE.textDeep,
                       overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                       paddingLeft: 6, paddingRight: 6,
                     }}>

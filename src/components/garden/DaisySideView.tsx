@@ -1,3 +1,5 @@
+import { POSITIVE } from '@/src/styles/colors'
+
 type Props = {
   x: number
   stemBottomY: number
@@ -7,10 +9,10 @@ type Props = {
   active?: boolean
 }
 
-const STEM_COLOR = '#4A7C59'
-const LEAF_DARK = '#3D7048'
-const LEAF_LIGHT = '#4A7C59'
-const PETAL_FILL = '#F5D78E'
+const STEM_COLOR = POSITIVE.base
+const LEAF_DARK = POSITIVE.deep
+const LEAF_LIGHT = POSITIVE.base
+const PETAL_FILL = POSITIVE.pale
 
 const PETAL_COUNT = 9
 const PETAL_ANGLES = Array.from({ length: PETAL_COUNT }, (_, i) => i * (360 / PETAL_COUNT))
@@ -48,13 +50,13 @@ export function DaisySideView({ x, stemBottomY, stemHeight, tagLabel, active = f
         {PETAL_ANGLES.map(angle => (
           <ellipse key={angle} cx={0} cy={-33} rx={12} ry={22} fill={PETAL_FILL} transform={`rotate(${angle})`} />
         ))}
-        <circle cx={0} cy={0} r={18} fill="#E8A020" />
-        <circle cx={0} cy={0} r={10} fill="#C47A10" />
+        <circle cx={0} cy={0} r={18} fill={POSITIVE.deep} />
+        <circle cx={0} cy={0} r={10} fill={POSITIVE.textDeep} />
       </g>
 
       {/* ハッシュタグピル */}
       <rect x={x - pillWidth / 2} y={pillY} width={pillWidth} height={24} rx={12} fill={PETAL_FILL} />
-      <text x={x} y={pillY + 16} textAnchor="middle" fontSize={11} fontWeight={600} fill="#8B6914">
+      <text x={x} y={pillY + 16} textAnchor="middle" fontSize={11} fontWeight={600} fill={POSITIVE.text}>
         {tagLabel}
       </text>
     </g>
