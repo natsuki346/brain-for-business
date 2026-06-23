@@ -26,12 +26,12 @@ export default function ShadowRoomVisitPage() {
         style={{
           minHeight: '100svh', paddingTop: 48, paddingBottom: 120,
           paddingLeft: 24, paddingRight: 24,
-          background: '#F5F0E8', maxWidth: 390, margin: '0 auto',
+          background: '#FFFFFF', maxWidth: 390, margin: '0 auto',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
           <span style={{ fontSize: 22 }}>🌱</span>
-          <h1 style={{ fontSize: 20, fontWeight: 700, color: '#3B2F1E', margin: 0 }}>Seed</h1>
+          <h1 style={{ fontSize: 20, fontWeight: 700, color: '#3B2F1E', margin: 0 }}>Negative</h1>
         </div>
         <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.55)', marginBottom: 28, marginTop: 0 }}>
           タグを選んで入室してみよう
@@ -44,7 +44,7 @@ export default function ShadowRoomVisitPage() {
           position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
           width: '100%', maxWidth: 390,
           padding: '16px 24px 32px',
-          background: 'linear-gradient(to bottom, transparent, #F5F0E8 40%)',
+          background: 'linear-gradient(to bottom, transparent, #FFFFFF 40%)',
         }}>
           <button
             onClick={() => setShowAnimation(true)}
@@ -80,7 +80,7 @@ export default function ShadowRoomVisitPage() {
       {showGardenPreview && (
         <div style={{
           position: 'fixed', inset: 0, zIndex: 600,
-          background: '#F5F0E8',
+          background: '#FFFFFF',
           display: 'flex', flexDirection: 'column',
           maxWidth: 390, margin: '0 auto',
         }}>
@@ -91,7 +91,7 @@ export default function ShadowRoomVisitPage() {
           {/* ステップ15: メインアプリへ */}
           <div style={{
             flexShrink: 0, padding: '12px 24px 32px',
-            background: 'linear-gradient(to bottom, transparent, #F5F0E8 30%)',
+            background: 'linear-gradient(to bottom, transparent, #FFFFFF 30%)',
           }}>
             <button
               onClick={handleEnterMainApp}

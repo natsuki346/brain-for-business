@@ -68,7 +68,7 @@ export default function WhyModal({ onStart, currentStep, completedStep, onComple
       <div
         style={{
           width: '100%', maxWidth: 342,
-          background: '#F5F0E8',
+          background: '#FFFFFF',
           borderRadius: 20,
           padding: '36px 28px 28px',
           transform: visible ? 'translateY(0)' : 'translateY(16px)',

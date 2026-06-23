@@ -12,12 +12,12 @@ export default function LightRoomVisitPage() {
       style={{
         minHeight: '100svh', paddingTop: 48, paddingBottom: 120,
         paddingLeft: 24, paddingRight: 24,
-        background: '#F5F0E8', maxWidth: 390, margin: '0 auto',
+        background: '#FFFFFF', maxWidth: 390, margin: '0 auto',
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
         <DaisyIcon size={22} stage={4} active />
-        <h1 style={{ fontSize: 20, fontWeight: 700, color: '#3B2F1E', margin: 0 }}>Daisy</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 700, color: '#3B2F1E', margin: 0 }}>Positive</h1>
       </div>
       <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.55)', marginBottom: 28, marginTop: 0 }}>
         タグを選んで入室してみよう
@@ -30,7 +30,7 @@ export default function LightRoomVisitPage() {
         position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
         width: '100%', maxWidth: 390,
         padding: '16px 24px 32px',
-        background: 'linear-gradient(to bottom, transparent, #F5F0E8 40%)',
+        background: 'linear-gradient(to bottom, transparent, #FFFFFF 40%)',
       }}>
         <button
           onClick={() => router.push('/onboarding/room-visit/shadow')}
@@ -40,7 +40,7 @@ export default function LightRoomVisitPage() {
             fontSize: 15, fontWeight: 700, cursor: 'pointer',
           }}
         >
-          次へ → Seed ルームを見る
+          次へ → Negative ルームを見る
         </button>
       </div>
 

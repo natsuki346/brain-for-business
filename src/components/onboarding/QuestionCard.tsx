@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
 
 // AI生成タグの呼び出し先（Supabase Edge Functions）。
 // Next.js API Routesは静的書き出し（output: 'export'）と相性が悪いため、
@@ -35,46 +36,46 @@ function FruitBg() {
     >
       <g fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.14">
         {/* トマト大 – 左上 */}
-        <circle cx="58" cy="118" r="35" stroke="#C4A35A" strokeWidth="1.8"/>
-        <line x1="58" y1="83" x2="58" y2="72" stroke="#4A7C59" strokeWidth="1.8"/>
-        <path d="M58 83 Q50 74 46 77" stroke="#4A7C59" strokeWidth="1.4"/>
-        <path d="M58 83 Q66 74 70 77" stroke="#4A7C59" strokeWidth="1.4"/>
+        <circle cx="58" cy="118" r="35" stroke={POSITIVE.soft} strokeWidth="1.8"/>
+        <line x1="58" y1="83" x2="58" y2="72" stroke={POSITIVE.deep} strokeWidth="1.8"/>
+        <path d="M58 83 Q50 74 46 77" stroke={POSITIVE.deep} strokeWidth="1.4"/>
+        <path d="M58 83 Q66 74 70 77" stroke={POSITIVE.deep} strokeWidth="1.4"/>
         {/* トマト小 – 右上 */}
-        <circle cx="338" cy="74" r="21" stroke="#C0392B" strokeWidth="1.6"/>
-        <line x1="338" y1="53" x2="338" y2="44" stroke="#4A7C59" strokeWidth="1.5"/>
-        <path d="M338 53 Q332 46 329 48" stroke="#4A7C59" strokeWidth="1.2"/>
+        <circle cx="338" cy="74" r="21" stroke={POSITIVE.base} strokeWidth="1.6"/>
+        <line x1="338" y1="53" x2="338" y2="44" stroke={POSITIVE.deep} strokeWidth="1.5"/>
+        <path d="M338 53 Q332 46 329 48" stroke={POSITIVE.deep} strokeWidth="1.2"/>
         {/* りんご – 右中 */}
-        <path d="M373 288 Q365 257 356 255 Q345 251 342 267 Q338 285 345 302 Q352 319 362 319 Q372 319 380 302 Q387 285 384 267 Q381 251 370 255 Q361 255 373 288" stroke="#C4A35A" strokeWidth="1.6"/>
-        <path d="M362 251 Q360 242 357 237" stroke="#4A7C59" strokeWidth="1.5"/>
-        <path d="M362 249 Q370 240 374 240" stroke="#4A7C59" strokeWidth="1.2"/>
+        <path d="M373 288 Q365 257 356 255 Q345 251 342 267 Q338 285 345 302 Q352 319 362 319 Q372 319 380 302 Q387 285 384 267 Q381 251 370 255 Q361 255 373 288" stroke={POSITIVE.soft} strokeWidth="1.6"/>
+        <path d="M362 251 Q360 242 357 237" stroke={POSITIVE.deep} strokeWidth="1.5"/>
+        <path d="M362 249 Q370 240 374 240" stroke={POSITIVE.deep} strokeWidth="1.2"/>
         {/* りんご小 – 左中 */}
-        <path d="M27 450 Q22 430 15 428 Q7 426 5 438 Q2 452 8 464 Q14 476 22 476 Q30 476 35 464 Q40 452 38 438 Q36 426 27 428 Q20 428 27 450" stroke="#C4A35A" strokeWidth="1.4"/>
-        <line x1="22" y1="425" x2="20" y2="418" stroke="#4A7C59" strokeWidth="1.3"/>
+        <path d="M27 450 Q22 430 15 428 Q7 426 5 438 Q2 452 8 464 Q14 476 22 476 Q30 476 35 464 Q40 452 38 438 Q36 426 27 428 Q20 428 27 450" stroke={POSITIVE.soft} strokeWidth="1.4"/>
+        <line x1="22" y1="425" x2="20" y2="418" stroke={POSITIVE.deep} strokeWidth="1.3"/>
         {/* ぶどう – 右下 */}
-        <line x1="340" y1="570" x2="340" y2="558" stroke="#4A7C59" strokeWidth="1.6"/>
-        <path d="M340 570 Q332 562 330 556" stroke="#4A7C59" strokeWidth="1.2"/>
-        <path d="M340 570 Q348 562 350 556" stroke="#4A7C59" strokeWidth="1.2"/>
-        <circle cx="325" cy="586" r="13" stroke="#8B6914" strokeWidth="1.4"/>
-        <circle cx="341" cy="583" r="13" stroke="#8B6914" strokeWidth="1.4"/>
-        <circle cx="357" cy="586" r="13" stroke="#8B6914" strokeWidth="1.4"/>
-        <circle cx="318" cy="604" r="12" stroke="#8B6914" strokeWidth="1.3"/>
-        <circle cx="333" cy="603" r="13" stroke="#8B6914" strokeWidth="1.4"/>
-        <circle cx="349" cy="603" r="13" stroke="#8B6914" strokeWidth="1.4"/>
-        <circle cx="364" cy="604" r="12" stroke="#8B6914" strokeWidth="1.3"/>
-        <circle cx="326" cy="622" r="11" stroke="#8B6914" strokeWidth="1.2"/>
-        <circle cx="341" cy="624" r="12" stroke="#8B6914" strokeWidth="1.3"/>
-        <circle cx="356" cy="622" r="11" stroke="#8B6914" strokeWidth="1.2"/>
+        <line x1="340" y1="570" x2="340" y2="558" stroke={POSITIVE.deep} strokeWidth="1.6"/>
+        <path d="M340 570 Q332 562 330 556" stroke={POSITIVE.deep} strokeWidth="1.2"/>
+        <path d="M340 570 Q348 562 350 556" stroke={POSITIVE.deep} strokeWidth="1.2"/>
+        <circle cx="325" cy="586" r="13" stroke={POSITIVE.textDeep} strokeWidth="1.4"/>
+        <circle cx="341" cy="583" r="13" stroke={POSITIVE.textDeep} strokeWidth="1.4"/>
+        <circle cx="357" cy="586" r="13" stroke={POSITIVE.textDeep} strokeWidth="1.4"/>
+        <circle cx="318" cy="604" r="12" stroke={POSITIVE.textDeep} strokeWidth="1.3"/>
+        <circle cx="333" cy="603" r="13" stroke={POSITIVE.textDeep} strokeWidth="1.4"/>
+        <circle cx="349" cy="603" r="13" stroke={POSITIVE.textDeep} strokeWidth="1.4"/>
+        <circle cx="364" cy="604" r="12" stroke={POSITIVE.textDeep} strokeWidth="1.3"/>
+        <circle cx="326" cy="622" r="11" stroke={POSITIVE.textDeep} strokeWidth="1.2"/>
+        <circle cx="341" cy="624" r="12" stroke={POSITIVE.textDeep} strokeWidth="1.3"/>
+        <circle cx="356" cy="622" r="11" stroke={POSITIVE.textDeep} strokeWidth="1.2"/>
         {/* トマト中 – 左下 */}
-        <circle cx="52" cy="692" r="29" stroke="#C0392B" strokeWidth="1.7"/>
-        <line x1="52" y1="663" x2="52" y2="654" stroke="#4A7C59" strokeWidth="1.6"/>
-        <path d="M52 663 Q46 655 43 657" stroke="#4A7C59" strokeWidth="1.3"/>
-        <path d="M52 663 Q58 655 61 657" stroke="#4A7C59" strokeWidth="1.3"/>
+        <circle cx="52" cy="692" r="29" stroke={POSITIVE.base} strokeWidth="1.7"/>
+        <line x1="52" y1="663" x2="52" y2="654" stroke={POSITIVE.deep} strokeWidth="1.6"/>
+        <path d="M52 663 Q46 655 43 657" stroke={POSITIVE.deep} strokeWidth="1.3"/>
+        <path d="M52 663 Q58 655 61 657" stroke={POSITIVE.deep} strokeWidth="1.3"/>
         {/* トマト極小 – 下中央 */}
-        <circle cx="192" cy="788" r="16" stroke="#C4A35A" strokeWidth="1.4"/>
-        <line x1="192" y1="772" x2="192" y2="765" stroke="#4A7C59" strokeWidth="1.3"/>
+        <circle cx="192" cy="788" r="16" stroke={POSITIVE.soft} strokeWidth="1.4"/>
+        <line x1="192" y1="772" x2="192" y2="765" stroke={POSITIVE.deep} strokeWidth="1.3"/>
         {/* トマト極小 – 上中央 */}
-        <circle cx="200" cy="36" r="14" stroke="#C4A35A" strokeWidth="1.3"/>
-        <line x1="200" y1="22" x2="200" y2="16" stroke="#4A7C59" strokeWidth="1.2"/>
+        <circle cx="200" cy="36" r="14" stroke={POSITIVE.soft} strokeWidth="1.3"/>
+        <line x1="200" y1="22" x2="200" y2="16" stroke={POSITIVE.deep} strokeWidth="1.2"/>
       </g>
     </svg>
   )
@@ -90,7 +91,7 @@ function RootBg() {
       style={{ position: 'absolute', inset: 0 }}
       aria-hidden="true"
     >
-      <g fill="none" stroke="#8B6914" strokeLinecap="round" opacity="0.13">
+      <g fill="none" stroke={NEGATIVE.deep} strokeLinecap="round" opacity="0.13">
         {/* 中央メイン根 */}
         <path d="M195 844 Q193 778 190 714 Q188 650 186 586" strokeWidth="4.5"/>
         {/* 左大根 */}
@@ -165,7 +166,7 @@ export function QuestionCard({
 
   // 質問グループ別カラーテーマ
   const c = {
-    pageBg:             isLight ? '#F5F0E8'             : '#EDE5D8',
+    pageBg:             '#FFFFFF',
     progress:           isLight ? 'rgba(93,72,40,0.45)' : 'rgba(60,40,15,0.42)',
     questionText:       isLight ? '#3B2F1E'             : '#2A1F0E',
     tagBg:              isLight ? '#3B2F1E'             : '#2A1F0E',
@@ -179,13 +180,13 @@ export function QuestionCard({
     tagTextNormal:      isLight ? '#3B2F1E'             : '#2A1F0E',
     addBtnAdded:        'rgba(0,0,0,0.07)',
     addBtnAddedText:    'rgba(0,0,0,0.2)',
-    addBtnNormal:       isLight ? '#4A7C59'             : '#6B4F12',
+    addBtnNormal:       isLight ? POSITIVE.base         : NEGATIVE.base,
     addBtnNormalText:   '#FFFFFF',
-    genActive:          isLight ? '#4A7C59'             : '#6B4F12',
+    genActive:          isLight ? POSITIVE.base         : NEGATIVE.base,
     genActiveText:      '#FFFFFF',
     genInactive:        'rgba(0,0,0,0.08)',
     genInactiveText:    'rgba(0,0,0,0.28)',
-    nextActive:         isLight ? '#4A7C59'             : '#6B4F12',
+    nextActive:         isLight ? POSITIVE.base         : NEGATIVE.base,
     nextActiveText:     '#FFFFFF',
     nextInactive:       'rgba(0,0,0,0.08)',
     nextInactiveText:   'rgba(0,0,0,0.28)',

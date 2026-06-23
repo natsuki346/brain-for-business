@@ -23,7 +23,7 @@ const STEPS = [
     icon: '🌸',
     num: '③',
     title: '向き合い、成長する',
-    desc: '自分の根と向き合いながら、デイジーを咲かせていこう',
+    desc: '自分の根と向き合いながら、Positiveを咲かせていこう',
     accent: '#7B5EA7',
     bg: '#F2EEF8',
   },
@@ -50,7 +50,7 @@ export default function ProcessOverviewScreen({ onUnderstand }: Props) {
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 500,
-        background: '#F5F0E8',
+        background: '#FFFFFF',
         display: 'flex', flexDirection: 'column',
         padding: '0 24px 48px',
         maxWidth: 390, margin: '0 auto',
