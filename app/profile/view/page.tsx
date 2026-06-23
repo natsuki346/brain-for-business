@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase } from '@/src/lib/supabase/client'
 import { formatHashtag } from '@/app/onboarding/garden-setup/garden-visuals'
 import { UserAvatar } from '@/src/components/UserAvatar'
+import { NEGATIVE, POSITIVE, withAlpha } from '@/src/styles/colors'
 
 type UserRow = {
   id: string
@@ -143,7 +144,7 @@ function OtherProfileContent() {
 
   if (loading) {
     return (
-      <div style={{ background: '#F5F0E8', maxWidth: 390, margin: '0 auto', minHeight: '100svh' }}>
+      <div style={{ background: '#FFFFFF', maxWidth: 390, margin: '0 auto', minHeight: '100svh' }}>
         <p style={{ textAlign: 'center', paddingTop: 80, fontSize: 13, color: '#A09070' }}>読み込み中...</p>
       </div>
     )
@@ -151,7 +152,7 @@ function OtherProfileContent() {
 
   if (!user) {
     return (
-      <div style={{ background: '#F5F0E8', maxWidth: 390, margin: '0 auto', minHeight: '100svh', padding: '24px 16px' }}>
+      <div style={{ background: '#FFFFFF', maxWidth: 390, margin: '0 auto', minHeight: '100svh', padding: '24px 16px' }}>
         <button
           onClick={() => router.back()}
           style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20, color: '#8B6914', padding: 0, marginBottom: 16 }}
@@ -166,9 +167,9 @@ function OtherProfileContent() {
   }
 
   const BUTTON_CONFIG: Record<ConnectionStatus, { label: string; bg: string; color: string; disabled: boolean; onClick?: () => void }> = {
-    none:     { label: '繋がる 🌼',        bg: '#4A7C59', color: '#F5F0E8', disabled: false, onClick: sendRequest },
+    none:     { label: '繋がる 🌼',        bg: '#4A7C59', color: '#FFFFFF', disabled: false, onClick: sendRequest },
     pending:  { label: '申請中…',          bg: '#D4B896', color: '#5C3A1E', disabled: true },
-    received: { label: '承認する ✓',       bg: '#4A7C59', color: '#F5F0E8', disabled: false, onClick: acceptRequest },
+    received: { label: '承認する ✓',       bg: '#4A7C59', color: '#FFFFFF', disabled: false, onClick: acceptRequest },
     accepted: { label: '繋がっています 🌼', bg: '#F5D78E', color: '#8B6914', disabled: true },
   }
   const buttonConfig = BUTTON_CONFIG[status]
@@ -179,7 +180,7 @@ function OtherProfileContent() {
   return (
     <div
       style={{
-        background: '#F5F0E8', maxWidth: 390, margin: '0 auto',
+        background: '#FFFFFF', maxWidth: 390, margin: '0 auto',
         minHeight: '100svh', padding: '24px 16px 100px',
         overflowY: 'auto',
       }}
@@ -228,14 +229,14 @@ function OtherProfileContent() {
             🤝 共通のタグ
           </h2>
 
-          {/* 共通Daisy */}
+          {/* 共通Positive */}
           {commonDaisy.length > 0 && (
             <div style={{ marginBottom: 12 }}>
-              <p style={{ fontSize: 11, color: '#8B6914', margin: '0 0 6px' }}>🌼 Daisy</p>
+              <p style={{ fontSize: 11, color: '#8B6914', margin: '0 0 6px' }}>🌼 Positive</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {commonDaisy.slice(0, 5).map(tag => (
                   <span key={tag.id} style={{
-                    background: '#4A7C59', color: '#F5F0E8',
+                    background: POSITIVE.base, color: '#FFFFFF',
                     borderRadius: 20, padding: '4px 12px', fontSize: 12, fontWeight: 600,
                   }}>{formatHashtag(tag.text)}</span>
                 ))}
@@ -243,7 +244,7 @@ function OtherProfileContent() {
                   <span
                     onClick={() => setShowAllCommon('daisy')}
                     style={{
-                      background: 'rgba(74,124,89,0.15)', color: '#4A7C59',
+                      background: withAlpha(POSITIVE.base, 0.15), color: POSITIVE.text,
                       borderRadius: 20, padding: '4px 12px', fontSize: 12, fontWeight: 600,
                       cursor: 'pointer',
                     }}
@@ -253,14 +254,14 @@ function OtherProfileContent() {
             </div>
           )}
 
-          {/* 共通Seed */}
+          {/* 共通Negative */}
           {commonSeed.length > 0 && (
             <div>
-              <p style={{ fontSize: 11, color: '#8B6914', margin: '0 0 6px' }}>🌱 Seed</p>
+              <p style={{ fontSize: 11, color: '#8B6914', margin: '0 0 6px' }}>🌱 Negative</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {commonSeed.slice(0, 5).map(tag => (
                   <span key={tag.id} style={{
-                    background: '#D4B896', color: '#5C3A1E',
+                    background: NEGATIVE.base, color: '#FFFFFF',
                     borderRadius: 20, padding: '4px 12px', fontSize: 12, fontWeight: 600,
                   }}>{formatHashtag(tag.text)}</span>
                 ))}
@@ -268,7 +269,7 @@ function OtherProfileContent() {
                   <span
                     onClick={() => setShowAllCommon('seed')}
                     style={{
-                      background: 'rgba(212,184,150,0.3)', color: '#8B6914',
+                      background: withAlpha(NEGATIVE.base, 0.15), color: NEGATIVE.text,
                       borderRadius: 20, padding: '4px 12px', fontSize: 12, fontWeight: 600,
                       cursor: 'pointer',
                     }}
@@ -280,7 +281,7 @@ function OtherProfileContent() {
         </div>
       )}
 
-      {/* Daisyタグ（折りたたみ） */}
+      {/* Positiveタグ（折りたたみ） */}
       <div style={{ marginBottom: 24 }}>
         <button
           onClick={() => setDaisyOpen(prev => !prev)}
@@ -291,7 +292,7 @@ function OtherProfileContent() {
           }}
         >
           <h2 style={{ fontSize: 14, color: '#8B6914', fontWeight: 700, margin: 0 }}>
-            🌼 Daisy（{daisyTags.length}）
+            🌼 Positive（{daisyTags.length}）
           </h2>
           <span style={{ fontSize: 16, color: '#8B6914' }}>{daisyOpen ? '∧' : '∨'}</span>
         </button>
@@ -302,9 +303,9 @@ function OtherProfileContent() {
             ) : (
               daisyTags.map(tag => (
                 <span key={tag.id} style={{
-                  background: commonTexts.has(tag.text) ? '#F5D78E' : '#FDF6E3',
-                  color: '#8B6914',
-                  border: '1px solid #D4B896',
+                  background: commonTexts.has(tag.text) ? POSITIVE.soft : POSITIVE.pale,
+                  color: POSITIVE.text,
+                  border: `1px solid ${POSITIVE.soft}`,
                   borderRadius: 20, padding: '4px 12px', fontSize: 12,
                 }}>{formatHashtag(tag.text)}</span>
               ))
@@ -316,9 +317,9 @@ function OtherProfileContent() {
       {/* 共通タグ全表示モーダル */}
       {showAllCommon && (() => {
         const tags = showAllCommon === 'daisy' ? commonDaisy : commonSeed
-        const label = showAllCommon === 'daisy' ? '🌼 Daisy 共通タグ' : '🌱 Seed 共通タグ'
-        const bg = showAllCommon === 'daisy' ? '#4A7C59' : '#D4B896'
-        const color = showAllCommon === 'daisy' ? '#F5F0E8' : '#5C3A1E'
+        const label = showAllCommon === 'daisy' ? '🌼 Positive 共通タグ' : '🌱 Negative 共通タグ'
+        const bg = showAllCommon === 'daisy' ? POSITIVE.base : NEGATIVE.base
+        const color = '#FFFFFF'
         return (
           <>
             <div
@@ -331,7 +332,7 @@ function OtherProfileContent() {
             <div style={{
               position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
               width: '100%', maxWidth: 390,
-              background: '#F5F0E8', borderRadius: '20px 20px 0 0',
+              background: '#FFFFFF', borderRadius: '20px 20px 0 0',
               borderTop: '1px solid #D4B896', zIndex: 101,
               padding: '20px 20px 48px',
             }}>

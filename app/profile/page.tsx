@@ -6,6 +6,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import { formatHashtag } from '@/app/onboarding/garden-setup/garden-visuals'
 import { BottomNav } from '@/src/components/BottomNav'
 import { UserAvatar } from '@/src/components/UserAvatar'
+import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
 
 type UserRow = {
   id: string
@@ -199,7 +200,7 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div style={{ background: '#F5F0E8', maxWidth: 390, margin: '0 auto', minHeight: '100svh' }}>
+      <div style={{ background: '#FFFFFF', maxWidth: 390, margin: '0 auto', minHeight: '100svh' }}>
         <p style={{ textAlign: 'center', paddingTop: 80, fontSize: 13, color: '#A09070' }}>読み込み中...</p>
       </div>
     )
@@ -208,7 +209,7 @@ export default function ProfilePage() {
   return (
     <div
       style={{
-        background: '#F5F0E8', maxWidth: 390, margin: '0 auto',
+        background: '#FFFFFF', maxWidth: 390, margin: '0 auto',
         minHeight: '100svh', padding: '24px 16px 100px',
         overflowY: 'auto',
       }}
@@ -227,7 +228,7 @@ export default function ProfilePage() {
             <div
               style={{
                 width: 80, height: 80, borderRadius: '50%',
-                background: '#4A7C59', color: '#F5F0E8',
+                background: '#4A7C59', color: '#FFFFFF',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 32, fontWeight: 700,
               }}
@@ -274,20 +275,20 @@ export default function ProfilePage() {
           あなたの言葉
         </h2>
 
-        {/* Daisy アコーディオン */}
-        <div style={{ border: '1px solid #D4B896', borderRadius: 12, padding: '0 12px', marginBottom: 12 }}>
+        {/* Positive アコーディオン */}
+        <div style={{ border: `1px solid ${POSITIVE.soft}`, borderRadius: 12, padding: '0 12px', marginBottom: 12 }}>
           <div
             onClick={() => setDaisyOpen(o => !o)}
             style={{
-              background: '#F5F0E8', borderBottom: '1px solid #D4B896',
+              background: POSITIVE.pale, borderBottom: `1px solid ${POSITIVE.soft}`,
               padding: '12px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
               cursor: 'pointer',
             }}
           >
-            <span style={{ fontSize: 12, color: '#8B6914', fontWeight: 600 }}>
-              🌼 Daisy（{lightTags.length}）
+            <span style={{ fontSize: 12, color: POSITIVE.text, fontWeight: 600 }}>
+              🌼 Positive（{lightTags.length}）
             </span>
-            <span style={{ fontSize: 12, color: '#8B6914' }}>{daisyOpen ? '∧' : '∨'}</span>
+            <span style={{ fontSize: 12, color: POSITIVE.text }}>{daisyOpen ? '∧' : '∨'}</span>
           </div>
           <div
             style={{
@@ -305,8 +306,8 @@ export default function ProfilePage() {
                   <span
                     key={tag.id}
                     style={{
-                      background: '#F5D78E', borderRadius: 12, padding: '8px 12px',
-                      fontSize: 12, color: '#8B6914', boxSizing: 'border-box',
+                      background: POSITIVE.pale, borderRadius: 12, padding: '8px 12px',
+                      fontSize: 12, color: POSITIVE.text, boxSizing: 'border-box',
                     }}
                   >
                     {formatHashtag(tag.text)}
@@ -317,20 +318,20 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Seed アコーディオン */}
-        <div style={{ border: '1px solid #D4B896', borderRadius: 12, padding: '0 12px' }}>
+        {/* Negative アコーディオン */}
+        <div style={{ border: `1px solid ${NEGATIVE.soft}`, borderRadius: 12, padding: '0 12px' }}>
           <div
             onClick={() => setSeedOpen(o => !o)}
             style={{
-              background: '#F5F0E8', borderBottom: '1px solid #D4B896',
+              background: NEGATIVE.pale, borderBottom: `1px solid ${NEGATIVE.soft}`,
               padding: '12px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
               cursor: 'pointer',
             }}
           >
-            <span style={{ fontSize: 12, color: '#8B6914', fontWeight: 600 }}>
-              🌱 Seed（{shadowTags.length}）
+            <span style={{ fontSize: 12, color: NEGATIVE.text, fontWeight: 600 }}>
+              🌱 Negative（{shadowTags.length}）
             </span>
-            <span style={{ fontSize: 12, color: '#8B6914' }}>{seedOpen ? '∧' : '∨'}</span>
+            <span style={{ fontSize: 12, color: NEGATIVE.text }}>{seedOpen ? '∧' : '∨'}</span>
           </div>
           <div
             style={{
@@ -348,8 +349,8 @@ export default function ProfilePage() {
                   <span
                     key={tag.id}
                     style={{
-                      background: '#D4B896', borderRadius: 12, padding: '8px 12px',
-                      fontSize: 12, color: '#5C3A1E', boxSizing: 'border-box',
+                      background: NEGATIVE.pale, borderRadius: 12, padding: '8px 12px',
+                      fontSize: 12, color: NEGATIVE.text, boxSizing: 'border-box',
                     }}
                   >
                     {formatHashtag(tag.text)}
@@ -371,7 +372,7 @@ export default function ProfilePage() {
           <div
             onClick={() => setConnectionsOpen(o => !o)}
             style={{
-              background: '#F5F0E8', borderBottom: '1px solid #D4B896',
+              background: '#FFFFFF', borderBottom: '1px solid #D4B896',
               padding: '12px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
               cursor: 'pointer',
             }}
@@ -416,8 +417,8 @@ export default function ProfilePage() {
                                 <span
                                   key={text}
                                   style={{
-                                    background: '#F5D78E', borderRadius: 12, padding: '2px 10px',
-                                    fontSize: 11, color: '#8B6914',
+                                    background: 'rgba(59,47,30,0.08)', borderRadius: 12, padding: '2px 10px',
+                                    fontSize: 11, color: '#3B2F1E',
                                   }}
                                 >
                                   {formatHashtag(text)}
@@ -456,7 +457,7 @@ export default function ProfilePage() {
                     onClick={() => handleAccept(req.id)}
                     style={{
                       flex: 1, padding: '8px 0', borderRadius: 20, border: 'none',
-                      background: '#4A7C59', color: '#F5F0E8',
+                      background: '#4A7C59', color: '#FFFFFF',
                       fontSize: 13, fontWeight: 700, cursor: 'pointer',
                     }}
                   >

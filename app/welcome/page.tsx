@@ -42,7 +42,7 @@ export default function WelcomePage() {
     <div
       style={{
         width: '100%', maxWidth: 390, margin: '0 auto',
-        minHeight: '100svh', background: '#F5F0E8',
+        minHeight: '100svh', background: '#FFFFFF',
         display: 'flex', flexDirection: 'column',
         opacity: isLeaving ? 0 : 1,
         transition: isLeaving ? 'opacity 0.5s ease' : 'none',
@@ -77,7 +77,7 @@ export default function WelcomePage() {
           onClick={handleStart}
           style={{
             width: '100%',
-            background: '#4A7C59', color: '#F5F0E8',
+            background: '#4A7C59', color: '#FFFFFF',
             border: 'none', borderRadius: 24,
             padding: '14px 0', fontSize: 15, fontWeight: 500,
             cursor: 'pointer',

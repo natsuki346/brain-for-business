@@ -71,7 +71,7 @@ export default function UsernamePage() {
 
   if (stage === 'splash') {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F5F0E8', maxWidth: 390, margin: '0 auto' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF', maxWidth: 390, margin: '0 auto' }}>
         <DaisyFlower size={140} animate={splashVisible} />
       </div>
     )
@@ -79,7 +79,7 @@ export default function UsernamePage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6" style={{
-      background: '#F5F0E8', maxWidth: 390, margin: '0 auto',
+      background: '#FFFFFF', maxWidth: 390, margin: '0 auto',
       opacity: formVisible ? 1 : 0,
       transition: 'opacity 0.3s ease',
     }}>
@@ -120,7 +120,7 @@ export default function UsernamePage() {
           className="w-full py-4 rounded-full text-sm font-semibold transition-all"
           style={{
             background: isValid && !loading ? '#4A7C59' : '#C4B49A',
-            color:      isValid && !loading ? '#FFFFFF' : '#F5F0E8',
+            color:      '#FFFFFF',
             cursor:     isValid && !loading ? 'pointer' : 'default',
           }}
         >
