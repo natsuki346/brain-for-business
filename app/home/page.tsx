@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <div
       style={{
-        background: '#F5F0E8', maxWidth: 390, margin: '0 auto', position: 'relative',
+        background: '#FFFFFF', maxWidth: 390, margin: '0 auto', position: 'relative',
         height: '100svh', display: 'flex', flexDirection: 'column', overflow: 'hidden',
       }}
     >

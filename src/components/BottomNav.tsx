@@ -22,7 +22,7 @@ export function BottomNav({ onRoomClick, onGardenClick }: BottomNavProps = {}) {
       position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
       width: '100%', maxWidth: 390, zIndex: 100,
       display: 'flex', justifyContent: 'space-around', alignItems: 'center',
-      background: '#F5F0E8', borderTop: '1px solid rgba(139,115,85,0.15)',
+      background: '#FFFFFF', borderTop: '1px solid rgba(139,115,85,0.15)',
       padding: '10px 0 18px',
     }}>
       {NAV_ITEMS.map(item => {

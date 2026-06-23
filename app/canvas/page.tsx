@@ -115,7 +115,7 @@ export default function CanvasPage() {
   return (
     <div
       className="min-h-screen"
-      style={{ background: '#F5F0E8', maxWidth: 390, margin: '0 auto', position: 'relative' }}
+      style={{ background: '#FFFFFF', maxWidth: 390, margin: '0 auto', position: 'relative' }}
     >
       {/* ────────────────── ヘッダー ────────────────── */}
       <div style={{

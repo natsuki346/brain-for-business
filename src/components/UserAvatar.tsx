@@ -28,7 +28,7 @@ export function UserAvatar({ username, avatarUrl, size, onClick }: UserAvatarPro
       onClick={onClick}
       style={{
         ...shared,
-        background: '#4A7C59', color: '#F5F0E8',
+        background: '#4A7C59', color: '#FFFFFF',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: Math.round(size * 0.4), fontWeight: 700,
       }}

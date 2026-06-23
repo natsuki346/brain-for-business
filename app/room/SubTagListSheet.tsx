@@ -112,7 +112,7 @@ export default function SubTagListSheet({
         className="flex flex-col"
         style={{
           position: 'relative', width: '100%', maxWidth: 390, height: '100%',
-          background: '#F5F0E8',
+          background: '#FFFFFF',
           transform: visible ? 'translateY(0)' : 'translateY(100%)',
           transition: 'transform 0.32s ease',
           overflow: 'hidden',
@@ -210,7 +210,7 @@ export default function SubTagListSheet({
           <div style={{
             position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
             width: '100%', maxWidth: 390,
-            background: '#F5F0E8', borderRadius: '20px 20px 0 0',
+            background: '#FFFFFF', borderRadius: '20px 20px 0 0',
             borderTop: '1px solid #D4B896', zIndex: 51,
             paddingBottom: 40,
           }}>
@@ -248,7 +248,7 @@ export default function SubTagListSheet({
                     <div style={{
                       width: 40, height: 40, borderRadius: '50%',
                       background: '#4A7C59', display: 'flex', alignItems: 'center',
-                      justifyContent: 'center', color: '#F5F0E8',
+                      justifyContent: 'center', color: '#FFFFFF',
                       fontSize: 16, fontWeight: 'bold', overflow: 'hidden', flexShrink: 0,
                     }}>
                       {member.avatar_url

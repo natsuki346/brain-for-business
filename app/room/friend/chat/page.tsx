@@ -120,19 +120,19 @@ function FriendChatContent() {
 
   if (loading) {
     return (
-      <div style={{ background: '#F5F0E8', maxWidth: 390, margin: '0 auto', minHeight: '100svh' }}>
+      <div style={{ background: '#FFFFFF', maxWidth: 390, margin: '0 auto', minHeight: '100svh' }}>
         <p style={{ textAlign: 'center', paddingTop: 80, fontSize: 13, color: '#A09070' }}>読み込み中...</p>
       </div>
     )
   }
 
   return (
-    <div className="flex flex-col" style={{ height: '100svh', maxWidth: 390, margin: '0 auto', background: '#F5F0E8' }}>
+    <div className="flex flex-col" style={{ height: '100svh', maxWidth: 390, margin: '0 auto', background: '#FFFFFF' }}>
       {/* Header */}
       <div style={{
         flexShrink: 0, padding: '16px 20px',
         borderBottom: '1px solid #D4B896',
-        background: '#F5F0E8',
+        background: '#FFFFFF',
         display: 'flex', alignItems: 'center', gap: 12,
       }}>
         <button
@@ -179,8 +179,8 @@ function FriendChatContent() {
                 <div style={{
                   maxWidth: '72%', padding: '10px 14px',
                   borderRadius: mine ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-                  background: mine ? '#4A7C59' : '#F5F0E8',
-                  color: mine ? '#F5F0E8' : '#3B2F1E',
+                  background: mine ? '#4A7C59' : '#FFFFFF',
+                  color: mine ? '#FFFFFF' : '#3B2F1E',
                   border: mine ? 'none' : '1px solid #D4B896',
                   fontSize: 14, lineHeight: 1.5,
                 }}>
@@ -206,7 +206,7 @@ function FriendChatContent() {
         flexShrink: 0, padding: '10px 16px 28px',
         borderTop: '1px solid #D4B896',
         display: 'flex', gap: 10, alignItems: 'center',
-        background: '#F5F0E8',
+        background: '#FFFFFF',
       }}>
         <input
           value={input}
@@ -224,7 +224,7 @@ function FriendChatContent() {
           style={{
             width: 38, height: 38, borderRadius: '50%', border: 'none',
             background: input.trim() ? '#4A7C59' : 'rgba(139,105,20,0.12)',
-            color: input.trim() ? '#F5F0E8' : 'rgba(139,105,20,0.35)',
+            color: input.trim() ? '#FFFFFF' : 'rgba(139,105,20,0.35)',
             fontSize: 16, cursor: input.trim() ? 'pointer' : 'default',
             display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
           }}

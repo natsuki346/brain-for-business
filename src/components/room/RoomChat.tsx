@@ -5,6 +5,7 @@ import { supabase } from '@/src/lib/supabase/client'
 import type { DummyMessage } from '@/app/room/dummy-messages'
 import { DEFAULT_MESSAGES } from '@/src/lib/defaultMessages'
 import { isSaveTooltipSeen, markSaveTooltipSeen } from '@/src/lib/onboarding'
+import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
 
 // ============================================================
 // 型定義
@@ -510,7 +511,7 @@ export default function RoomChat({
           width: 36, height: 36, borderRadius: '50%',
           background: '#4A7C59', overflow: 'hidden', flexShrink: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: '#F5F0E8', fontSize: 15, fontWeight: 'bold', cursor: 'pointer',
+          color: '#FFFFFF', fontSize: 15, fontWeight: 'bold', cursor: 'pointer',
         }}
       >
         {user?.avatar_url
@@ -536,23 +537,26 @@ export default function RoomChat({
     ...messages,
   ]
 
+  // Positive（light）/ Negative（shadow）でルームの配色を切り替える
+  const theme = tagType === 'shadow' ? NEGATIVE : POSITIVE
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#F5F0E8', position: 'relative' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#FFFFFF', position: 'relative' }}>
 
       {/* ヘッダー */}
       <div style={{
         flexShrink: 0, padding: '12px 16px',
-        borderBottom: '1px solid #D4B896',
-        background: '#F5F0E8', display: 'flex', alignItems: 'center', gap: 10,
+        borderBottom: `1px solid ${theme.soft}`,
+        background: '#FFFFFF', display: 'flex', alignItems: 'center', gap: 10,
       }}>
         {header.onBack && (
           <div onClick={header.onBack}
-            style={{ color: '#4A7C59', fontSize: 18, cursor: 'pointer', flexShrink: 0 }}
+            style={{ color: theme.base, fontSize: 18, cursor: 'pointer', flexShrink: 0 }}
           >‹</div>
         )}
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 16, fontWeight: 'bold', color: '#3B2F1E' }}>{header.title}</div>
-          {header.subtitle && <div style={{ fontSize: 11, color: '#8B6914', marginTop: 1 }}>{header.subtitle}</div>}
+          {header.subtitle && <div style={{ fontSize: 11, color: theme.text, marginTop: 1 }}>{header.subtitle}</div>}
         </div>
       </div>
 
@@ -573,11 +577,11 @@ export default function RoomChat({
               {/* 日付区切り */}
               {showDateDivider(index, allMessages) && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '12px 0 8px' }}>
-                  <div style={{ flex: 1, height: .5, background: 'rgba(139,105,20,0.2)' }} />
-                  <span style={{ fontSize: 11, color: 'rgba(139,105,20,0.55)', whiteSpace: 'nowrap' }}>
+                  <div style={{ flex: 1, height: .5, background: theme.soft }} />
+                  <span style={{ fontSize: 11, color: theme.text, whiteSpace: 'nowrap' }}>
                     {formatDateLabel(msg.created_at)}
                   </span>
-                  <div style={{ flex: 1, height: .5, background: 'rgba(139,105,20,0.2)' }} />
+                  <div style={{ flex: 1, height: .5, background: theme.soft }} />
                 </div>
               )}
 
@@ -598,7 +602,7 @@ export default function RoomChat({
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 2 }}>
                       <span style={{
                         fontSize: 13, fontWeight: 600,
-                        color: mine ? '#4A7C59' : '#8B6914',
+                        color: mine ? theme.deep : theme.text,
                       }}>{user?.username ?? (mine ? 'あなた' : '匿名')}</span>
                       <span style={{ fontSize: 11, color: '#A09070' }}>{formatTime(msg.created_at)}</span>
                     </div>
@@ -614,7 +618,7 @@ export default function RoomChat({
                   >
                     {msg.content.split(/(@\w+)/g).map((part, i) =>
                       /^@\w+$/.test(part)
-                        ? <span key={i} style={{ color: '#4A7C59', fontWeight: 600 }}>{part}</span>
+                        ? <span key={i} style={{ color: theme.deep, fontWeight: 600 }}>{part}</span>
                         : part
                     )}
                   </div>
@@ -625,13 +629,13 @@ export default function RoomChat({
                       <button key={r.emoji}
                         onClick={() => isIntro ? handleIntroReaction(msg.id, r.emoji) : handleReaction(msg.id, r.emoji)}
                         style={{
-                          background: r.reacted ? '#F5D78E' : '#FFFFFF',
-                          border: `1px solid ${r.reacted ? '#8B6914' : '#D4B896'}`,
+                          background: r.reacted ? theme.pale : '#FFFFFF',
+                          border: `1px solid ${r.reacted ? theme.text : theme.soft}`,
                           borderRadius: 20, padding: '2px 8px', fontSize: 12,
                           cursor: 'pointer', color: '#3B2F1E',
                           display: 'flex', alignItems: 'center', gap: 3,
                         }}
-                      >{r.emoji} <span style={{ fontSize: 11, color: '#8B6914' }}>{r.count}</span></button>
+                      >{r.emoji} <span style={{ fontSize: 11, color: theme.text }}>{r.count}</span></button>
                     ))}
                     <button
                       onClick={() => { setActiveCatIndex(0); setOpenPickerMsgId(msg.id) }}
@@ -663,7 +667,7 @@ export default function RoomChat({
                         }}
                         aria-label="保存"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill={savedIds.has(msg.id) ? '#4A7C59' : 'none'} stroke={savedIds.has(msg.id) ? '#4A7C59' : '#3B2F1E'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill={savedIds.has(msg.id) ? theme.base : 'none'} stroke={savedIds.has(msg.id) ? theme.base : '#3B2F1E'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
                         </svg>
                       </button>
@@ -691,7 +695,7 @@ export default function RoomChat({
             if (candidates.length === 0) return null
             return (
               <div style={{
-                background: '#FFFFFF', borderTop: '1px solid #D4B896',
+                background: '#FFFFFF', borderTop: `1px solid ${theme.soft}`,
                 maxHeight: 160, overflowY: 'auto', flexShrink: 0,
               }}>
                 {candidates.map(u => (
@@ -704,17 +708,17 @@ export default function RoomChat({
                     style={{
                       padding: '10px 16px', fontSize: 14, color: '#3B2F1E',
                       cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
-                      borderBottom: '1px solid rgba(212,184,150,0.4)',
+                      borderBottom: `1px solid ${theme.soft}`,
                     }}
                   >
-                    <span style={{ fontWeight: 600, color: '#4A7C59' }}>@{u.username}</span>
+                    <span style={{ fontWeight: 600, color: theme.deep }}>@{u.username}</span>
                   </div>
                 ))}
               </div>
             )
           })()}
           <div style={{
-            background: '#F5F0E8', borderTop: '1px solid #D4B896',
+            background: '#FFFFFF', borderTop: `1px solid ${theme.soft}`,
             padding: '10px 12px 28px', display: 'flex', gap: 8, alignItems: 'center', flexShrink: 0,
           }}>
             <input
@@ -728,7 +732,7 @@ export default function RoomChat({
               onKeyDown={e => { if (e.key === 'Enter') handleSend() }}
               placeholder="メッセージを入力..."
               style={{
-                flex: 1, background: '#FFFFFF', border: '1px solid #D4B896',
+                flex: 1, background: '#FFFFFF', border: `1px solid ${theme.soft}`,
                 borderRadius: 20, padding: '10px 16px', fontSize: 14,
                 color: '#3B2F1E', outline: 'none',
               }}
@@ -737,8 +741,8 @@ export default function RoomChat({
               onClick={handleSend}
               style={{
                 width: 36, height: 36, borderRadius: '50%', border: 'none',
-                background: input.trim() ? '#4A7C59' : 'rgba(0,0,0,0.10)',
-                color: input.trim() ? '#F5F0E8' : 'rgba(0,0,0,0.3)',
+                background: input.trim() ? theme.base : 'rgba(0,0,0,0.10)',
+                color: input.trim() ? '#FFFFFF' : 'rgba(0,0,0,0.3)',
                 fontSize: 18, cursor: input.trim() ? 'pointer' : 'default',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
               }}
@@ -756,8 +760,8 @@ export default function RoomChat({
           />
           <div style={{
             position: 'absolute', bottom: 0, left: 0, right: 0,
-            background: '#F5F0E8', borderRadius: '20px 20px 0 0',
-            borderTop: '1px solid #D4B896', zIndex: 11, paddingBottom: 32,
+            background: '#FFFFFF', borderRadius: '20px 20px 0 0',
+            borderTop: `1px solid ${theme.soft}`, zIndex: 11, paddingBottom: 32,
           }}>
             <div style={{ width: 36, height: 4, background: 'rgba(139,105,20,.25)', borderRadius: 2, margin: '10px auto 8px' }} />
             <button
@@ -783,11 +787,11 @@ export default function RoomChat({
           />
           <div style={{
             position: 'absolute', bottom: 0, left: 0, right: 0,
-            background: '#F5F0E8', borderRadius: '20px 20px 0 0',
-            borderTop: '1px solid #D4B896', zIndex: 11,
+            background: '#FFFFFF', borderRadius: '20px 20px 0 0',
+            borderTop: `1px solid ${theme.soft}`, zIndex: 11,
           }}>
             <div style={{ width: 36, height: 4, background: 'rgba(139,105,20,.25)', borderRadius: 2, margin: '10px auto 0' }} />
-            <div style={{ fontSize: 13, color: '#8B6914', textAlign: 'center', padding: '8px 0 4px', fontWeight: 500 }}>
+            <div style={{ fontSize: 13, color: theme.text, textAlign: 'center', padding: '8px 0 4px', fontWeight: 500 }}>
               リアクションを選ぶ
             </div>
             {/* クイック5つ */}
@@ -813,7 +817,7 @@ export default function RoomChat({
                   style={{
                     fontSize: 20, padding: '6px 10px', cursor: 'pointer', flexShrink: 0,
                     background: 'none', border: 'none',
-                    borderBottom: activeCatIndex === i ? '2px solid #8B6914' : '2px solid transparent',
+                    borderBottom: activeCatIndex === i ? `2px solid ${theme.text}` : '2px solid transparent',
                   }}
                 >{cat.icon}</button>
               ))}
