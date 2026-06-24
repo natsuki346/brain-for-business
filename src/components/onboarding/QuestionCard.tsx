@@ -1,7 +1,8 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
+import { getTagCounts } from '@/src/lib/supabase/tagCounts'
 
 // AI生成タグの呼び出し先（Supabase Edge Functions）。
 // Next.js API Routesは静的書き出し（output: 'export'）と相性が悪いため、
@@ -155,6 +156,8 @@ export function QuestionCard({
   const [error,          setError]          = useState<string | null>(null)
   const [showAll,        setShowAll]        = useState(false)
   const [suggestedTags,  setSuggestedTags]  = useState<Set<string>>(new Set())
+  // AIが生成・提案した候補タグごとの「既に持っている人数」（textを#なしに正規化したものをキーにする）
+  const [tagCounts,      setTagCounts]      = useState<Record<string, number>>({})
 
   const displayTags = generatedTags.length > 0 ? generatedTags : exampleTags
 
@@ -192,7 +195,20 @@ export function QuestionCard({
     nextInactiveText:   'rgba(0,0,0,0.28)',
     textareaBg:         isLight ? 'rgba(0,0,0,0.04)'    : 'rgba(0,0,0,0.05)',
     textareaBorder:     isLight ? 'rgba(0,0,0,0.10)'    : 'rgba(0,0,0,0.12)',
+    candidateCount:     isLight ? 'rgba(59,47,30,0.38)' : 'rgba(42,31,14,0.36)',
   }
+
+  // AIが生成・提案した候補タグが更新されるたびに、既に持っている人数をまとめて取得する。
+  // 取得が遅れても画面はブロックしない（未取得の間はその行を表示しないだけ）。
+  useEffect(() => {
+    if (generatedTags.length === 0) { setTagCounts({}); return }
+    let cancelled = false
+    ;(async () => {
+      const counts = await getTagCounts(generatedTags)
+      if (!cancelled) setTagCounts(counts)
+    })()
+    return () => { cancelled = true }
+  }, [generatedTags])
 
   const handleGenerate = async () => {
     if (!text.trim() || isGenerating) return
@@ -394,18 +410,29 @@ export function QuestionCard({
             <div className="flex flex-col gap-2">
               {displayTags.map(tag => {
                 const added = registeredTags.includes(tag)
+                const count = tagCounts[tag.replace(/^#+/, '')] ?? 0
                 return (
                   <div
                     key={tag}
                     className={`flex items-center justify-between px-4 py-3 rounded-2xl ${suggestedTags.has(tag) ? 'animate-fadeIn' : ''}`}
                     style={{ background: added ? c.candidateRowAdded : c.candidateRowNormal }}
                   >
-                    <span
-                      className="text-sm font-medium"
-                      style={{ color: added ? c.tagTextAdded : c.tagTextNormal }}
-                    >
-                      {tag}
-                    </span>
+                    <div className="flex flex-col" style={{ minWidth: 0 }}>
+                      <span
+                        className="text-sm font-medium"
+                        style={{ color: added ? c.tagTextAdded : c.tagTextNormal }}
+                      >
+                        {tag}
+                      </span>
+                      {count > 0 && (
+                        <span
+                          className="text-[10px] leading-tight"
+                          style={{ color: c.candidateCount, marginTop: 2 }}
+                        >
+                          同じ気持ちの人 {count}人
+                        </span>
+                      )}
+                    </div>
                     <button
                       onClick={() => addTag(tag)}
                       disabled={added}
