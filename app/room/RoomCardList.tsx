@@ -17,9 +17,9 @@ type RoomCard = {
   preview: string | null
 }
 
-const TYPE_STYLE: Record<'light' | 'shadow', { bg: string; accent: string; icon: string }> = {
-  light:  { bg: POSITIVE.pale, accent: POSITIVE.text, icon: '🌿' },
-  shadow: { bg: NEGATIVE.pale, accent: NEGATIVE.text, icon: '🌱' },
+const TYPE_STYLE: Record<'light' | 'shadow', { border: string; accent: string; icon: string }> = {
+  light:  { border: POSITIVE.base, accent: POSITIVE.text, icon: '🌿' },
+  shadow: { border: NEGATIVE.base, accent: NEGATIVE.text, icon: '🌱' },
 }
 
 function RoomTypeIcon({ type }: { type: 'light' | 'shadow' }) {
@@ -121,7 +121,7 @@ export default function RoomCardList({ type }: { type: 'light' | 'shadow' }) {
           key={card.id}
           onClick={() => router.push(`/onboarding/room-visit/${card.type}/chat?tag=${encodeURIComponent(card.text)}`)}
           className="w-full text-left px-5 py-4 rounded-2xl transition-opacity hover:opacity-80"
-          style={{ background: style.bg, border: 'none' }}
+          style={{ background: '#FFFFFF', border: `1.5px solid ${style.border}` }}
         >
           <div className="flex items-center justify-between">
             <span className="text-base font-semibold flex items-center gap-1.5" style={{ color: style.accent }}>
