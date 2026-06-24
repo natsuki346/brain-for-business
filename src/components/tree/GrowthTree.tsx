@@ -3,7 +3,11 @@
 import type { GrowthStage } from './useGrowthStage'
 
 const STEM_COLOR = '#4A7C59'
-const LEAF_COLORS = ['#4A7C59', '#5A9C6A']
+const LEAF_COLOR = '#5A9C6A'
+const ROOT_COLOR = '#8B6914'
+const SEED_COLOR = '#D4B896'
+const BLOOM_COLOR = '#E8A020'
+const BLOOM_GLOW = '#F5D060'
 
 const GROUND_LINE_Y = 360
 const GRASS_HEIGHT = 8
@@ -11,24 +15,21 @@ const SOIL_HEIGHT = 5
 const SOIL_TOP = GROUND_LINE_Y + GRASS_HEIGHT + SOIL_HEIGHT
 const SEED_Y = SOIL_TOP + 5
 
-const PETAL_COUNT = 13
-const PETAL_ANGLE_STEP = 360 / PETAL_COUNT
-const PETAL_ANGLES = Array.from({ length: PETAL_COUNT }, (_, i) => i * PETAL_ANGLE_STEP)
-const CENTER_DOTS = [
-  { cx: 7, cy: 0 },
-  { cx: 3.5, cy: 6.062 },
-  { cx: -3.5, cy: 6.062 },
-  { cx: -7, cy: 0 },
-  { cx: -3.5, cy: -6.062 },
-  { cx: 3.5, cy: -6.062 },
-]
+// 根の先端を示す小さな円（位置のみ。形は丸で統一する）
+const ROOT_DOTS = [
+  { cx: 160, cy: 417, delay: 0 },
+  { cx: 122, cy: 419, delay: 0.1 },
+  { cx: 198, cy: 419, delay: 0.1 },
+  { cx: 116, cy: 419, delay: 0.25 },
+  { cx: 204, cy: 419, delay: 0.25 },
+] as const
 
-function ClosedBud({ x, y, size }: { x: number; y: number; size: number }) {
+function LeafDots({ y, r }: { y: number; r: number }) {
   return (
-    <g transform={`translate(${x},${y})`}>
-      <ellipse cx="0" cy="0" rx={size * 0.32} ry={size * 0.46} fill="#5A9C6A" />
-      <ellipse cx="0" cy={-size * 0.12} rx={size * 0.2} ry={size * 0.28} fill="#FFF176" />
-    </g>
+    <>
+      <circle cx={160 - r * 1.7} cy={y} r={r} fill={LEAF_COLOR} />
+      <circle cx={160 + r * 1.7} cy={y} r={r} fill={LEAF_COLOR} />
+    </>
   )
 }
 
@@ -40,81 +41,60 @@ export default function GrowthTree({ stage, size = 320 }: { stage: GrowthStage; 
       <style>{`
         @keyframes gt-tree-fade-in { from { opacity: 0; } to { opacity: 1; } }
         @keyframes gt-tree-pop { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-        @keyframes gt-tree-bloom { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+        @keyframes gt-tree-bloom { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
         @keyframes gt-tree-grow { from { transform: scale(0.92); } to { transform: scale(1); } }
-        @keyframes gt-root-grow { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+        @keyframes gt-dot-pop { 0% { opacity: 0; transform: scale(0.3); } 70% { opacity: 1; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
         @keyframes gt-seed-fade { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.6); } }
-        .gt-seed-fade { transform-box: fill-box; transform-origin: center; animation: gt-seed-fade 0.5s ease-in forwards; animation-delay: 0.2s; }
+        @keyframes gt-stem-grow { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+        @keyframes gt-bloom-glow { 0%, 100% { opacity: 0.35; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.08); } }
+        .gt-fade-out { transform-box: fill-box; transform-origin: center; animation: gt-seed-fade 0.5s ease-in forwards; animation-delay: 0.2s; }
         .gt-pop  { transform-box: fill-box; transform-origin: center; animation: gt-tree-pop 0.8s ease both; }
+        .gt-dot  { transform-box: fill-box; transform-origin: center; animation: gt-dot-pop 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
         .gt-bloom-group { transform-box: fill-box; transform-origin: center; animation: gt-tree-bloom 1s ease both; }
         .gt-whole-bloom { transform-box: fill-box; transform-origin: 50% 90%; animation: gt-tree-grow 1.2s ease both; }
-        .gt-root { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0.85; animation: gt-root-grow 0.7s ease-out forwards; }
+        .gt-stem { stroke-dasharray: 1; stroke-dashoffset: 1; animation: gt-stem-grow 0.7s ease-out forwards; }
+        .gt-glow { transform-box: fill-box; transform-origin: center; animation: gt-bloom-glow 2.2s ease-in-out infinite; }
       `}</style>
       <svg width="100%" height="100%" viewBox="0 0 320 420" className={showBloom ? 'gt-whole-bloom' : undefined}>
         {/* 地面 */}
-        <rect x="0" y={GROUND_LINE_Y} width="320" height={GRASS_HEIGHT} fill="#4A7C59" />
-        <rect x="0" y={GROUND_LINE_Y + GRASS_HEIGHT} width="320" height={SOIL_HEIGHT} fill="#8B6914" />
+        <rect x="0" y={GROUND_LINE_Y} width="320" height={GRASS_HEIGHT} fill={STEM_COLOR} />
+        <rect x="0" y={GROUND_LINE_Y + GRASS_HEIGHT} width="320" height={SOIL_HEIGHT} fill={ROOT_COLOR} />
         <rect x="0" y={SOIL_TOP} width="320" height={420 - SOIL_TOP} fill="#C9A96E" />
 
-        {/* タネ（seed） */}
+        {/* タネ（seed）：丸ひとつ */}
         {stage === 'seed' && (
-          <>
-            <line x1="160" y1={GROUND_LINE_Y} x2="160" y2={GROUND_LINE_Y - 12}
-              stroke="#8B6914" strokeWidth="6" strokeLinecap="round" />
-            <ellipse cx="160" cy={GROUND_LINE_Y} rx="16" ry="12" fill="#D4B896" />
-            <ellipse cx="156" cy={GROUND_LINE_Y - 3} rx="7" ry="5" fill="#C4A07A" />
-          </>
+          <circle cx="160" cy={GROUND_LINE_Y} r="16" fill={SEED_COLOR} className="gt-pop" />
         )}
 
         {/* 芽吹き（sprout）：根が伸びて、地上に茎と葉が出る */}
         {stage === 'sprout' && (
           <>
-            {/* 根（地下） */}
-            <path d="M160 378 Q158 400 160 417" fill="none" stroke="#8B6914" strokeWidth="4" strokeLinecap="round"
-              pathLength={1} className="gt-root" style={{ animationDelay: '0s' }} />
-            <path d="M159 378 Q140 402 122 419" fill="none" stroke="#8B6914" strokeWidth="3" strokeLinecap="round"
-              pathLength={1} className="gt-root" style={{ animationDelay: '0.1s' }} />
-            <path d="M161 378 Q180 402 198 419" fill="none" stroke="#8B6914" strokeWidth="3" strokeLinecap="round"
-              pathLength={1} className="gt-root" style={{ animationDelay: '0.1s' }} />
-            <path d="M140 402 Q128 411 116 419" fill="none" stroke="#A0791A" strokeWidth="1.5" strokeLinecap="round"
-              pathLength={1} className="gt-root" style={{ animationDelay: '0.25s' }} />
-            <path d="M180 402 Q192 411 204 419" fill="none" stroke="#A0791A" strokeWidth="1.5" strokeLinecap="round"
-              pathLength={1} className="gt-root" style={{ animationDelay: '0.25s' }} />
-            {/* タネ */}
-            <g className="gt-pop">
-              <ellipse cx="160" cy={SEED_Y} rx="16" ry="12" fill="#D4B896" />
-              <ellipse cx="156" cy={SEED_Y - 3} rx="7" ry="5" fill="#C4A07A" />
-            </g>
-            {/* 茎（地上へ伸びる） */}
-            <path d="M160 360 L160 308" fill="none" stroke={STEM_COLOR} strokeWidth="3.5" strokeLinecap="round"
-              pathLength={1} className="gt-root" style={{ animationDelay: '0.55s' }} />
-            {/* 小さな葉 */}
+            {ROOT_DOTS.map((d, i) => (
+              <circle key={i} cx={d.cx} cy={d.cy} r={5} fill={ROOT_COLOR} className="gt-dot"
+                style={{ animationDelay: `${d.delay}s` }} />
+            ))}
+            <circle cx="160" cy={SEED_Y} r="16" fill={SEED_COLOR} className="gt-pop" />
+            <path d="M160 360 L160 312" fill="none" stroke={STEM_COLOR} strokeWidth="3.5" strokeLinecap="round"
+              pathLength={1} className="gt-stem" style={{ animationDelay: '0.55s' }} />
             <g className="gt-pop" style={{ animationDelay: '1.1s' }}>
-              <ellipse cx="147" cy="316" rx="13" ry="6" fill={LEAF_COLORS[1]} transform="rotate(-30 147 316)" />
-              <ellipse cx="173" cy="312" rx="13" ry="6" fill={LEAF_COLORS[0]} transform="rotate(25 173 312)" />
+              <LeafDots y={318} r={9} />
             </g>
           </>
         )}
 
-        {/* つぼみ（bud）：小さな芽 */}
+        {/* つぼみ（bud）：根とタネは退き、茎と葉が育つ */}
         {stage === 'bud' && (
           <>
-            <g className="gt-seed-fade">
-              <path d="M160 378 Q158 400 160 417" fill="none" stroke="#8B6914" strokeWidth="4" strokeLinecap="round" opacity="0.85" />
-              <path d="M159 378 Q140 402 122 419" fill="none" stroke="#8B6914" strokeWidth="3" strokeLinecap="round" opacity="0.85" />
-              <path d="M161 378 Q180 402 198 419" fill="none" stroke="#8B6914" strokeWidth="3" strokeLinecap="round" opacity="0.85" />
-              <path d="M140 402 Q128 411 116 419" fill="none" stroke="#A0791A" strokeWidth="1.5" strokeLinecap="round" opacity="0.85" />
-              <path d="M180 402 Q192 411 204 419" fill="none" stroke="#A0791A" strokeWidth="1.5" strokeLinecap="round" opacity="0.85" />
+            <g className="gt-fade-out">
+              {ROOT_DOTS.map((d, i) => (
+                <circle key={i} cx={d.cx} cy={d.cy} r={5} fill={ROOT_COLOR} />
+              ))}
             </g>
-            <g className="gt-seed-fade">
-              <ellipse cx="160" cy={SEED_Y} rx="16" ry="12" fill="#D4B896" />
-              <ellipse cx="156" cy={SEED_Y - 3} rx="7" ry="5" fill="#C4A07A" />
-            </g>
-            <path d="M160 360 L160 322" stroke={STEM_COLOR} strokeWidth="4" strokeLinecap="round"
-              pathLength={1} className="gt-root" style={{ animationDelay: '0.2s' }} />
+            <circle cx="160" cy={SEED_Y} r="16" fill={SEED_COLOR} className="gt-fade-out" />
+            <path d="M160 360 L160 296" stroke={STEM_COLOR} strokeWidth="4" strokeLinecap="round"
+              pathLength={1} className="gt-stem" style={{ animationDelay: '0.2s' }} />
             <g className="gt-pop" style={{ animationDelay: '0.7s' }}>
-              <ellipse cx="148" cy="324" rx="14" ry="8" fill={LEAF_COLORS[1]} transform="rotate(-25 148 324)" />
-              <ellipse cx="172" cy="320" rx="14" ry="8" fill={LEAF_COLORS[0]} transform="rotate(20 172 320)" />
+              <LeafDots y={302} r={10} />
             </g>
           </>
         )}
@@ -122,60 +102,28 @@ export default function GrowthTree({ stage, size = 320 }: { stage: GrowthStage; 
         {/* 枝葉とつぼみ（budding） */}
         {stage === 'budding' && (
           <>
-            <g className="gt-seed-fade">
-              <ellipse cx="148" cy="324" rx="14" ry="8" fill={LEAF_COLORS[1]} transform="rotate(-25 148 324)" />
-              <ellipse cx="172" cy="320" rx="14" ry="8" fill={LEAF_COLORS[0]} transform="rotate(20 172 320)" />
-            </g>
-            <line x1="160" y1={GROUND_LINE_Y} x2="160" y2="322" stroke={STEM_COLOR} strokeWidth="4" strokeLinecap="round" />
-            <path d="M160 322 L160 238" stroke={STEM_COLOR} strokeWidth="4" strokeLinecap="round"
-              pathLength={1} className="gt-root" style={{ animationDelay: '0.2s' }} />
+            <LeafDots y={302} r={10} />
+            <line x1="160" y1={GROUND_LINE_Y} x2="160" y2="296" stroke={STEM_COLOR} strokeWidth="4" strokeLinecap="round" />
+            <path d="M160 296 L160 240" stroke={STEM_COLOR} strokeWidth="4" strokeLinecap="round"
+              pathLength={1} className="gt-stem" style={{ animationDelay: '0.2s' }} />
             <g className="gt-pop" style={{ animationDelay: '0.6s' }}>
-              <ellipse cx="140" cy="342" rx="20" ry="7" fill={LEAF_COLORS[0]} transform="rotate(58 140 342)" />
-              <ellipse cx="180" cy="342" rx="20" ry="7" fill={LEAF_COLORS[1]} transform="rotate(-58 180 342)" />
+              <LeafDots y={248} r={12} />
             </g>
-            <g className="gt-pop" style={{ animationDelay: '1.1s' }}>
-              <ClosedBud x={160} y={230} size={28} />
-            </g>
+            <circle cx="160" cy="232" r="17" fill={LEAF_COLOR} className="gt-pop" style={{ animationDelay: '1.1s' }} />
           </>
         )}
 
-        {/* 開花（bloom）：デイジー */}
+        {/* 開花（bloom）：丸ひとつ＋やわらかな光で表現する */}
         {showBloom && (
           <>
-            <path d="M160 360 Q166 286 160 210" fill="none" stroke="#5A8A40" strokeWidth="6" strokeLinecap="round" />
+            <line x1="160" y1={GROUND_LINE_Y} x2="160" y2="200" stroke={STEM_COLOR} strokeWidth="5" strokeLinecap="round" />
             <g className="gt-pop">
-              <ellipse cx="128" cy="359" rx="28" ry="9" fill="#3D7048" transform="rotate(-4 128 359)" />
-              <ellipse cx="192" cy="359" rx="28" ry="9" fill="#3D7048" transform="rotate(4 192 359)" />
-              <ellipse cx="142" cy="369" rx="20" ry="7" fill="#4A7C59" transform="rotate(-38 142 369)" />
-              <ellipse cx="178" cy="369" rx="20" ry="7" fill="#4A7C59" transform="rotate(38 178 369)" />
-              <ellipse cx="140" cy="342" rx="18" ry="6" fill="#4A7C59" transform="rotate(-58 140 342)" />
-              <ellipse cx="180" cy="342" rx="18" ry="6" fill="#4A7C59" transform="rotate(58 180 342)" />
-            </g>
-            <g className="gt-pop">
-              <path d="M160 284 C128 274 105 286 98 302 C122 310 150 298 160 284 Z" fill="#4A7C59" />
-              <path d="M160 280 C192 270 215 282 222 298 C198 306 170 294 160 280 Z" fill="#4A7C59" />
+              <LeafDots y={302} r={10} />
+              <LeafDots y={248} r={12} />
             </g>
             <g className="gt-bloom-group">
-              <g transform="translate(160 210)">
-                {PETAL_ANGLES.map((angle, i) => (
-                  <path key={`outer-${angle}`}
-                    d="M0,0 C-8,-15 -6,-55 0,-72 C6,-55 8,-15 0,0Z"
-                    fill={i % 2 === 0 ? '#F5D060' : '#F0C840'}
-                    transform={`rotate(${angle})`} />
-                ))}
-                {PETAL_ANGLES.map(angle => (
-                  <path key={`inner-${angle}`}
-                    d="M0,0 C-5,-10 -4,-36 0,-46 C4,-36 5,-10 0,0Z"
-                    fill="#EFC030"
-                    transform={`rotate(${angle + PETAL_ANGLE_STEP / 2})`} />
-                ))}
-                <circle cx="0" cy="0" r="22" fill="#C47A10" />
-                <circle cx="0" cy="0" r="18" fill="#D98C18" />
-                <circle cx="0" cy="0" r="13" fill="#E8A020" />
-                {CENTER_DOTS.map(({ cx, cy }, i) => (
-                  <circle key={i} cx={cx} cy={cy} r="2.2" fill="#C47A10" opacity="0.6" />
-                ))}
-              </g>
+              <circle cx="160" cy="190" r="58" fill={BLOOM_GLOW} className="gt-glow" />
+              <circle cx="160" cy="190" r="42" fill={BLOOM_COLOR} />
             </g>
           </>
         )}

@@ -18,21 +18,22 @@ export default function WateringAnimation({ onComplete }: WateringAnimationProps
       className="fixed inset-0 flex flex-col items-center justify-center px-6"
       style={{ zIndex: 280, background: '#FFFFFF', maxWidth: 390, margin: '0 auto' }}
     >
+      <style>{`
+        @keyframes watering-seed-pulse {
+          0%, 100% { transform: scale(1); }
+          50%      { transform: scale(1.1); }
+        }
+      `}</style>
       <svg width="240" height="240" viewBox="0 0 280 280">
         {/* 土の断面 */}
         <rect x="0" y="160" width="280" height="60" fill={NEGATIVE.pale} />
         <rect x="0" y="220" width="280" height="60" fill={NEGATIVE.soft} opacity="0.55" />
 
-        {/* 種 */}
-        <ellipse cx="140" cy="190" rx="16" ry="11" fill={NEGATIVE.deep} />
-        <ellipse cx="134" cy="185" rx="5" ry="3" fill={NEGATIVE.soft} />
-
-        {/* 根：水やりで少し伸びる */}
-        <g className="animate-rootGrow" style={{ transformOrigin: 'center top', transformBox: 'fill-box' }}>
-          <path d="M140 201 L130 222" fill="none" stroke={NEGATIVE.deep} strokeWidth="2" strokeLinecap="round" opacity="0.7" />
-          <path d="M140 201 L140 226" fill="none" stroke={NEGATIVE.deep} strokeWidth="2" strokeLinecap="round" opacity="0.7" />
-          <path d="M140 201 L150 222" fill="none" stroke={NEGATIVE.deep} strokeWidth="2" strokeLinecap="round" opacity="0.7" />
-        </g>
+        {/* 種（水やりで少し脈動する円） */}
+        <circle
+          cx="140" cy="190" r="17" fill={NEGATIVE.deep}
+          style={{ transformOrigin: '140px 190px', animation: 'watering-seed-pulse 1.3s ease-in-out 0.6s infinite' }}
+        />
 
         {/* ジョウロ */}
         <g className="animate-pour" style={{ transformOrigin: '203px 53px' }}>
