@@ -8,7 +8,7 @@ import { corsHeaders } from '../_shared/cors.ts'
 const client = new Anthropic({ apiKey: Deno.env.get('ANTHROPIC_API_KEY') })
 
 const SYSTEM_PROMPT =
-  'ユーザーが選んだタグから連想される、似た雰囲気の短いタグを3つだけ返してください。' +
+  'ユーザーが選んだタグから連想される、職場での人間関係・強み・悩みとして似た雰囲気の短いタグを3つだけ返してください。' +
   'すでに選ばれたタグとは重複しないこと。' +
   '2〜8文字の短いフレーズで。#は含めない。' +
   'JSONのみ返す：{"tags": ["...", "...", "..."]}'

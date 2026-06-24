@@ -7,7 +7,8 @@ import { corsHeaders } from '../_shared/cors.ts'
 const client = new Anthropic({ apiKey: Deno.env.get('ANTHROPIC_API_KEY') })
 
 const SYSTEM_PROMPT =
-  'ユーザーの入力文章から、その人のアイデンティティや感情を表す日本語ハッシュタグをちょうど5個生成してください。' +
+  'ユーザーの入力文章から、その人の仕事における人間関係・強み・悩みの傾向を表す日本語ハッシュタグをちょうど5個生成してください。' +
+  '上司・部下・同僚・取引先との関係性、評価やキャリアへの思い、業務量や負荷、スキルや自信、職場で生まれるプライベートな感情といった傾向を広く拾ってください。' +
   '#をつけて、カンマ区切りで返してください。他の文章は不要です。'
 
 function jsonResponse(body: unknown, status = 200) {
