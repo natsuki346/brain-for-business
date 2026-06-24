@@ -25,118 +25,6 @@ type Props = {
   onComplete:       (tags: string[]) => void
 }
 
-// ── 背景 SVG: 実の世界（Q1・Q2）────────────────────────────────────────────────
-function FruitBg() {
-  return (
-    <svg
-      width="100%" height="100%"
-      viewBox="0 0 390 844"
-      preserveAspectRatio="xMidYMid slice"
-      style={{ position: 'absolute', inset: 0 }}
-      aria-hidden="true"
-    >
-      <g fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.14">
-        {/* トマト大 – 左上 */}
-        <circle cx="58" cy="118" r="35" stroke={POSITIVE.soft} strokeWidth="1.8"/>
-        <line x1="58" y1="83" x2="58" y2="72" stroke={POSITIVE.deep} strokeWidth="1.8"/>
-        <path d="M58 83 Q50 74 46 77" stroke={POSITIVE.deep} strokeWidth="1.4"/>
-        <path d="M58 83 Q66 74 70 77" stroke={POSITIVE.deep} strokeWidth="1.4"/>
-        {/* トマト小 – 右上 */}
-        <circle cx="338" cy="74" r="21" stroke={POSITIVE.base} strokeWidth="1.6"/>
-        <line x1="338" y1="53" x2="338" y2="44" stroke={POSITIVE.deep} strokeWidth="1.5"/>
-        <path d="M338 53 Q332 46 329 48" stroke={POSITIVE.deep} strokeWidth="1.2"/>
-        {/* りんご – 右中 */}
-        <path d="M373 288 Q365 257 356 255 Q345 251 342 267 Q338 285 345 302 Q352 319 362 319 Q372 319 380 302 Q387 285 384 267 Q381 251 370 255 Q361 255 373 288" stroke={POSITIVE.soft} strokeWidth="1.6"/>
-        <path d="M362 251 Q360 242 357 237" stroke={POSITIVE.deep} strokeWidth="1.5"/>
-        <path d="M362 249 Q370 240 374 240" stroke={POSITIVE.deep} strokeWidth="1.2"/>
-        {/* りんご小 – 左中 */}
-        <path d="M27 450 Q22 430 15 428 Q7 426 5 438 Q2 452 8 464 Q14 476 22 476 Q30 476 35 464 Q40 452 38 438 Q36 426 27 428 Q20 428 27 450" stroke={POSITIVE.soft} strokeWidth="1.4"/>
-        <line x1="22" y1="425" x2="20" y2="418" stroke={POSITIVE.deep} strokeWidth="1.3"/>
-        {/* ぶどう – 右下 */}
-        <line x1="340" y1="570" x2="340" y2="558" stroke={POSITIVE.deep} strokeWidth="1.6"/>
-        <path d="M340 570 Q332 562 330 556" stroke={POSITIVE.deep} strokeWidth="1.2"/>
-        <path d="M340 570 Q348 562 350 556" stroke={POSITIVE.deep} strokeWidth="1.2"/>
-        <circle cx="325" cy="586" r="13" stroke={POSITIVE.textDeep} strokeWidth="1.4"/>
-        <circle cx="341" cy="583" r="13" stroke={POSITIVE.textDeep} strokeWidth="1.4"/>
-        <circle cx="357" cy="586" r="13" stroke={POSITIVE.textDeep} strokeWidth="1.4"/>
-        <circle cx="318" cy="604" r="12" stroke={POSITIVE.textDeep} strokeWidth="1.3"/>
-        <circle cx="333" cy="603" r="13" stroke={POSITIVE.textDeep} strokeWidth="1.4"/>
-        <circle cx="349" cy="603" r="13" stroke={POSITIVE.textDeep} strokeWidth="1.4"/>
-        <circle cx="364" cy="604" r="12" stroke={POSITIVE.textDeep} strokeWidth="1.3"/>
-        <circle cx="326" cy="622" r="11" stroke={POSITIVE.textDeep} strokeWidth="1.2"/>
-        <circle cx="341" cy="624" r="12" stroke={POSITIVE.textDeep} strokeWidth="1.3"/>
-        <circle cx="356" cy="622" r="11" stroke={POSITIVE.textDeep} strokeWidth="1.2"/>
-        {/* トマト中 – 左下 */}
-        <circle cx="52" cy="692" r="29" stroke={POSITIVE.base} strokeWidth="1.7"/>
-        <line x1="52" y1="663" x2="52" y2="654" stroke={POSITIVE.deep} strokeWidth="1.6"/>
-        <path d="M52 663 Q46 655 43 657" stroke={POSITIVE.deep} strokeWidth="1.3"/>
-        <path d="M52 663 Q58 655 61 657" stroke={POSITIVE.deep} strokeWidth="1.3"/>
-        {/* トマト極小 – 下中央 */}
-        <circle cx="192" cy="788" r="16" stroke={POSITIVE.soft} strokeWidth="1.4"/>
-        <line x1="192" y1="772" x2="192" y2="765" stroke={POSITIVE.deep} strokeWidth="1.3"/>
-        {/* トマト極小 – 上中央 */}
-        <circle cx="200" cy="36" r="14" stroke={POSITIVE.soft} strokeWidth="1.3"/>
-        <line x1="200" y1="22" x2="200" y2="16" stroke={POSITIVE.deep} strokeWidth="1.2"/>
-      </g>
-    </svg>
-  )
-}
-
-// ── 背景 SVG: 根の世界（Q3・Q4）────────────────────────────────────────────────
-function RootBg() {
-  return (
-    <svg
-      width="100%" height="100%"
-      viewBox="0 0 390 844"
-      preserveAspectRatio="xMidYMid slice"
-      style={{ position: 'absolute', inset: 0 }}
-      aria-hidden="true"
-    >
-      <g fill="none" stroke={NEGATIVE.deep} strokeLinecap="round" opacity="0.13">
-        {/* 中央メイン根 */}
-        <path d="M195 844 Q193 778 190 714 Q188 650 186 586" strokeWidth="4.5"/>
-        {/* 左大根 */}
-        <path d="M190 746 Q154 708 120 670 Q92 636 74 598" strokeWidth="3.5"/>
-        {/* 右大根 */}
-        <path d="M192 746 Q228 708 262 670 Q290 636 308 598" strokeWidth="3.5"/>
-        {/* 中央左枝 */}
-        <path d="M186 648 Q160 620 138 596 Q120 576 106 553" strokeWidth="2.5"/>
-        {/* 中央右枝 */}
-        <path d="M188 648 Q214 620 236 596 Q254 576 268 553" strokeWidth="2.5"/>
-        {/* 左中根 */}
-        <path d="M74 598 Q50 570 32 543 Q18 520 10 494" strokeWidth="2"/>
-        <path d="M74 598 Q64 568 60 538" strokeWidth="1.8"/>
-        {/* 右中根 */}
-        <path d="M308 598 Q332 570 350 543 Q364 520 372 494" strokeWidth="2"/>
-        <path d="M308 598 Q318 568 322 538" strokeWidth="1.8"/>
-        {/* 細根 – 左 */}
-        <path d="M106 553 Q86 528 68 506" strokeWidth="1.5"/>
-        <path d="M106 553 Q98 524 94 496" strokeWidth="1.4"/>
-        <path d="M32 543 Q16 516 6 486" strokeWidth="1.4"/>
-        {/* 細根 – 右 */}
-        <path d="M268 553 Q288 528 306 506" strokeWidth="1.5"/>
-        <path d="M268 553 Q276 524 280 496" strokeWidth="1.4"/>
-        <path d="M350 543 Q366 516 376 486" strokeWidth="1.4"/>
-        {/* 左端根 */}
-        <path d="M0 844 Q6 788 12 738 Q16 690 20 642" strokeWidth="3"/>
-        <path d="M14 748 Q-2 716 -6 684" strokeWidth="1.8"/>
-        <path d="M18 698 Q6 668 0 638" strokeWidth="1.5"/>
-        {/* 右端根 */}
-        <path d="M390 844 Q384 788 378 738 Q374 690 370 642" strokeWidth="3"/>
-        <path d="M376 748 Q392 716 396 684" strokeWidth="1.8"/>
-        <path d="M372 698 Q384 668 390 638" strokeWidth="1.5"/>
-        {/* 極細根 – 上方へ */}
-        <path d="M186 586 Q170 556 162 526 Q156 500 152 472" strokeWidth="1.4"/>
-        <path d="M186 586 Q202 556 210 526 Q216 500 220 472" strokeWidth="1.4"/>
-        <path d="M138 596 Q122 566 112 536" strokeWidth="1.3"/>
-        <path d="M236 596 Q252 566 262 536" strokeWidth="1.3"/>
-        <path d="M10 494 Q4 464 2 434" strokeWidth="1.2"/>
-        <path d="M372 494 Q378 464 380 434" strokeWidth="1.2"/>
-      </g>
-    </svg>
-  )
-}
-
 // ── メインコンポーネント ────────────────────────────────────────────────────────
 
 export function QuestionCard({
@@ -183,16 +71,16 @@ export function QuestionCard({
     tagTextNormal:      isLight ? '#3B2F1E'             : '#2A1F0E',
     addBtnAdded:        'rgba(0,0,0,0.07)',
     addBtnAddedText:    'rgba(0,0,0,0.2)',
-    addBtnNormal:       isLight ? POSITIVE.base         : NEGATIVE.base,
-    addBtnNormalText:   '#FFFFFF',
-    genActive:          isLight ? POSITIVE.base         : NEGATIVE.base,
-    genActiveText:      '#FFFFFF',
-    genInactive:        'rgba(0,0,0,0.08)',
-    genInactiveText:    'rgba(0,0,0,0.28)',
-    nextActive:         isLight ? POSITIVE.base         : NEGATIVE.base,
-    nextActiveText:     '#FFFFFF',
-    nextInactive:       'rgba(0,0,0,0.08)',
-    nextInactiveText:   'rgba(0,0,0,0.28)',
+    addBorderNormal:    isLight ? POSITIVE.base         : NEGATIVE.base,
+    addTextNormal:      isLight ? POSITIVE.text         : NEGATIVE.text,
+    genBorderActive:    isLight ? POSITIVE.base         : NEGATIVE.base,
+    genTextActive:      isLight ? POSITIVE.text         : NEGATIVE.text,
+    genBorderInactive:  'rgba(0,0,0,0.15)',
+    genTextInactive:    'rgba(0,0,0,0.28)',
+    nextBorderActive:   isLight ? POSITIVE.base         : NEGATIVE.base,
+    nextTextActive:     isLight ? POSITIVE.text         : NEGATIVE.text,
+    nextBorderInactive: 'rgba(0,0,0,0.15)',
+    nextTextInactive:   'rgba(0,0,0,0.28)',
     textareaBg:         isLight ? 'rgba(0,0,0,0.04)'    : 'rgba(0,0,0,0.05)',
     textareaBorder:     isLight ? 'rgba(0,0,0,0.10)'    : 'rgba(0,0,0,0.12)',
     candidateCount:     isLight ? 'rgba(59,47,30,0.38)' : 'rgba(42,31,14,0.36)',
@@ -286,11 +174,6 @@ export function QuestionCard({
       className="px-6 pt-12 pb-10"
       style={{ minHeight: '100svh', overflowY: 'auto', position: 'relative', background: c.pageBg, maxWidth: 390, width: '100%', margin: '0 auto' }}
     >
-      {/* ── 背景イラスト ── */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-        {isLight ? <FruitBg /> : <RootBg />}
-      </div>
-
       {/* ── スキップ ── */}
       <button
         onClick={handleSkip}
@@ -350,8 +233,9 @@ export function QuestionCard({
           disabled={!text.trim() || isGenerating}
           className="w-full py-3.5 rounded-full text-sm font-semibold mb-2.5 transition-all"
           style={{
-            background: text.trim() && !isGenerating ? c.genActive    : c.genInactive,
-            color:      text.trim() && !isGenerating ? c.genActiveText : c.genInactiveText,
+            background: '#FFFFFF',
+            border: `2px solid ${text.trim() && !isGenerating ? c.genBorderActive : c.genBorderInactive}`,
+            color:      text.trim() && !isGenerating ? c.genTextActive : c.genTextInactive,
             cursor:     text.trim() && !isGenerating ? 'pointer'      : 'default',
           }}
         >
@@ -369,8 +253,9 @@ export function QuestionCard({
           disabled={registeredTags.length === 0}
           className="w-full py-4 rounded-full text-sm font-semibold mb-6 transition-all"
           style={{
-            background: registeredTags.length > 0 ? c.nextActive    : c.nextInactive,
-            color:      registeredTags.length > 0 ? c.nextActiveText : c.nextInactiveText,
+            background: '#FFFFFF',
+            border: `2px solid ${registeredTags.length > 0 ? c.nextBorderActive : c.nextBorderInactive}`,
+            color:      registeredTags.length > 0 ? c.nextTextActive : c.nextTextInactive,
             cursor:     registeredTags.length > 0 ? 'pointer'       : 'default',
           }}
         >
@@ -438,8 +323,9 @@ export function QuestionCard({
                       disabled={added}
                       className="flex items-center justify-center h-7 rounded-full text-xs font-semibold transition-all flex-shrink-0"
                       style={{
-                        background: added ? c.addBtnAdded     : c.addBtnNormal,
-                        color:      added ? c.addBtnAddedText : c.addBtnNormalText,
+                        background: added ? c.addBtnAdded : '#FFFFFF',
+                        border:     added ? 'none' : `1.5px solid ${c.addBorderNormal}`,
+                        color:      added ? c.addBtnAddedText : c.addTextNormal,
                         cursor:     added ? 'default'         : 'pointer',
                         padding: '0 10px',
                         minWidth: 28,

@@ -596,7 +596,7 @@ export default function GardenDisplay() {
         {/* ── タブ ── */}
         <div style={{ display: 'flex', padding: '0 20px', gap: 8, marginBottom: 12, flexShrink: 0 }}>
           {(['light', 'shadow', 'friend'] as TabType[]).map(t => {
-            const tabBg   = t === 'light' ? POSITIVE.pale : t === 'shadow' ? NEGATIVE.pale : '#B8D4E8'
+            const tabBorder = t === 'light' ? POSITIVE.base : t === 'shadow' ? NEGATIVE.base : '#B8D4E8'
             const tabText = t === 'light' ? POSITIVE.text : t === 'shadow' ? NEGATIVE.text : '#2C5F7A'
             const tabLabel = t === 'light' ? '🌼 Positive' : t === 'shadow' ? '🌱 Negative' : '🤝 Friend'
             return (
@@ -604,11 +604,12 @@ export default function GardenDisplay() {
                 key={t}
                 onClick={() => setTab(t)}
                 style={{
-                  flex: 1, padding: '10px 0', borderRadius: 12, border: 'none',
-                  background: tab === t ? tabBg : 'rgba(59,47,30,0.07)',
+                  flex: 1, padding: '10px 0', borderRadius: 12,
+                  background: '#FFFFFF',
+                  border: tab === t ? `2px solid ${tabBorder}` : '1px solid rgba(59,47,30,0.12)',
                   color: tab === t ? tabText : 'rgba(59,47,30,0.4)',
                   fontSize: 13, fontWeight: tab === t ? 700 : 500, cursor: 'pointer',
-                  transition: 'background 0.2s ease, color 0.2s ease',
+                  transition: 'background 0.2s ease, color 0.2s ease, border-color 0.2s ease',
                 }}
               >
                 {tabLabel}
