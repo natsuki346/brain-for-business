@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/src/lib/supabase/client'
-import DaisyFlower from '@/src/components/DaisyFlower'
+import BrainIllustration from '@/src/components/BrainIllustration'
 
 type Stage = 'splash' | 'form'
 
@@ -16,7 +16,7 @@ export default function UsernamePage() {
   const [loading,  setLoading]  = useState(false)
   const [error,    setError]    = useState<string | null>(null)
 
-  // 起動時：デイジーの花が咲くスプラッシュを少し見せてから、入力フォームへ
+  // 起動時：脳のイラストが浮かび上がるスプラッシュを少し見せてから、入力フォームへ
   useEffect(() => {
     const t1 = setTimeout(() => setSplashVisible(true), 20)
     const t2 = setTimeout(() => setStage('form'), 1900)
@@ -72,7 +72,7 @@ export default function UsernamePage() {
   if (stage === 'splash') {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF', maxWidth: 390, margin: '0 auto' }}>
-        <DaisyFlower size={140} animate={splashVisible} />
+        <BrainIllustration size={140} animate={splashVisible} />
       </div>
     )
   }

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import WhyModal from '@/src/components/onboarding/WhyModal'
 import ProcessOverviewScreen from '@/src/components/onboarding/ProcessOverviewScreen'
-import DaisyFlower from '@/src/components/DaisyFlower'
+import BrainIllustration from '@/src/components/BrainIllustration'
 
 export default function WelcomePage() {
   const router    = useRouter()
@@ -48,7 +48,7 @@ export default function WelcomePage() {
         transition: isLeaving ? 'opacity 0.5s ease' : 'none',
       }}
     >
-      {/* ── 中央メッセージ + デイジーの開花アニメーション ── */}
+      {/* ── 中央メッセージ + 脳のイラストのアニメーション ── */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 28, padding: '0 24px' }}>
         <p style={{
           fontSize: 28, fontWeight: 700, color: '#E0708A',
@@ -60,7 +60,7 @@ export default function WelcomePage() {
           ありのままで<br />つながれる
         </p>
         <div style={{ marginTop: 16 }}>
-          <DaisyFlower size={150} animate={loaded} />
+          <BrainIllustration size={150} animate={loaded} />
         </div>
       </div>
 

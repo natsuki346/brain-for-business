@@ -1,6 +1,5 @@
 'use client'
 
-import { useId } from 'react'
 import type { PointerEvent } from 'react'
 import { NEGATIVE, withAlpha } from '@/src/styles/colors'
 
@@ -14,10 +13,8 @@ type SeedTopViewProps = {
   onPointerDown?: (e: PointerEvent<HTMLDivElement>) => void
 }
 
-// 土壌透視用：上から見たタネ（根の部屋・影タグ）
+// 土壌透視用：上から見たNegativeタグ（根の部屋・影タグ）。タネの形はやめて、単色の円で表現する
 export default function SeedTopView({ cx, cy, size, label, onClick, onDelete, onPointerDown }: SeedTopViewProps) {
-  const gradientId = useId()
-
   return (
     <div
       onClick={onClick}
@@ -36,41 +33,17 @@ export default function SeedTopView({ cx, cy, size, label, onClick, onDelete, on
         viewBox={`${-size / 2} ${-size / 2} ${size} ${size}`}
         style={{ position: 'absolute', inset: 0, overflow: 'visible' }}
       >
-        <defs>
-          <radialGradient id={gradientId} cx="35%" cy="30%" r="75%">
-            <stop offset="0%" stopColor={NEGATIVE.soft} />
-            <stop offset="60%" stopColor={NEGATIVE.base} />
-            <stop offset="100%" stopColor={NEGATIVE.deep} />
-          </radialGradient>
-        </defs>
+        {/* 影 */}
+        <ellipse cx="0" cy={size * 0.36} rx={size * 0.3} ry={size * 0.08} fill="#000000" opacity="0.06" />
 
-        {/* 土に埋まっている範囲 */}
-        <ellipse cx="0" cy={size * 0.051} rx={size * 0.561} ry={size * 0.408} fill={NEGATIVE.base} opacity={0.35} />
-
-        {/* タネ本体（控えめな雫型） */}
-        <path
-          d={`M 0 ${-size * 0.204}
-              C ${size * 0.116} ${-size * 0.192} ${size * 0.116} ${size * 0.116} 0 ${size * 0.204}
-              C ${-size * 0.116} ${size * 0.116} ${-size * 0.116} ${-size * 0.192} 0 ${-size * 0.204}
-              Z`}
-          fill={`url(#${gradientId})`}
-          opacity={0.85}
-        />
-
-        {/* タネにかぶる土粒（半分埋まっている表現） */}
-        <circle cx={size * 0.065} cy={size * 0.128} r={size * 0.056} fill={NEGATIVE.base} opacity={0.6} />
-        <circle cx={-size * 0.077} cy={size * 0.153} r={size * 0.041} fill={NEGATIVE.base} opacity={0.55} />
-
-        {/* 周辺の土粒テクスチャ */}
-        <circle cx={-size * 0.383} cy={-size * 0.128} r={size * 0.038} fill={NEGATIVE.deep} opacity={0.4} />
-        <circle cx={size * 0.357} cy={size * 0.179} r={size * 0.033} fill={NEGATIVE.deep} opacity={0.4} />
-        <circle cx={size * 0.255} cy={-size * 0.255} r={size * 0.031} fill={NEGATIVE.deep} opacity={0.35} />
+        {/* 円 */}
+        <circle cx="0" cy="0" r={size * 0.4} fill={NEGATIVE.base} />
       </svg>
 
       {/* ハッシュタグピル */}
       <span
         style={{
-          position: 'absolute', left: '50%', top: -size * 0.561,
+          position: 'absolute', left: '50%', top: -size * 0.6,
           transform: 'translate(-50%, -50%)',
           background: withAlpha(NEGATIVE.pale, 0.9), color: NEGATIVE.text,
           fontSize: 10, fontWeight: 600,

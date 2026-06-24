@@ -26,7 +26,7 @@ const FRAME_STYLE: React.CSSProperties = {
   position: 'relative', background: '#FFFFFF',
 }
 
-// Seedバブルのイラスト：DaisyBubbleと対になる「土の中で育つタネ」のシンプルな図
+// Negativeバブルのイラスト：DaisyBubbleと対になる、単色の円
 // （RoomIntroSlidesModalのSeedBubbleIllustrationと同じ図案）
 function SeedBubbleIllustration({ size }: { size: number }) {
   return (
@@ -34,13 +34,7 @@ function SeedBubbleIllustration({ size }: { size: number }) {
       width={size} height={size} viewBox="0 0 100 100"
       style={{ display: 'block', flexShrink: 0 }}
     >
-      <circle cx="50" cy="50" r="50" fill={NEGATIVE.pale} />
-      <ellipse cx="50" cy="64" rx="30" ry="9" fill={NEGATIVE.base} opacity="0.3" />
-      <path
-        d="M50 26 C63 31 63 58 50 70 C37 58 37 31 50 26 Z"
-        fill={NEGATIVE.base}
-      />
-      <path d="M50 30 L50 64" stroke={NEGATIVE.deep} strokeWidth="2" opacity="0.6" strokeLinecap="round" />
+      <circle cx="50" cy="50" r="50" fill={NEGATIVE.base} />
     </svg>
   )
 }
