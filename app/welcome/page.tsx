@@ -105,7 +105,7 @@ export default function WelcomePage() {
           fontSize: 72, fontStyle: 'italic', fontWeight: 600, color: '#3B2F1E', margin: 0,
           fontFamily: "'Cormorant Garamond', serif", letterSpacing: '0.02em',
         }}>
-          DaiMe
+          Brain
         </p>
       </div>
     </div>

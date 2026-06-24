@@ -59,7 +59,7 @@ export default function RoomChatSheet({
   }
 
   const handleProfileClick = (targetUserId: string) => {
-    sessionStorage.setItem('daime_chat_return', JSON.stringify({
+    sessionStorage.setItem('brain_chat_return', JSON.stringify({
       type,
       tagId,
       tagText,

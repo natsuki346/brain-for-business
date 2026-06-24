@@ -37,7 +37,7 @@ export default function LightRoomView() {
 
   // プロフィール閲覧から戻ってきた場合にチャットを復元する
   useEffect(() => {
-    const stored = sessionStorage.getItem('daime_chat_return')
+    const stored = sessionStorage.getItem('brain_chat_return')
     if (!stored) return
     try {
       const state = JSON.parse(stored) as {
@@ -45,11 +45,11 @@ export default function LightRoomView() {
         subTagId: string | null; subTagName: string | null
       }
       if (state.type !== 'light') return
-      sessionStorage.removeItem('daime_chat_return')
+      sessionStorage.removeItem('brain_chat_return')
       setOpenTag({ id: state.tagId, text: state.tagText, growth_point: 0 })
       setChannel({ subTagId: state.subTagId, name: state.subTagName ?? state.tagText })
     } catch {
-      sessionStorage.removeItem('daime_chat_return')
+      sessionStorage.removeItem('brain_chat_return')
     }
   }, [])
 

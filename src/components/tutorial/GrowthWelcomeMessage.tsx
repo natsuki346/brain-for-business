@@ -48,7 +48,7 @@ export default function GrowthWelcomeMessage({ onNext, zIndex = 300 }: GrowthWel
           transition: 'opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s',
         }}
       >
-        DaiMeは己を愛でる場所です。
+        Brainは己を愛でる場所です。
       </p>
       <p
         style={{

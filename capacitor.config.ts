@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.daime.app',
-  appName: 'DaiMe',
+  appName: 'Brain',
   webDir: 'out'
 };
 

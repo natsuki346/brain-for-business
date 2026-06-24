@@ -80,7 +80,7 @@ export default function ShadowRoomView({ onSeedChatDone }: { onSeedChatDone?: ()
 
   // プロフィール閲覧から戻ってきた場合にチャットを復元する
   useEffect(() => {
-    const stored = sessionStorage.getItem('daime_chat_return')
+    const stored = sessionStorage.getItem('brain_chat_return')
     if (!stored) return
     try {
       const state = JSON.parse(stored) as {
@@ -88,11 +88,11 @@ export default function ShadowRoomView({ onSeedChatDone }: { onSeedChatDone?: ()
         subTagId: string | null; subTagName: string | null
       }
       if (state.type !== 'shadow') return
-      sessionStorage.removeItem('daime_chat_return')
+      sessionStorage.removeItem('brain_chat_return')
       setOpenTag({ id: state.tagId, text: state.tagText, growth_point: 0, stage: 0, seed_weight: 'light' })
       setChannel({ subTagId: state.subTagId, name: state.subTagName ?? state.tagText })
     } catch {
-      sessionStorage.removeItem('daime_chat_return')
+      sessionStorage.removeItem('brain_chat_return')
     }
   }, [])
 
