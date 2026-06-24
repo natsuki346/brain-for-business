@@ -164,11 +164,11 @@ export default function LightRoomView() {
             <rect
               x={0} y={GROUND_LINE_Y + GRASS_HEIGHT + SOIL_HEIGHT}
               width={390} height={TOTAL_HEIGHT - (GROUND_LINE_Y + GRASS_HEIGHT + SOIL_HEIGHT)}
-              fill={POSITIVE.pale}
+              fill="#FFFFFF"
             />
           </svg>
         </div>
-        <div style={{ flex: 1, background: POSITIVE.pale }} />
+        <div style={{ flex: 1, background: '#FFFFFF' }} />
 
         {/* カルーセル（Seed と同一構造） */}
         <div

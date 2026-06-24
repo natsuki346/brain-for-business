@@ -281,13 +281,13 @@ export default function ShadowRoomView({ onSeedChatDone }: { onSeedChatDone?: ()
             <rect
               x={0} y={GROUND_LINE_Y + GRASS_HEIGHT + SOIL_HEIGHT}
               width={390} height={TOTAL_HEIGHT - (GROUND_LINE_Y + GRASS_HEIGHT + SOIL_HEIGHT)}
-              fill={NEGATIVE.pale}
+              fill="#FFFFFF"
             />
           </svg>
         </div>
 
-        {/* 地下エリアの続き：残りの高さを土色で埋める */}
-        <div style={{ flex: 1, background: NEGATIVE.pale }} />
+        {/* 地下エリアの続き：残りの高さを白で埋める */}
+        <div style={{ flex: 1, background: '#FFFFFF' }} />
 
         {/* タネカルーセル */}
         <div

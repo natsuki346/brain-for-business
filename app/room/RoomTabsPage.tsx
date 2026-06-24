@@ -25,12 +25,15 @@ const TAB_CONFIG: Record<RoomType, { label: string; icon: string }> = {
   friend: { label: 'Friend', icon: '👥' },
 }
 
-// タブごとの配色（Positive=赤系／Negative=青系、Friendは既存配色を維持）
-const TAB_STYLES: Record<RoomType, { activeBg: string; activeText: string; inactiveBg: string; inactiveText: string }> = {
-  light:  { activeBg: POSITIVE.base, activeText: '#FFFFFF', inactiveBg: POSITIVE.pale, inactiveText: POSITIVE.text },
-  shadow: { activeBg: NEGATIVE.base, activeText: '#FFFFFF', inactiveBg: NEGATIVE.pale, inactiveText: NEGATIVE.text },
-  friend: { activeBg: '#4A7C59',     activeText: '#FFFFFF', inactiveBg: '#D4B896',     inactiveText: '#5C3A1E' },
+// タブごとの配色（Positive=赤系／Negative=青系、Friendは既存配色を維持）。
+// 背景は常に白にし、選択中のみカラーボーダーで示す。
+const TAB_STYLES: Record<RoomType, { activeBorder: string; activeText: string }> = {
+  light:  { activeBorder: POSITIVE.base, activeText: POSITIVE.text },
+  shadow: { activeBorder: NEGATIVE.base, activeText: NEGATIVE.text },
+  friend: { activeBorder: '#4A7C59',     activeText: '#3B6B47' },
 }
+const TAB_INACTIVE_BORDER = 'rgba(59,47,30,0.15)'
+const TAB_INACTIVE_TEXT   = 'rgba(59,47,30,0.4)'
 
 type TutorialPhase = 'room_intro' | null
 
@@ -132,9 +135,10 @@ export default function RoomTabsPage({ type }: { type: RoomType }) {
               onClick={() => handleTabClick(t)}
               className="flex-1 py-3 rounded-xl text-sm font-bold"
               style={{
-                background: active ? s.activeBg : s.inactiveBg,
-                color: active ? s.activeText : s.inactiveText,
-                border: 'none', cursor: 'pointer',
+                background: '#FFFFFF',
+                color: active ? s.activeText : TAB_INACTIVE_TEXT,
+                border: active ? `2px solid ${s.activeBorder}` : `1px solid ${TAB_INACTIVE_BORDER}`,
+                cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
               }}
             >
