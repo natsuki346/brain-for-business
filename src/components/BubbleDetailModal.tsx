@@ -48,7 +48,7 @@ function formatDate(iso: string): string {
 }
 
 // 初めて訪れたユーザー向けの案内ツールチップ（吹き出し＋上向き矢印）。
-// HelpModalと同じ配色（#8B6914／#3B2F1E／#F5F0E8系）に合わせている。
+// HelpModalと同じ配色（#8B6914／#3B2F1E／白系）に合わせている。
 function GuideTooltip({ text, onClose }: { text: string; onClose: () => void }) {
   return (
     <div style={{ position: 'absolute', top: 30, left: 0, zIndex: 10, width: 260 }}>
