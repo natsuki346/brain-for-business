@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import LightRoomView from './LightRoomView'
 import ShadowRoomView from './ShadowRoomView'
-import FriendRoomView from '@/src/components/room/FriendRoomView'
+import NetworkGraph from '@/src/components/network/NetworkGraph'
 import HelpModal from '@/src/components/HelpModal'
 import { BottomNav } from '@/src/components/BottomNav'
 import { useTutorialStep } from '@/src/components/tutorial/useTutorialStep'
@@ -151,7 +151,7 @@ export default function RoomTabsPage({ type }: { type: RoomType }) {
         })}
       </div>
 
-      {type === 'light' ? <LightRoomView /> : type === 'shadow' ? <ShadowRoomView onSeedChatDone={() => advanceStep('room_grow_animation')} /> : <FriendRoomView />}
+      {type === 'light' ? <LightRoomView /> : type === 'shadow' ? <ShadowRoomView onSeedChatDone={() => advanceStep('room_grow_animation')} /> : <NetworkGraph />}
 
       <BottomNav
         onGardenClick={() => { if (step === 'room_grow_animation') advanceStep('garden_onboarding') }}
