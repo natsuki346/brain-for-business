@@ -142,16 +142,21 @@ export function QuestionCard({
       const res = await fetch(`${EDGE_FUNCTIONS_BASE}/suggest-tags`, {
         method: 'POST',
         headers: EDGE_FUNCTION_HEADERS,
-        body: JSON.stringify({ selectedTags: selected, type: isLight ? 'light' : 'shadow' }),
+        body: JSON.stringify({ selectedTags: selected }),
       })
       const data = await res.json()
-      const suggestions: string[] = Array.isArray(data.tags) ? data.tags : []
+      const positiveSuggestions: string[] = data.positive ?? []
+      const negativeSuggestions: string[] = data.negative ?? []
+      const suggestions = [...positiveSuggestions, ...negativeSuggestions]
 
       setGeneratedTags(prev => {
         const additions = suggestions.filter(t => !prev.includes(t) && !selected.includes(t))
         if (additions.length === 0) return prev
         setSuggestedTags(prevSet => new Set([...prevSet, ...additions]))
-        if (isLight) setPositiveTagSet(prevSet => new Set([...prevSet, ...additions]))
+        const positiveAdditions = positiveSuggestions.filter(t => !prev.includes(t) && !selected.includes(t))
+        if (positiveAdditions.length > 0) {
+          setPositiveTagSet(prevSet => new Set([...prevSet, ...positiveAdditions]))
+        }
         return [...prev, ...additions]
       })
     } catch {
