@@ -9,29 +9,23 @@ import { useGrowthStage } from '@/src/components/tree/useGrowthStage'
 import TagConfirmScreen from '@/src/components/onboarding/TagConfirmScreen'
 import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
 
-type QuestionType = 'light' | 'shadow'
-
-// Q1・Q2 → 光タグ / Q3・Q4 → 影タグ
-const QUESTIONS: { text: string; exampleTags: string[]; type: QuestionType }[] = [
+// Q1〜Q4：AIがpositive/negativeを自動分類する
+const QUESTIONS: { text: string; exampleTags: string[] }[] = [
   {
-    text: '仕事での自分の強み、思う存分出してみよう',
-    exampleTags: ['聞き上手', '調整力がある', '粘り強い', '気配りができる', '数字に強い'],
-    type: 'light',
+    text: '仕事の中で、気づいたら頼られていることや、\n自然と得意にやれていることはありますか？',
+    exampleTags: [],
   },
   {
-    text: '仕事でやりがいを感じる瞬間って、\nどんな時？',
-    exampleTags: ['チームで成果が出た時', '感謝された時', '新しい挑戦ができた時', '後輩が育った時', '評価された時', '困っている人を助けられた時'],
-    type: 'light',
+    text: '最近、仕事でモヤモヤしていることや、\nなんとなく引っかかっていることはありますか？',
+    exampleTags: [],
   },
   {
-    text: '仕事の中で、自分ではわかってるけど\nあまり人に言わないこと、何かある？',
-    exampleTags: ['上司と合わない', '評価に納得してない', '転職を考えてる', '正直しんどい', '人間関係が苦手', '社内に気になる人がいる'],
-    type: 'shadow',
+    text: '職場での人との関わりで、うまくいっていると感じることや、\n逆に難しいと感じることはありますか？',
+    exampleTags: [],
   },
   {
-    text: 'よく一人で悩んじゃうけど、\n誰にも吐き出してないもの——\n仕事のことで思うがままに出してみない？',
-    exampleTags: ['実は辞めたい', '実は自信がない', '実は評価が不安', '実は社内恋愛で悩んでる', '実は孤独を感じてる'],
-    type: 'shadow',
+    text: '今の自分の状態について、誰かに正直に話すとしたら\n何を話したいですか？',
+    exampleTags: [],
   },
 ]
 
@@ -46,10 +40,10 @@ export default function OnboardingPage() {
     sessionStorage.removeItem('canvas_tutorial_shown_light')
     sessionStorage.removeItem('canvas_tutorial_shown_shadow')
   }, [])
-  const [collectedTags, setCollectedTags] = useState<{ tags: string[]; type: QuestionType }[]>([])
+  const [collectedTags, setCollectedTags] = useState<{ positive: string[]; negative: string[] }[]>([])
 
-  const handleComplete = (tags: string[]) => {
-    const updated = [...collectedTags, { tags, type: QUESTIONS[currentIndex].type }]
+  const handleComplete = (positive: string[], negative: string[]) => {
+    const updated = [...collectedTags, { positive, negative }]
     setCollectedTags(updated)
 
     if (currentIndex < QUESTIONS.length - 1) {
@@ -57,15 +51,9 @@ export default function OnboardingPage() {
       return
     }
 
-    // ── Q4 完了：全タグを DB に保存してキャンバス編集へ ──────────────────────
-    const lightTags  = updated.filter(q => q.type === 'light' ).flatMap(q => q.tags)
-
-    // Q3（軽い種）・Q4（重い種）の順で並ぶ前提で seed_weight を割り当てる
-    const shadowGroups = updated.filter(q => q.type === 'shadow').map(q => q.tags)
-    const shadowTags = shadowGroups.flat()
-    const shadowSeedWeights = shadowGroups.flatMap((tags, qi) =>
-      tags.map(() => (qi === 0 ? 'light' as const : 'heavy' as const))
-    )
+    // ── Q4 完了：全タグを DB に保存 ──────────────────────
+    const lightTags  = updated.flatMap(q => q.positive)
+    const shadowTags = updated.flatMap(q => q.negative)
 
     // sessionStorage に保存（canvas-light / canvas-shadow ページが参照）
     sessionStorage.setItem('onboarding_tags', JSON.stringify({ lightTags, shadowTags }))
@@ -78,10 +66,9 @@ export default function OnboardingPage() {
           user_id: userId, text: text.replace(/^#+/, ''), type: 'light' as const,
           color:   POSITIVE.pale,
         })),
-        ...shadowTags.map((text, i) => ({
+        ...shadowTags.map((text) => ({
           user_id: userId, text: text.replace(/^#+/, ''), type: 'shadow' as const,
           color:   NEGATIVE.pale,
-          seed_weight: shadowSeedWeights[i],
         })),
       ]
       const insertTags = (rows: unknown[]) =>
@@ -92,24 +79,7 @@ export default function OnboardingPage() {
         }>
 
       insertTags(allTags).then(result => {
-        if (result.error) {
-          // seed_weight/stage が未マイグレーション環境では、それらを除いて再試行する
-          if (result.error.message.includes('seed_weight') || result.error.message.includes('stage')) {
-            const fallbackTags = allTags.map(tag => {
-              const copy: Record<string, unknown> = { ...tag }
-              delete copy.seed_weight
-              delete copy.stage
-              return copy
-            })
-            insertTags(fallbackTags).then(retry => {
-              if (retry.error) { console.error('tags save failed:', retry.error.message); return }
-              retry.data?.forEach(row => recordTagEvent(row.id, userId, 'registered'))
-            })
-            return
-          }
-          console.error('tags save failed:', result.error.message)
-          return
-        }
+        if (result.error) { console.error('tags save failed:', result.error.message); return }
         result.data?.forEach(row => recordTagEvent(row.id, userId, 'registered'))
       })
     }
@@ -122,8 +92,8 @@ export default function OnboardingPage() {
   }
 
   if (showGrowthOverlay) {
-    const lightTags  = collectedTags.filter(q => q.type === 'light' ).flatMap(q => q.tags)
-    const shadowTags = collectedTags.filter(q => q.type === 'shadow').flatMap(q => q.tags)
+    const lightTags  = collectedTags.flatMap(q => q.positive)
+    const shadowTags = collectedTags.flatMap(q => q.negative)
     return <TagConfirmScreen lightTags={lightTags} shadowTags={shadowTags} />
   }
 
@@ -134,7 +104,6 @@ export default function OnboardingPage() {
       totalQuestions={QUESTIONS.length}
       questionText={QUESTIONS[currentIndex].text}
       exampleTags={QUESTIONS[currentIndex].exampleTags}
-      addButtonText={currentIndex === 2 ? '+ これも自分' : currentIndex === 3 ? '+ 本当の自分' : undefined}
       onComplete={handleComplete}
     />
   )

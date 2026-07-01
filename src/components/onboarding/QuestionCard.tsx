@@ -22,7 +22,7 @@ type Props = {
   questionText:     string
   exampleTags?:     string[]  // 初回生成前に「例）」欄として表示しておく例タグ
   addButtonText?:   string   // タグ追加ボタンのラベル（デフォルト: '+ これ自分！'）
-  onComplete:       (tags: string[]) => void
+  onComplete:       (positive: string[], negative: string[]) => void
 }
 
 // ── メインコンポーネント ────────────────────────────────────────────────────────
@@ -44,6 +44,7 @@ export function QuestionCard({
   const [error,          setError]          = useState<string | null>(null)
   const [showAll,        setShowAll]        = useState(false)
   const [suggestedTags,  setSuggestedTags]  = useState<Set<string>>(new Set())
+  const [positiveTagSet, setPositiveTagSet] = useState<Set<string>>(new Set())
   // AIが生成・提案した候補タグごとの「既に持っている人数」（textを#なしに正規化したものをキーにする）
   const [tagCounts,      setTagCounts]      = useState<Record<string, number>>({})
 
@@ -58,32 +59,32 @@ export function QuestionCard({
   // 質問グループ別カラーテーマ
   const c = {
     pageBg:             '#FFFFFF',
-    progress:           isLight ? 'rgba(93,72,40,0.45)' : 'rgba(60,40,15,0.42)',
-    questionText:       isLight ? '#3B2F1E'             : '#2A1F0E',
-    tagBg:              isLight ? '#3B2F1E'             : '#2A1F0E',
-    tagColor:           isLight ? '#FFFFFF'             : '#F5EDD8',
-    overflowBg:         isLight ? 'rgba(59,47,30,0.12)' : 'rgba(42,31,14,0.12)',
-    overflowColor:      isLight ? '#3B2F1E'             : '#2A1F0E',
-    candidateLabel:     isLight ? 'rgba(59,47,30,0.42)' : 'rgba(42,31,14,0.40)',
-    candidateRowAdded:  isLight ? 'rgba(0,0,0,0.03)'    : 'rgba(0,0,0,0.04)',
-    candidateRowNormal: isLight ? 'rgba(0,0,0,0.06)'    : 'rgba(0,0,0,0.07)',
-    tagTextAdded:       isLight ? 'rgba(59,47,30,0.25)' : 'rgba(42,31,14,0.25)',
-    tagTextNormal:      isLight ? '#3B2F1E'             : '#2A1F0E',
+    progress:           'rgba(0,0,0,0.4)',
+    questionText:       '#111111',
+    tagBg:              '#1A1A1A',
+    tagColor:           '#FFFFFF',
+    overflowBg:         'rgba(0,0,0,0.08)',
+    overflowColor:      '#333333',
+    candidateLabel:     'rgba(0,0,0,0.4)',
+    candidateRowAdded:  'rgba(0,0,0,0.03)',
+    candidateRowNormal: 'rgba(0,0,0,0.06)',
+    tagTextAdded:       'rgba(0,0,0,0.25)',
+    tagTextNormal:      '#222222',
     addBtnAdded:        'rgba(0,0,0,0.07)',
     addBtnAddedText:    'rgba(0,0,0,0.2)',
-    addBorderNormal:    isLight ? POSITIVE.base         : NEGATIVE.base,
-    addTextNormal:      isLight ? POSITIVE.text         : NEGATIVE.text,
-    genBorderActive:    isLight ? POSITIVE.base         : NEGATIVE.base,
-    genTextActive:      isLight ? POSITIVE.text         : NEGATIVE.text,
+    addBorderNormal:    POSITIVE.base,
+    addTextNormal:      POSITIVE.text,
+    genBorderActive:    POSITIVE.base,
+    genTextActive:      POSITIVE.text,
     genBorderInactive:  'rgba(0,0,0,0.15)',
     genTextInactive:    'rgba(0,0,0,0.28)',
-    nextBorderActive:   isLight ? POSITIVE.base         : NEGATIVE.base,
-    nextTextActive:     isLight ? POSITIVE.text         : NEGATIVE.text,
+    nextBorderActive:   POSITIVE.base,
+    nextTextActive:     POSITIVE.text,
     nextBorderInactive: 'rgba(0,0,0,0.15)',
     nextTextInactive:   'rgba(0,0,0,0.28)',
-    textareaBg:         isLight ? 'rgba(0,0,0,0.04)'    : 'rgba(0,0,0,0.05)',
-    textareaBorder:     isLight ? 'rgba(0,0,0,0.10)'    : 'rgba(0,0,0,0.12)',
-    candidateCount:     isLight ? 'rgba(59,47,30,0.38)' : 'rgba(42,31,14,0.36)',
+    textareaBg:         'rgba(0,0,0,0.04)',
+    textareaBorder:     'rgba(0,0,0,0.10)',
+    candidateCount:     'rgba(0,0,0,0.35)',
   }
 
   // AIが生成・提案した候補タグが更新されるたびに、既に持っている人数をまとめて取得する。
@@ -110,8 +111,11 @@ export function QuestionCard({
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error ?? 'エラーが発生しました')
-      const generated: string[] = data.tags ?? []
-      setGeneratedTags(prev => [...prev, ...generated.filter(t => !prev.includes(t))])
+      const positive: string[] = data.positive ?? []
+      const negative: string[] = data.negative ?? []
+      const all = [...positive, ...negative]
+      setPositiveTagSet(prev => new Set([...prev, ...positive]))
+      setGeneratedTags(prev => [...prev, ...all.filter(t => !prev.includes(t))])
     } catch (e) {
       setError(e instanceof Error ? e.message : 'エラーが発生しました')
     } finally {
@@ -145,6 +149,7 @@ export function QuestionCard({
         const additions = suggestions.filter(t => !prev.includes(t) && !selected.includes(t))
         if (additions.length === 0) return prev
         setSuggestedTags(prevSet => new Set([...prevSet, ...additions]))
+        if (isLight) setPositiveTagSet(prevSet => new Set([...prevSet, ...additions]))
         return [...prev, ...additions]
       })
     } catch {
@@ -158,12 +163,14 @@ export function QuestionCard({
 
   const handleNext = () => {
     if (registeredTags.length === 0) return
-    onComplete(registeredTags)
+    const positive = registeredTags.filter(t => positiveTagSet.has(t))
+    const negative = registeredTags.filter(t => !positiveTagSet.has(t))
+    onComplete(positive, negative)
   }
 
   const handleSkip = () => {
     setRegisteredTags([])
-    onComplete([])
+    onComplete([], [])
   }
 
   const visibleTags   = showAll ? registeredTags : registeredTags.slice(0, MAX_VISIBLE)
@@ -181,7 +188,7 @@ export function QuestionCard({
         style={{
           top: 8, right: 8, zIndex: 2,
           padding: '8px 12px',
-          fontSize: 13, color: '#8B7355',
+          fontSize: 13, color: '#777777',
           background: 'none', border: 'none', textDecoration: 'none',
           cursor: 'pointer',
         }}
