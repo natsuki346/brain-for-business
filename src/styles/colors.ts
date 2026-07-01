@@ -1,24 +1,23 @@
-// 「脳・ニューロン」メタファーの配色パレット。
-// Positive（旧Daisy／lightタグ）= 暖色・赤系、Negative（旧Seed／shadowタグ）= 寒色・青系に統一する。
+// Positive＝赤系、Negative＝青系。
 // 表示色のみを集約する定義ファイル。DBのtype/stage等のenum値('light'/'shadow'等)は変更しない。
 // 各コンポーネントはここから色を import して使い、hexのハードコードを避けること。
 
 export const POSITIVE = {
-  pale:     '#FCE4E4', // タグピル・バブル背景など最も薄い赤
-  soft:     '#F3B6B6', // 葉・トラック色などやや薄い赤
-  base:     '#E0585F', // 花びら・メインアクセント
-  deep:     '#B83A3A', // 花芯・茎など濃い赤
-  text:     '#8B2424', // ピル文字・選択中タブ文字
-  textDeep: '#6B1A1A', // 見出しなど、より濃い文字色
+  pale:     '#FFF0F0',
+  soft:     '#FECACA',
+  base:     '#EF4444',
+  deep:     '#DC2626',
+  text:     '#DC2626',
+  textDeep: '#B91C1C',
 } as const
 
 export const NEGATIVE = {
-  pale:     '#DCEAF7',
-  soft:     '#A9CCEA',
-  base:     '#4F8FC0',
-  deep:     '#2C5F88',
-  text:     '#1F4E73',
-  textDeep: '#163A56',
+  pale:     '#EFF6FF',
+  soft:     '#BFDBFE',
+  base:     '#3B82F6',
+  deep:     '#2563EB',
+  text:     '#2563EB',
+  textDeep: '#1D4ED8',
 } as const
 
 // 成長段階（タネ→芽→蕾→満開）を型ごとの色相内で表現する4段階グラデーション
