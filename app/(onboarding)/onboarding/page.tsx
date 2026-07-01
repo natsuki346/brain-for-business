@@ -10,21 +10,25 @@ import TagConfirmScreen from '@/src/components/onboarding/TagConfirmScreen'
 import { NEGATIVE, POSITIVE } from '@/src/styles/colors'
 
 // Q1〜Q4：AIがpositive/negativeを自動分類する
-const QUESTIONS: { text: string; exampleTags: string[] }[] = [
+const QUESTIONS: { text: string; hintTags: string[]; exampleTags: string[] }[] = [
   {
     text: '仕事の中で、気づいたら頼られていることや、\n自然と得意にやれていることはありますか？',
+    hintTags: ['#決めたことは最後までやり切れる', '#複雑なことをわかりやすく伝えられる', '#困っている人を見たら放っておけない'],
     exampleTags: [],
   },
   {
     text: '最近、仕事でモヤモヤしていることや、\nなんとなく引っかかっていることはありますか？',
+    hintTags: ['#得意なことを活かせていない気がする', '#自分のペースで仕事ができない', '#頑張っても手応えを感じられない'],
     exampleTags: [],
   },
   {
     text: '職場での人との関わりで、うまくいっていると感じることや、\n逆に難しいと感じることはありますか？',
+    hintTags: ['#チームの雰囲気を大切にできる', '#上司に本音を話せない', '#本音で話せる同僚がいない'],
     exampleTags: [],
   },
   {
     text: '今の自分の状態について、誰かに正直に話すとしたら\n何を話したいですか？',
+    hintTags: ['#将来のキャリアが全く見えない', '#職場での孤独感がずっと続いている', '#自分の悩みをわかってもらえる人がいない気がする'],
     exampleTags: [],
   },
 ]
@@ -103,6 +107,7 @@ export default function OnboardingPage() {
       questionNumber={currentIndex + 1}
       totalQuestions={QUESTIONS.length}
       questionText={QUESTIONS[currentIndex].text}
+      hintTags={QUESTIONS[currentIndex].hintTags}
       exampleTags={QUESTIONS[currentIndex].exampleTags}
       onComplete={handleComplete}
     />

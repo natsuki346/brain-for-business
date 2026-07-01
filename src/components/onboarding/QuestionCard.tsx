@@ -20,6 +20,7 @@ type Props = {
   questionNumber:   number
   totalQuestions:   number
   questionText:     string
+  hintTags?:        string[]  // 質問文の下にヒントとして表示するタグ（非インタラクティブ）
   exampleTags?:     string[]  // 初回生成前に「例）」欄として表示しておく例タグ
   addButtonText?:   string   // タグ追加ボタンのラベル（デフォルト: '+ これ自分！'）
   onComplete:       (positive: string[], negative: string[]) => void
@@ -31,6 +32,7 @@ export function QuestionCard({
   questionNumber,
   totalQuestions,
   questionText,
+  hintTags = [],
   exampleTags = [],
   addButtonText = '+ これ自分！',
   onComplete,
@@ -204,7 +206,7 @@ export function QuestionCard({
         </p>
 
         {/* Question */}
-        <div className="mb-8 text-center" style={{ maxWidth: 320 }}>
+        <div className="mb-4 text-center" style={{ maxWidth: 320 }}>
           <div className="text-center">
             {questionText.split('\n').map((line, i) => (
               <p key={i} className="text-base font-bold leading-relaxed" style={{ color: c.questionText }}>
@@ -213,6 +215,24 @@ export function QuestionCard({
             ))}
           </div>
         </div>
+
+        {/* ── Hint tags ── */}
+        {hintTags.length > 0 && (
+          <div className="mb-6 text-center">
+            <p className="text-xs mb-2" style={{ color: 'rgba(0,0,0,0.35)' }}>例えば：</p>
+            <div className="flex flex-wrap gap-1.5 justify-center">
+              {hintTags.map(tag => (
+                <span
+                  key={tag}
+                  className="text-xs px-2.5 py-1 rounded-full"
+                  style={{ background: 'rgba(0,0,0,0.05)', color: 'rgba(0,0,0,0.4)' }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* ── Textarea ── */}
         <textarea
