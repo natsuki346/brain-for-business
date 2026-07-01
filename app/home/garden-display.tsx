@@ -7,6 +7,7 @@ import BubbleDetailModal from '@/src/components/BubbleDetailModal'
 import HelpModal from '@/src/components/HelpModal'
 import DaisyBubble from '@/src/components/DaisyBubble'
 import { NEGATIVE, POSITIVE, withAlpha } from '@/src/styles/colors'
+import { forceCollide, forceSimulation, forceX, forceY, type SimulationNodeDatum } from 'd3-force'
 
 type LightTag  = { id: string; text: string; growth_point: number; position_x?: number | null; position_y?: number | null }
 type ShadowTag = { id: string; text: string; growth_point: number; seed_weight: string | null; stage: string | null; position_x?: number | null; position_y?: number | null }
@@ -93,156 +94,66 @@ function getConsecutiveDays(dates: string[]): number {
   return count
 }
 
-// position_x / position_y は「バブル中心座標」(cx, cy) として保存・解釈する。
-// GardenSetupFlow.savePositions が書き込む値と意味を統一している。
-// generatePositions の戻り値 positions[].x/.y は CSS left/top 用の「左上座標」なので、
-// 中心 → 左上の変換は必ず (cx - r, cy - r) で行うこと。
-type StoredPos = { x?: number | null; y?: number | null }
-
-// バブル配置エリアの上端マージン。タブ行とバブルエリアの間は元々marginBottom:12pxしか
-// 無く、バブルのboxShadow(最大10pxにじみ)と合わさってタブに重なって見えるため確保する。
-// ※ バブルエリア自体は既にタブの下（通常のflowの後続要素）に配置されているので、
-//   ヘッダー全体の高さを足す必要はなく、エリア内の小さな安全マージンで十分。
 const BUBBLE_TOP_OFFSET = 24
 
-// ── 配置アルゴリズム ──
-// 重なりを最優先で排除しつつ、隙間なく密着させ、サイズが大きいバブルほど
-// 中央寄りになるようにする（同心円状の「空き地サーチ」による円充填）。
-// 1. 保存済み座標(中心)を元の順序で検証 → 既存同士で重ならず、上端マージンも
-//    侵していないものだけ確定採用（ユーザーが手動でドラッグした位置を無駄に動かさないため）
-// 2. 重なっていた/上端マージンに食い込んでいた/未保存のものは「未検査」として再生成対象に回す
-// 3. 再生成対象は直径の大きい順に処理し、配置エリアの中心から外側へリング状に
-//    候補点を走査して、最初に見つかった非重複地点（＝中心に最も近い空き）に置く
-//    （gap=2px、ほぼ密着）。大きいバブルが先に中心の最良地点を確保するため、
-//    自然と「大きいほど中央・小さいほど外側」になる。
-// 4. 配置エリア内に空きが見つからない極端なケースのみ、既存バブルの最下部に
-//    積み上げるフォールバック（gap=2px、必ず非重複）
-// changedIndices には「保存値と異なる座標になった（≒DBに書き戻すべき）」インデックスを返す
-function generatePositions(
-  count: number,
+// ── d3-force によるバブル配置 ──
+// growth_point が高いタグほど中心に引き寄せられる重み付きシミュレーション。
+// forceX / forceY の strength を growth_point に比例させることで、
+// 成長したバブルが自然に中央にクラスタリングされる。
+interface ForceNode extends SimulationNodeDatum {
+  x: number; y: number; r: number; gp: number
+}
+
+function simulatePositions(
   w: number,
   sizes: number[],
-  storedPos?: StoredPos[],
+  growthPoints: number[],
   topOffset: number = BUBBLE_TOP_OFFSET,
-): { positions: Array<{ x: number; y: number }>; changedIndices: number[] } {
-  if (count === 0) return { positions: [], changedIndices: [] }
+): Array<{ x: number; y: number }> {
+  const count = sizes.length
+  if (count === 0 || w === 0) return []
 
-  // ほぼ密着させるための最小ギャップ（0だとアンチエイリアスや影で接触に見えづらいため2px確保）
-  const GAP = 2
-  const result: Array<{ x: number; y: number }> = Array.from({ length: count }, () => ({ x: 0, y: 0 }))
-  const placed: Array<{ cx: number; cy: number; r: number }> = []
-  const needsGen: number[] = []
-
-  const noOverlap = (cx: number, cy: number, r: number): boolean =>
-    placed.every(p => Math.hypot(cx - p.cx, cy - p.cy) >= r + p.r + GAP)
-
-  // Phase 0: 保存済み座標(中心)を元の順序で検証。
-  // すでに確定済みの placed と重ならず、上端マージンも侵していない場合のみ確定採用し、
-  // それ以外は未検査として needsGen（再生成対象）に積む。
-  for (let i = 0; i < count; i++) {
-    const sp = storedPos?.[i]
-    const r  = (sizes[i] ?? 52) / 2
-    if (
-      sp && sp.x != null && sp.x !== 0 && sp.y != null && sp.y !== 0 &&
-      noOverlap(sp.x, sp.y, r) && sp.y - r >= topOffset
-    ) {
-      result[i] = { x: sp.x - r, y: sp.y - r }
-      placed.push({ cx: sp.x, cy: sp.y, r })
-    } else {
-      needsGen.push(i)
-    }
-  }
-  if (needsGen.length === 0) return { positions: result, changedIndices: [] }
-
-  // 直径の大きい順に処理（先に確保したバブルほど中心の最良地点を取れる）
-  const order = [...needsGen].sort((a, b) => (sizes[b] ?? 0) - (sizes[a] ?? 0))
-
-  // 配置エリアのY方向の上限は、未配置バブルの総面積から動的に算出する。
-  // 「総面積 × 余裕係数 ÷ 幅」で必要分だけ確保する（最小300pxは保証）。
-  // 余裕係数1.7は実測調整値：これより小さいとリングサーチが配置エリア内で
-  // 空きを見つけられず最下部フォールバックに落ちる頻度が増え、密着配置が崩れる。
-  const needsGenArea = needsGen.reduce((sum, idx) => {
-    const r = (sizes[idx] ?? 52) / 2
-    return sum + Math.PI * r * r
-  }, 0)
-  const AREA_FACTOR = 1.7
-  const yCap = Math.max(300, topOffset + (needsGenArea * AREA_FACTOR) / w)
-
-  // 配置エリアの中心（大きいバブルをここに最優先で寄せる）
   const cx0 = w / 2
-  const cy0 = topOffset + (yCap - topOffset) / 2
+  const totalArea = sizes.reduce((s, d) => s + Math.PI * (d / 2) ** 2, 0)
+  const simH = topOffset + Math.max(300, (totalArea * 2.2) / w)
+  const cy0 = topOffset + (simH - topOffset) * 0.45
 
-  const inBounds = (cx: number, cy: number, r: number): boolean =>
-    cx - r >= 10 && cx + r <= w - 10 &&
-    cy - r >= topOffset + 10 && cy + r <= yCap - 10
-
-  // 中心から配置エリアの隅までの最大距離（リングサーチの探索上限）
-  const maxRadius = Math.hypot(w / 2, (yCap - topOffset) / 2) + 20
-  const RADIAL_STEP = 3 // リングの半径方向の刻み(px)：小さいほど密着できるが探索コストが増える
-  const ARC_RES = 4     // 各リング上での弧の刻み(px)：小さいほど精度が上がるが探索コストが増える
-
-  // 中心(cx0, cy0)から外側へリング状に候補点を走査し、最初に見つかった
-  // 非重複・範囲内の地点を返す（＝中心に最も近い空き地）
-  const findNearestFreeSpot = (r: number): { cx: number; cy: number } | null => {
-    if (inBounds(cx0, cy0, r) && noOverlap(cx0, cy0, r)) return { cx: cx0, cy: cy0 }
-    for (let radius = RADIAL_STEP; radius <= maxRadius; radius += RADIAL_STEP) {
-      const numSamples = Math.max(8, Math.min(360, Math.ceil((2 * Math.PI * radius) / ARC_RES)))
-      for (let s = 0; s < numSamples; s++) {
-        const angle = (2 * Math.PI * s) / numSamples
-        const tx = cx0 + radius * Math.cos(angle)
-        const ty = cy0 + radius * Math.sin(angle)
-        if (inBounds(tx, ty, r) && noOverlap(tx, ty, r)) return { cx: tx, cy: ty }
-      }
+  // 決定論的な初期配置（インデックスに基づくリング状散布）
+  const nodes: ForceNode[] = sizes.map((size, i) => {
+    const angle = (2 * Math.PI * i) / Math.max(1, count)
+    const ir = Math.min(w / 6, 70)
+    return {
+      x: cx0 + ir * Math.cos(angle),
+      y: cy0 + ir * Math.sin(angle),
+      r: size / 2,
+      gp: growthPoints[i] ?? 0,
     }
-    return null
-  }
+  })
 
-  // シェルフ（行）パッキング・フォールバック：配置エリア内に空きが見つからない
-  // 極端なケースのみ、左→右に詰めて入らなくなったら次の行へ折り返す。
-  // 最初の行のベースラインは必ず yCap 以上にする（cx=w/2 固定で詰んでいくと
-  // 縦一列に並ぶ不具合があったため修正）。yCap はリングサーチが届く範囲
-  // （cy+r <= yCap-10）の上限でもあるため、これより下から開始すれば、処理順が
-  // 後になるリングサーチ済みバブルと時系列的に衝突することも構造的に無くなる。
-  let shelfActive = false
-  let shelfY = 0
-  let shelfNextX = 0
-  let shelfRowMaxR = 0
-  let fallbackCount = 0
+  // growth_point に比例した中心引力（gp=0→弱い引力、MAX_GP→強い引力）
+  const MAX_GP = 60
+  const MIN_STR = 0.02
+  const MAX_STR = 0.65
+  const strengthFn = (d: ForceNode) =>
+    MIN_STR + (MAX_STR - MIN_STR) * Math.min(d.gp / MAX_GP, 1)
 
-  const startNewShelfRow = (r: number, baseline: number) => {
-    shelfY = baseline + r + GAP + 10
-    shelfNextX = 10
-    shelfRowMaxR = r
-  }
+  const simulation = forceSimulation<ForceNode>(nodes)
+    .force('collide', forceCollide<ForceNode>(d => d.r + 2).strength(1).iterations(3))
+    .force('x', forceX<ForceNode>(cx0).strength(strengthFn))
+    .force('y', forceY<ForceNode>(cy0).strength(strengthFn))
+    .stop()
 
-  for (const idx of order) {
-    const r = (sizes[idx] ?? 52) / 2
-    let spot = findNearestFreeSpot(r)
-
-    if (!spot) {
-      fallbackCount++
-      if (!shelfActive) {
-        const placedBottomMax = placed.length > 0 ? Math.max(...placed.map(p => p.cy + p.r)) : topOffset
-        startNewShelfRow(r, Math.max(yCap, placedBottomMax))
-        shelfActive = true
-      } else if (shelfNextX + r * 2 > w - 10) {
-        startNewShelfRow(r, shelfY + shelfRowMaxR)
-      }
-      const cx = shelfNextX + r
-      spot = { cx, cy: shelfY }
-      shelfRowMaxR = Math.max(shelfRowMaxR, r)
-      shelfNextX += r * 2 + GAP
+  // 境界制約を各tick後に適用（左右端・上端を拘束、下方向は自由に伸ばす）
+  const MARGIN = 10
+  for (let tick = 0; tick < 300; tick++) {
+    simulation.tick()
+    for (const n of nodes) {
+      n.x = Math.max(n.r + MARGIN, Math.min(w - n.r - MARGIN, n.x))
+      n.y = Math.max(topOffset + n.r + MARGIN, n.y)
     }
-
-    placed.push({ cx: spot.cx, cy: spot.cy, r })
-    result[idx] = { x: spot.cx - r, y: spot.cy - r }
   }
 
-  if (fallbackCount > 0) {
-    console.log(`[generatePositions] needsGen=${needsGen.length} fallback(shelf)=${fallbackCount} yCap=${yCap.toFixed(0)}`)
-  }
-
-  return { positions: result, changedIndices: needsGen }
+  return nodes.map(n => ({ x: n.x - n.r, y: n.y - n.r }))
 }
 
 const DAISY_LEGEND = [
@@ -460,36 +371,14 @@ export default function GardenDisplay() {
     return friendBubbles.map(f => FRIEND_LEVEL_SIZES[f.level])
   }, [tab, lightTags, shadowTags, friendBubbles])
 
-  const { positions, changedIndices } = useMemo(() => {
-    if (containerW === 0) return { positions: [], changedIndices: [] }
-    return generatePositions(
-      currentTags.length,
+  const positions = useMemo(() => {
+    if (containerW === 0) return []
+    return simulatePositions(
       containerW,
       bubbleSizes,
-      currentTags.map(t => ({ x: t.position_x, y: t.position_y })),
-      BUBBLE_TOP_OFFSET,
+      currentTags.map(t => ('growth_point' in t ? (t as LightTag | ShadowTag).growth_point ?? 0 : 0)),
     )
   }, [tab, containerW, bubbleSizes, currentTags])
-
-  // 衝突解消で座標が変わった（≒保存値と異なる）タグはDBへ書き戻す。
-  // 次回読み込み時にも同じ重ならない配置がそのまま再現されるようにする。
-  // Friendバブルは tags テーブルの行を持たないため対象外。
-  useEffect(() => {
-    if (tab === 'friend' || changedIndices.length === 0) return
-    const userId = sessionStorage.getItem('user_id')
-    if (!userId) return
-    for (const i of changedIndices) {
-      const tag = currentTags[i]
-      const pos = positions[i]
-      if (!tag || !pos) continue
-      const r = (bubbleSizes[i] ?? 52) / 2
-      // result は左上座標なので、DB保存用の中心座標に変換し直す
-      ;(supabase.from('tags') as any)
-        .update({ position_x: pos.x + r, position_y: pos.y + r })
-        .eq('id', tag.id)
-        .eq('user_id', userId)
-    }
-  }, [changedIndices, positions, currentTags, bubbleSizes, tab])
 
   // 最も下のバブルの底辺 + 余白
   const canvasH = useMemo(() => {

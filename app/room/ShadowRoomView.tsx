@@ -236,9 +236,14 @@ export default function ShadowRoomView({ onSeedChatDone }: { onSeedChatDone?: ()
       if (depth) {
         const userId = sessionStorage.getItem('user_id')
         if (userId) {
-          commitSessionPoints(tag.id, depth, userId).then(({ newGrowthPoint, newStage, leveledUp }) => {
+          commitSessionPoints(tag.id, depth, userId).then(({ newGrowthPoint, newStage, leveledUp, deactivated }) => {
             if (leveledUp) {
               revealLevelUp(tag.id, newGrowthPoint, newStage)
+              if (deactivated) {
+                setTimeout(() => setTags(prev => prev.filter(t => t.id !== tag.id)), 800)
+              }
+            } else if (deactivated) {
+              setTags(prev => prev.filter(t => t.id !== tag.id))
             } else {
               setTags(prev => prev.map(t => (t.id === tag.id ? { ...t, growth_point: newGrowthPoint, stage: newStage } : t)))
             }

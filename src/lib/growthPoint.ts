@@ -39,10 +39,10 @@ export async function commitSessionPoints(
   tagId: string,
   deepestAction: ActionDepth,
   userId: string,
-): Promise<{ newGrowthPoint: number; newStage: number; leveledUp: boolean }> {
+): Promise<{ newGrowthPoint: number; newStage: number; leveledUp: boolean; deactivated: boolean }> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let { data: tag, error: fetchError } = await (supabase.from('tags') as any)
-    .select('growth_point, stage, seed_weight')
+    .select('growth_point, stage, seed_weight, type')
     .eq('id', tagId)
     .single()
 
@@ -50,7 +50,7 @@ export async function commitSessionPoints(
     // stage/seed_weight が未マイグレーション環境ではフォールバック
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const fallback = await (supabase.from('tags') as any)
-      .select('growth_point')
+      .select('growth_point, type')
       .eq('id', tagId)
       .single()
     if (fallback.data) {
@@ -61,7 +61,7 @@ export async function commitSessionPoints(
 
   if (fetchError || !tag) {
     console.error('commitSessionPoints fetch error:', fetchError?.message)
-    return { newGrowthPoint: 0, newStage: 0, leveledUp: false }
+    return { newGrowthPoint: 0, newStage: 0, leveledUp: false, deactivated: false }
   }
 
   const seedWeight: SeedWeight = tag.seed_weight === 'heavy' ? 'heavy' : 'light'
@@ -71,7 +71,7 @@ export async function commitSessionPoints(
   const currentStage = tag.stage ?? 0
 
   if (currentPoint >= maxPoint) {
-    return { newGrowthPoint: currentPoint, newStage: currentStage, leveledUp: false }
+    return { newGrowthPoint: currentPoint, newStage: currentStage, leveledUp: false, deactivated: false }
   }
 
   const newGrowthPoint = Math.min(currentPoint + ACTION_POINTS[deepestAction], maxPoint)
@@ -96,5 +96,15 @@ export async function commitSessionPoints(
 
   await recordTagEvent(tagId, userId, deepestAction)
 
-  return { newGrowthPoint, newStage, leveledUp }
+  // Negativeタグが上限に達した場合、is_active=false にして非表示にする（削除はしない）
+  let deactivated = false
+  if (!updateError && tag.type === 'shadow' && newGrowthPoint >= maxPoint) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (supabase.from('tags') as any)
+      .update({ is_active: false })
+      .eq('id', tagId)
+    deactivated = true
+  }
+
+  return { newGrowthPoint, newStage, leveledUp, deactivated }
 }
