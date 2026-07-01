@@ -666,7 +666,7 @@ export default function GardenDisplay() {
               bg = activeBg; textColor = activeText
             } else {
               bg = negativeGrowthBubbleColor((tag as ShadowTag).growth_point ?? 0)
-              textColor = NEGATIVE.text
+              textColor = '#FFFFFF'
             }
 
             return (
@@ -751,7 +751,7 @@ export default function GardenDisplay() {
                 ) : (
                   <span style={{
                     fontSize: clamp(Math.round(size * 0.14), 8, 12),
-                    fontWeight: 700, color: NEGATIVE.text,
+                    fontWeight: 700, color: '#FFFFFF',
                     maxWidth: size - 8, overflow: 'hidden',
                     textAlign: 'center', lineHeight: 1.3,
                     wordBreak: 'break-all',
