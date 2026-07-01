@@ -45,6 +45,7 @@ export function QuestionCard({
   const [isGenerating,   setIsGenerating]   = useState(false)
   const [error,          setError]          = useState<string | null>(null)
   const [showAll,        setShowAll]        = useState(false)
+  const [selectedHintTags, setSelectedHintTags] = useState<Set<string>>(new Set())
   const [suggestedTags,  setSuggestedTags]  = useState<Set<string>>(new Set())
   const [positiveTagSet, setPositiveTagSet] = useState<Set<string>>(new Set())
   // AIが生成・提案した候補タグごとの「既に持っている人数」（textを#なしに正規化したものをキーにする）
@@ -100,6 +101,18 @@ export function QuestionCard({
     })()
     return () => { cancelled = true }
   }, [generatedTags])
+
+  const toggleHintTag = (tag: string) => {
+    if (selectedHintTags.has(tag)) {
+      setSelectedHintTags(prev => { const n = new Set(prev); n.delete(tag); return n })
+      const updated = text.split('\n').filter(line => line !== tag).join('\n').trim()
+      setText(updated)
+      if (!updated && generatedTags.length > 0) setGeneratedTags([])
+    } else {
+      setSelectedHintTags(prev => new Set([...prev, tag]))
+      setText(t => t.trim() ? `${t.trim()}\n${tag}` : tag)
+    }
+  }
 
   const handleGenerate = async () => {
     if (!text.trim() || isGenerating) return
@@ -226,15 +239,24 @@ export function QuestionCard({
           <div className="mb-6 text-center">
             <p className="text-xs mb-2" style={{ color: 'rgba(0,0,0,0.35)' }}>例えば：</p>
             <div className="flex flex-wrap gap-1.5 justify-center">
-              {hintTags.map(tag => (
-                <span
-                  key={tag}
-                  className="text-xs px-2.5 py-1 rounded-full"
-                  style={{ background: 'rgba(0,0,0,0.05)', color: 'rgba(0,0,0,0.4)' }}
-                >
-                  {tag}
-                </span>
-              ))}
+              {hintTags.map(tag => {
+                const selected = selectedHintTags.has(tag)
+                return (
+                  <button
+                    key={tag}
+                    onClick={() => toggleHintTag(tag)}
+                    className="text-xs px-2.5 py-1 rounded-full transition-all"
+                    style={{
+                      background: selected ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.05)',
+                      color:      selected ? 'rgba(0,0,0,0.75)' : 'rgba(0,0,0,0.4)',
+                      border: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {tag}
+                  </button>
+                )
+              })}
             </div>
           </div>
         )}
