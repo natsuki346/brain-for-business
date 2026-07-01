@@ -30,9 +30,9 @@ const FRIEND_LEVEL_SIZES: Record<1 | 2 | 3, number> = {
   3: Math.round(BASE_FRIEND_SIZE * 1.4),
 }
 const FRIEND_LEVEL_COLORS: Record<1 | 2 | 3, { bg: string; text: string }> = {
-  1: { bg: '#B8D4E8', text: '#2C5F7A' },
-  2: { bg: '#F5E8A0', text: '#7A6A00' },
-  3: { bg: '#E88080', text: '#7A1F1F' },
+  1: { bg: '#EEEEEE', text: '#444444' },
+  2: { bg: '#E0E0E0', text: '#333333' },
+  3: { bg: '#D0D0D0', text: '#1A1A1A' },
 }
 
 function getDaisyEmoji(gp: number): string {
@@ -41,21 +41,24 @@ function getDaisyEmoji(gp: number): string {
   return '🌼'
 }
 
-// seed_weight（数値 or 文字列）からバブルスタイルを決定
-// 数値: 0〜2=seed, 3〜6=sprout, 7〜=bloom
-// 旧フォーマット文字列('light'/'heavy')は stage で判定
-function getSeedBubble(stage: string | null, seedWeight: string | null): { emoji: string; bg: string; text: string } {
-  const sw = parseFloat(String(seedWeight ?? ''))
-  if (!isNaN(sw)) {
-    if (sw >= 7) return { emoji: '🌼', bg: NEGATIVE.base, text: NEGATIVE.textDeep }
-    if (sw >= 3) return { emoji: '🌿', bg: NEGATIVE.soft, text: NEGATIVE.text }
-    return { emoji: '🌱', bg: NEGATIVE.pale, text: NEGATIVE.text }
-  }
-  // 旧フォーマット：stage 文字列で判定
-  if (stage === 'bloom')                      return { emoji: '🌼', bg: NEGATIVE.base, text: NEGATIVE.textDeep }
-  if (stage === 'bud' || stage === 'budding') return { emoji: '🌿', bg: NEGATIVE.soft, text: NEGATIVE.text }
-  if (stage === 'sprout')                     return { emoji: '🌿', bg: NEGATIVE.soft, text: NEGATIVE.text }
-  return { emoji: '🌱', bg: NEGATIVE.pale, text: NEGATIVE.text }
+// growth_point に応じて青→紫→赤へ滑らかに変化する背景色
+// 最大値は HEAVY_THRESHOLDS の上限（growthPoint.ts 参照）
+const NEGATIVE_MAX_GROWTH = 60
+
+function lerpRgb(c1: [number, number, number], c2: [number, number, number], t: number): string {
+  return `rgb(${Math.round(c1[0]+(c2[0]-c1[0])*t)},${Math.round(c1[1]+(c2[1]-c1[1])*t)},${Math.round(c1[2]+(c2[2]-c1[2])*t)})`
+}
+function hexToRgbArr(hex: string): [number, number, number] {
+  const n = parseInt(hex.replace('#', ''), 16)
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255]
+}
+function negativeGrowthBubbleColor(growthPoint: number): string {
+  const t      = Math.min(1, Math.max(0, (growthPoint ?? 0) / NEGATIVE_MAX_GROWTH))
+  const blue   = hexToRgbArr(NEGATIVE.base)                 // #3B82F6
+  const purple: [number, number, number] = [139, 92, 246]   // #8B5CF6
+  const red    = hexToRgbArr(POSITIVE.base)                 // #EF4444
+  if (t <= 0.5) return lerpRgb(blue, purple, t * 2)
+  return lerpRgb(purple, red, (t - 0.5) * 2)
 }
 
 const BASE_SEED_SIZE  = 68
@@ -527,14 +530,14 @@ export default function GardenDisplay() {
 
   if (loading) {
     return (
-      <div style={{ textAlign: 'center', paddingTop: 80, color: 'rgba(59,47,30,0.4)', fontSize: 13 }}>
+      <div style={{ textAlign: 'center', paddingTop: 80, color: 'rgba(0,0,0,0.4)', fontSize: 13 }}>
         読み込み中...
       </div>
     )
   }
 
-  const activeBg   = tab === 'light' ? POSITIVE.pale : tab === 'shadow' ? NEGATIVE.pale : '#B8D4E8'
-  const activeText = tab === 'light' ? POSITIVE.text : tab === 'shadow' ? NEGATIVE.text : '#2C5F7A'
+  const activeBg   = tab === 'light' ? POSITIVE.pale : tab === 'shadow' ? NEGATIVE.pale : '#E0E0E0'
+  const activeText = tab === 'light' ? POSITIVE.text : tab === 'shadow' ? NEGATIVE.text : '#333333'
   const legend     = tab === 'light' ? DAISY_LEGEND : tab === 'shadow' ? SEED_LEGEND : FRIEND_LEGEND
 
   return (
@@ -554,10 +557,10 @@ export default function GardenDisplay() {
           display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
         }}>
           <div>
-            <h1 style={{ fontSize: 20, fontWeight: 700, color: '#3B2F1E', margin: '0 0 2px' }}>
+            <h1 style={{ fontSize: 20, fontWeight: 700, color: '#111111', margin: '0 0 2px' }}>
               🌿 わたしのガーデン
             </h1>
-            <p style={{ fontSize: 12, color: 'rgba(59,47,30,0.45)', margin: 0 }}>
+            <p style={{ fontSize: 12, color: 'rgba(0,0,0,0.4)', margin: 0 }}>
               タグをタップしてルームへ
             </p>
           </div>
@@ -566,8 +569,8 @@ export default function GardenDisplay() {
             aria-label="ヘルプ"
             style={{
               width: 32, height: 32, borderRadius: '50%',
-              background: '#FFFFFF', border: '1px solid rgba(139,105,20,0.2)',
-              cursor: 'pointer', fontSize: 14, fontWeight: 700, color: '#8B6914',
+              background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.15)',
+              cursor: 'pointer', fontSize: 14, fontWeight: 700, color: '#333333',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               flexShrink: 0, marginTop: 4,
             }}
@@ -585,10 +588,10 @@ export default function GardenDisplay() {
           ].map(({ label, value }, i) => (
             <div key={label} style={{
               flex: 1, textAlign: 'center',
-              borderLeft: i > 0 ? '1px solid rgba(59,47,30,0.1)' : 'none',
+              borderLeft: i > 0 ? '1px solid rgba(0,0,0,0.08)' : 'none',
             }}>
-              <p style={{ fontSize: 18, fontWeight: 700, color: '#3B2F1E', margin: 0 }}>{value}</p>
-              <p style={{ fontSize: 10, color: 'rgba(59,47,30,0.5)', margin: 0 }}>{label}</p>
+              <p style={{ fontSize: 18, fontWeight: 700, color: '#111111', margin: 0 }}>{value}</p>
+              <p style={{ fontSize: 10, color: 'rgba(0,0,0,0.4)', margin: 0 }}>{label}</p>
             </div>
           ))}
         </div>
@@ -596,8 +599,8 @@ export default function GardenDisplay() {
         {/* ── タブ ── */}
         <div style={{ display: 'flex', padding: '0 20px', gap: 8, marginBottom: 12, flexShrink: 0 }}>
           {(['light', 'shadow', 'friend'] as TabType[]).map(t => {
-            const tabBorder = t === 'light' ? POSITIVE.base : t === 'shadow' ? NEGATIVE.base : '#B8D4E8'
-            const tabText = t === 'light' ? POSITIVE.text : t === 'shadow' ? NEGATIVE.text : '#2C5F7A'
+            const tabBorder = t === 'light' ? POSITIVE.base : t === 'shadow' ? NEGATIVE.base : '#888888'
+            const tabText = t === 'light' ? POSITIVE.text : t === 'shadow' ? NEGATIVE.text : '#333333'
             const tabLabel = t === 'light' ? '🌼 Positive' : t === 'shadow' ? '🌱 Negative' : '🤝 Friend'
             return (
               <button
@@ -606,8 +609,8 @@ export default function GardenDisplay() {
                 style={{
                   flex: 1, padding: '10px 0', borderRadius: 12,
                   background: '#FFFFFF',
-                  border: tab === t ? `2px solid ${tabBorder}` : '1px solid rgba(59,47,30,0.12)',
-                  color: tab === t ? tabText : 'rgba(59,47,30,0.4)',
+                  border: tab === t ? `2px solid ${tabBorder}` : '1px solid rgba(0,0,0,0.1)',
+                  color: tab === t ? tabText : 'rgba(0,0,0,0.4)',
                   fontSize: 13, fontWeight: tab === t ? 700 : 500, cursor: 'pointer',
                   transition: 'background 0.2s ease, color 0.2s ease, border-color 0.2s ease',
                 }}
@@ -648,7 +651,7 @@ export default function GardenDisplay() {
               position: 'absolute', top: '50%', left: '50%',
               transform: 'translate(-50%,-50%)', textAlign: 'center',
             }}>
-              <p style={{ fontSize: 14, color: 'rgba(59,47,30,0.35)', margin: 0 }}>
+              <p style={{ fontSize: 14, color: 'rgba(0,0,0,0.3)', margin: 0 }}>
                 タグがありません
               </p>
             </div>
@@ -668,8 +671,8 @@ export default function GardenDisplay() {
             } else if (tab === 'light') {
               bg = activeBg; textColor = activeText
             } else {
-              const s = getSeedBubble((tag as ShadowTag).stage, (tag as ShadowTag).seed_weight)
-              bg = s.bg; textColor = s.text
+              bg = negativeGrowthBubbleColor((tag as ShadowTag).growth_point ?? 0)
+              textColor = NEGATIVE.text
             }
 
             return (
@@ -695,7 +698,7 @@ export default function GardenDisplay() {
                   alignItems: 'center', justifyContent: 'center', gap: 2,
                   overflow: 'hidden',
                   boxShadow: isPulsing
-                    ? `0 0 20px ${withAlpha(tab === 'shadow' ? NEGATIVE.base : POSITIVE.base, 0.55)}, 0 3px 10px rgba(0,0,0,0.1)`
+                    ? `0 0 20px rgba(0,0,0,0.3), 0 3px 10px rgba(0,0,0,0.1)`
                     : '0 3px 10px rgba(0,0,0,0.1)',
                   opacity: visible ? 1 : 0,
                   transform: visible ? 'scale(1)' : 'scale(0.75)',
@@ -740,30 +743,28 @@ export default function GardenDisplay() {
                     <DaisyBubble size={size} />
                     <span style={{
                       position: 'absolute',
-                      bottom: Math.max(Math.round(size * 0.1), 4),
-                      left: 0, right: 0, textAlign: 'center',
-                      fontSize: clamp(Math.round(size * 0.13), 7, 11),
+                      left: 4, right: 4, top: 0, bottom: 0,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      textAlign: 'center',
+                      fontSize: clamp(Math.round(size * 0.13), 7, 12),
                       fontWeight: 700, color: POSITIVE.textDeep,
-                      overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                      paddingLeft: 6, paddingRight: 6,
+                      overflow: 'hidden', lineHeight: 1.3,
+                      wordBreak: 'break-all',
                     }}>
-                      #{tag.text.replace(/^#+/, '')}
+                      {tag.text.replace(/^#+/, '')}
                     </span>
                   </>
                 ) : (
-                  <>
-                    <span style={{ fontSize: clamp(Math.round(size * 0.28), 16, 28) }}>
-                      {getSeedBubble((tag as ShadowTag).stage, (tag as ShadowTag).seed_weight).emoji}
-                    </span>
-                    <span style={{
-                      fontSize: clamp(Math.round(size * 0.14), 8, 11),
-                      fontWeight: 600, color: textColor,
-                      maxWidth: size - 10, overflow: 'hidden',
-                      textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                    }}>
-                      #{tag.text.replace(/^#+/, '')}
-                    </span>
-                  </>
+                  <span style={{
+                    fontSize: clamp(Math.round(size * 0.14), 8, 12),
+                    fontWeight: 700, color: NEGATIVE.text,
+                    maxWidth: size - 8, overflow: 'hidden',
+                    textAlign: 'center', lineHeight: 1.3,
+                    wordBreak: 'break-all',
+                    paddingLeft: 4, paddingRight: 4,
+                  }}>
+                    {tag.text.replace(/^#+/, '')}
+                  </span>
                 )}
               </button>
             )
@@ -775,7 +776,7 @@ export default function GardenDisplay() {
       <div style={{ padding: '10px 20px 16px', flexShrink: 0 }}>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           {legend.map(({ emoji, label }) => (
-            <span key={label} style={{ fontSize: 11, color: 'rgba(59,47,30,0.5)' }}>
+            <span key={label} style={{ fontSize: 11, color: 'rgba(0,0,0,0.4)' }}>
               {emoji} {label}
             </span>
           ))}

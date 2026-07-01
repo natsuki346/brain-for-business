@@ -3,8 +3,8 @@
 import { useRouter, usePathname } from 'next/navigation'
 
 const NAV_ITEMS = [
-  { icon: '🌿', label: 'ガーデン',     path: '/home' },
-  { icon: '🏠', label: 'ルーム',       path: '/room/light' },
+  { icon: '🌿', label: 'ホーム',       path: '/home' },
+  { icon: '🏠', label: 'つながり',     path: '/room/light' },
   { icon: '👤', label: 'プロフィール', path: '/profile' },
 ]
 
@@ -22,7 +22,7 @@ export function BottomNav({ onRoomClick, onGardenClick }: BottomNavProps = {}) {
       position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
       width: '100%', maxWidth: 390, zIndex: 100,
       display: 'flex', justifyContent: 'space-around', alignItems: 'center',
-      background: '#FFFFFF', borderTop: '1px solid rgba(139,115,85,0.15)',
+      background: '#FFFFFF', borderTop: '1px solid rgba(0,0,0,0.1)',
       padding: '10px 0 18px',
     }}>
       {NAV_ITEMS.map(item => {
@@ -40,7 +40,7 @@ export function BottomNav({ onRoomClick, onGardenClick }: BottomNavProps = {}) {
             style={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
               background: 'none', border: 'none', cursor: 'pointer',
-              color: active ? '#4A7C59' : '#A89880',
+              color: active ? '#000000' : '#999999',
               fontWeight: active ? 700 : 500,
             }}
           >
