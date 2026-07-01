@@ -20,8 +20,7 @@ type Props = {
   questionNumber:   number
   totalQuestions:   number
   questionText:     string
-  hintTags?:        string[]  // 質問文の下にヒントとして表示するタグ（非インタラクティブ）
-  exampleTags?:     string[]  // 初回生成前に「例）」欄として表示しておく例タグ
+  exampleTags?:     string[]  // 初回生成前に候補タグとして表示しておく例タグ
   addButtonText?:   string   // タグ追加ボタンのラベル（デフォルト: '+ これ自分！'）
   onComplete:       (positive: string[], negative: string[]) => void
 }
@@ -32,7 +31,6 @@ export function QuestionCard({
   questionNumber,
   totalQuestions,
   questionText,
-  hintTags = [],
   exampleTags = [],
   addButtonText = '+ これ自分！',
   onComplete,
@@ -45,7 +43,6 @@ export function QuestionCard({
   const [isGenerating,   setIsGenerating]   = useState(false)
   const [error,          setError]          = useState<string | null>(null)
   const [showAll,        setShowAll]        = useState(false)
-  const [selectedHintTags, setSelectedHintTags] = useState<Set<string>>(new Set())
   const [suggestedTags,  setSuggestedTags]  = useState<Set<string>>(new Set())
   const [positiveTagSet, setPositiveTagSet] = useState<Set<string>>(new Set())
   // AIが生成・提案した候補タグごとの「既に持っている人数」（textを#なしに正規化したものをキーにする）
@@ -90,29 +87,17 @@ export function QuestionCard({
     candidateCount:     'rgba(0,0,0,0.35)',
   }
 
-  // AIが生成・提案した候補タグが更新されるたびに、既に持っている人数をまとめて取得する。
+  // 表示中の候補タグ（生成済み or 例タグ）が更新されるたびに既に持っている人数を取得する。
   // 取得が遅れても画面はブロックしない（未取得の間はその行を表示しないだけ）。
   useEffect(() => {
-    if (generatedTags.length === 0) { setTagCounts({}); return }
+    if (displayTags.length === 0) { setTagCounts({}); return }
     let cancelled = false
     ;(async () => {
-      const counts = await getTagCounts(generatedTags)
+      const counts = await getTagCounts(displayTags)
       if (!cancelled) setTagCounts(counts)
     })()
     return () => { cancelled = true }
-  }, [generatedTags])
-
-  const toggleHintTag = (tag: string) => {
-    if (selectedHintTags.has(tag)) {
-      setSelectedHintTags(prev => { const n = new Set(prev); n.delete(tag); return n })
-      const updated = text.split('\n').filter(line => line !== tag).join('\n').trim()
-      setText(updated)
-      if (!updated && generatedTags.length > 0) setGeneratedTags([])
-    } else {
-      setSelectedHintTags(prev => new Set([...prev, tag]))
-      setText(t => t.trim() ? `${t.trim()}\n${tag}` : tag)
-    }
-  }
+  }, [generatedTags, exampleTags])
 
   const handleGenerate = async () => {
     if (!text.trim() || isGenerating) return
@@ -224,7 +209,7 @@ export function QuestionCard({
         </p>
 
         {/* Question */}
-        <div className="mb-4 text-center" style={{ maxWidth: 320 }}>
+        <div className="mb-8 text-center" style={{ maxWidth: 320 }}>
           <div className="text-center">
             {questionText.split('\n').map((line, i) => (
               <p key={i} className="text-base font-bold leading-relaxed" style={{ color: c.questionText }}>
@@ -233,33 +218,6 @@ export function QuestionCard({
             ))}
           </div>
         </div>
-
-        {/* ── Hint tags ── */}
-        {hintTags.length > 0 && (
-          <div className="mb-6 text-center">
-            <p className="text-xs mb-2" style={{ color: 'rgba(0,0,0,0.35)' }}>例えば：</p>
-            <div className="flex flex-wrap gap-1.5 justify-center">
-              {hintTags.map(tag => {
-                const selected = selectedHintTags.has(tag)
-                return (
-                  <button
-                    key={tag}
-                    onClick={() => toggleHintTag(tag)}
-                    className="text-xs px-2.5 py-1 rounded-full transition-all"
-                    style={{
-                      background: selected ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.05)',
-                      color:      selected ? 'rgba(0,0,0,0.75)' : 'rgba(0,0,0,0.4)',
-                      border: 'none',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {tag}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-        )}
 
         {/* ── Textarea ── */}
         <textarea
