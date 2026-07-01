@@ -747,7 +747,7 @@ export default function GardenDisplay() {
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       textAlign: 'center',
                       fontSize: clamp(Math.round(size * 0.13), 7, 12),
-                      fontWeight: 700, color: POSITIVE.textDeep,
+                      fontWeight: 700, color: '#FFFFFF',
                       overflow: 'hidden', lineHeight: 1.3,
                       wordBreak: 'break-all',
                     }}>
