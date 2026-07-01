@@ -131,15 +131,15 @@ export default function LightRoomView() {
   }
 
   if (loading) {
-    return <p className="text-sm text-center mt-10" style={{ color: 'rgba(120,100,70,0.5)' }}>読み込み中...</p>
+    return <p className="text-sm text-center mt-10" style={{ color: 'rgba(0,0,0,0.4)' }}>読み込み中...</p>
   }
   if (tags.length === 0) {
-    return <p className="text-sm text-center mt-10" style={{ color: 'rgba(120,100,70,0.5)' }}>タグが見つかりません</p>
+    return <p className="text-sm text-center mt-10" style={{ color: 'rgba(0,0,0,0.4)' }}>タグが見つかりません</p>
   }
 
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-      <p className="text-center text-xs mb-4" style={{ color: 'rgba(59,47,30,0.45)', flexShrink: 0 }}>
+      <p className="text-center text-xs mb-4" style={{ color: 'rgba(0,0,0,0.4)', flexShrink: 0 }}>
         スワイプして選び、タップして部屋に入る
       </p>
 

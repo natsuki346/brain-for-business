@@ -14,13 +14,13 @@ import SeedQuoteModal from '@/src/components/room/SeedQuoteModal'
 type Tag = { id: string; text: string; growth_point: number; stage: number; seed_weight: string | null }
 
 // ガーデンと同じ設計：seed_weight の数値でステージを決定
-function getSeedBubble(seedWeight: string | null): { emoji: string; bg: string; textColor: string } {
+function getSeedBubble(seedWeight: string | null): { bg: string; textColor: string } {
   const sw = parseFloat(String(seedWeight ?? ''))
   if (!isNaN(sw)) {
-    if (sw >= 7) return { emoji: '🌼', bg: NEGATIVE.base, textColor: NEGATIVE.textDeep }
-    if (sw >= 3) return { emoji: '🌿', bg: NEGATIVE.soft, textColor: NEGATIVE.text }
+    if (sw >= 7) return { bg: NEGATIVE.base, textColor: NEGATIVE.textDeep }
+    if (sw >= 3) return { bg: NEGATIVE.soft, textColor: NEGATIVE.text }
   }
-  return { emoji: '🌱', bg: NEGATIVE.pale, textColor: NEGATIVE.text }
+  return { bg: NEGATIVE.pale, textColor: NEGATIVE.text }
 }
 
 const ITEM_WIDTH = 160
@@ -249,16 +249,16 @@ export default function ShadowRoomView({ onSeedChatDone }: { onSeedChatDone?: ()
   }
 
   if (loading) {
-    return <p className="text-sm text-center mt-10" style={{ color: 'rgba(120,100,70,0.5)' }}>読み込み中...</p>
+    return <p className="text-sm text-center mt-10" style={{ color: 'rgba(0,0,0,0.4)' }}>読み込み中...</p>
   }
 
   if (tags.length === 0) {
-    return <p className="text-sm text-center mt-10" style={{ color: 'rgba(120,100,70,0.5)' }}>タグが見つかりません</p>
+    return <p className="text-sm text-center mt-10" style={{ color: 'rgba(0,0,0,0.4)' }}>タグが見つかりません</p>
   }
 
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-      <p className="text-center text-xs mb-4" style={{ color: 'rgba(59,47,30,0.45)', flexShrink: 0 }}>
+      <p className="text-center text-xs mb-4" style={{ color: 'rgba(0,0,0,0.4)', flexShrink: 0 }}>
         スワイプして選び、タップして部屋に入る
       </p>
 
@@ -304,7 +304,7 @@ export default function ShadowRoomView({ onSeedChatDone }: { onSeedChatDone?: ()
             const active   = i === activeIndex
             const isGrow   = growingTagId === tag.id
             const bubble   = getSeedBubble(tag.seed_weight)
-            const dispBubble = isGrow ? { emoji: '🌿', bg: NEGATIVE.soft, textColor: NEGATIVE.text } : bubble
+            const dispBubble = isGrow ? { bg: NEGATIVE.soft, textColor: NEGATIVE.text } : bubble
             return (
               <button
                 key={tag.id}
@@ -344,7 +344,6 @@ export default function ShadowRoomView({ onSeedChatDone }: { onSeedChatDone?: ()
                     ? '0 4px 16px rgba(0,0,0,0.18)'
                     : '0 2px 8px rgba(0,0,0,0.12)',
                 }}>
-                  <span style={{ fontSize: 28, lineHeight: 1 }}>{dispBubble.emoji}</span>
                   <span style={{
                     fontSize: 10, fontWeight: 600, color: dispBubble.textColor,
                     maxWidth: BUBBLE_DIAMETER - 8,

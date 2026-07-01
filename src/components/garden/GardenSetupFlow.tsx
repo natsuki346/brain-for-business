@@ -156,14 +156,14 @@ export default function GardenSetupFlow({ lightTags, shadowTags, onComplete }: G
     >
       {/* ヘッダー */}
       <div className="flex items-center justify-between mb-1" style={{ flexShrink: 0 }}>
-        <h1 className="text-xl font-bold" style={{ color: '#3B2F1E' }}>
-          {isStep1 ? '🌻 実の畑を整えよう' : '🌱 根の畑を整えよう'}
+        <h1 className="text-xl font-bold" style={{ color: '#111111' }}>
+          {isStep1 ? '実の畑を整えよう' : '根の畑を整えよう'}
         </h1>
-        <span className="text-sm font-bold" style={{ color: 'rgba(59,47,30,0.5)' }}>
+        <span className="text-sm font-bold" style={{ color: 'rgba(0,0,0,0.45)' }}>
           {step} / 2
         </span>
       </div>
-      <p className="text-sm mb-4" style={{ color: 'rgba(59,47,30,0.55)', flexShrink: 0 }}>
+      <p className="text-sm mb-4" style={{ color: 'rgba(0,0,0,0.5)', flexShrink: 0 }}>
         {isStep1 ? 'Positiveを動かして、自分だけの花畑を作ろう' : 'Negativeを動かして、自分の根っこを配置しよう'}
       </p>
 
@@ -183,7 +183,7 @@ export default function GardenSetupFlow({ lightTags, shadowTags, onComplete }: G
             position: 'absolute', top: '50%', left: '50%',
             transform: 'translate(-50%, -50%)',
             width: '100%', padding: '0 32px',
-            color: '#8B6914', fontSize: 14, textAlign: 'center',
+            color: '#555555', fontSize: 14, textAlign: 'center',
           }}>
             <p style={{ margin: 0 }}>
               {isStep1 ? '光タグ' : '影タグ'}が登録されていません
@@ -229,7 +229,7 @@ export default function GardenSetupFlow({ lightTags, shadowTags, onComplete }: G
           disabled={saving}
           className="w-full h-full rounded-xl text-base font-bold flex items-center justify-center"
           style={{
-            background: '#4A7C59', color: '#FFFFFF', border: 'none',
+            background: '#1A1A1A', color: '#FFFFFF', border: 'none',
             cursor: saving ? 'default' : 'pointer', opacity: saving ? 0.6 : 1,
           }}
         >

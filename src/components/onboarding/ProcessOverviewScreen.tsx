@@ -4,15 +4,15 @@ import { useEffect, useState } from 'react'
 
 const STEPS = [
   {
-    icon: '🌱',
+    icon: '💡',
     num: '①',
     title: '自分を理解する',
     desc: '4つの質問に答えて、あなた自身の光と影のタグを見つけよう',
-    accent: '#4A7C59',
+    accent: '#1A1A1A',
     bg: '#EBF4ED',
   },
   {
-    icon: '🌼',
+    icon: '🤝',
     num: '②',
     title: '仲間と繋がる',
     desc: '同じタグを持つ仲間が集まるルームで、言葉を交わそう',
@@ -20,7 +20,7 @@ const STEPS = [
     bg: '#FBF4E4',
   },
   {
-    icon: '🌸',
+    icon: '✨',
     num: '③',
     title: '向き合い、成長する',
     desc: '自分の根と向き合いながら、Positiveを咲かせていこう',
@@ -59,17 +59,16 @@ export default function ProcessOverviewScreen({ onUnderstand }: Props) {
     >
       {/* ヘッダー */}
       <div style={{ paddingTop: 64, textAlign: 'center', marginBottom: 36, ...show(1) }}>
-        <div style={{ fontSize: 40, lineHeight: 1, marginBottom: 16 }}>🌼</div>
         <h1
           style={{
-            fontSize: 26, fontWeight: 800, color: '#3B2F1E',
+            fontSize: 26, fontWeight: 800, color: '#111111',
             lineHeight: 1.5, margin: '0 0 10px',
             letterSpacing: '0.02em',
           }}
         >
           ありのままに、<br />愛でるために
         </h1>
-        <p style={{ fontSize: 14, color: 'rgba(59,47,30,0.45)', margin: 0 }}>
+        <p style={{ fontSize: 14, color: 'rgba(0,0,0,0.4)', margin: 0 }}>
           この旅の3つのステップ
         </p>
       </div>
@@ -105,13 +104,13 @@ export default function ProcessOverviewScreen({ onUnderstand }: Props) {
               {/* テキスト */}
               <div style={{ flex: 1, paddingTop: 5 }}>
                 <p style={{
-                  fontSize: 16, fontWeight: 700, color: '#3B2F1E',
+                  fontSize: 16, fontWeight: 700, color: '#111111',
                   margin: '0 0 5px', lineHeight: 1.35,
                 }}>
                   {title}
                 </p>
                 <p style={{
-                  fontSize: 13, color: 'rgba(59,47,30,0.6)',
+                  fontSize: 13, color: 'rgba(0,0,0,0.5)',
                   margin: 0, lineHeight: 1.7,
                 }}>
                   {desc}
@@ -130,9 +129,9 @@ export default function ProcessOverviewScreen({ onUnderstand }: Props) {
               >
                 <svg width="16" height="22" viewBox="0 0 16 22" fill="none">
                   <line x1="8" y1="1" x2="8" y2="13"
-                    stroke="#3B2F1E" strokeWidth="1.5" strokeDasharray="3 2.5" strokeLinecap="round" />
+                    stroke="#111111" strokeWidth="1.5" strokeDasharray="3 2.5" strokeLinecap="round" />
                   <path d="M3 11 L8 17 L13 11"
-                    stroke="#3B2F1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    stroke="#111111" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
             )}
@@ -146,7 +145,7 @@ export default function ProcessOverviewScreen({ onUnderstand }: Props) {
         style={{
           width: '100%', padding: '14px',
           borderRadius: 24, border: 'none',
-          background: '#4A7C59', color: '#FFFFFF',
+          background: '#1A1A1A', color: '#FFFFFF',
           fontSize: 15, fontWeight: 700, cursor: 'pointer',
           marginTop: 32,
           ...show(5),

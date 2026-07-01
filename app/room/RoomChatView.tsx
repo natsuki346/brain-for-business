@@ -10,8 +10,8 @@ import RoomChat from '@/src/components/room/RoomChat'
 import { DUMMY_MESSAGES_COMMON } from './dummy-messages'
 
 const ROOM_INFO: Record<'light' | 'shadow', { icon: string; label: string; backHref: string }> = {
-  light:  { icon: '🌼', label: 'Positive', backHref: '/onboarding/room-visit/light' },
-  shadow: { icon: '🌱', label: 'Negative',  backHref: '/onboarding/room-visit/shadow' },
+  light:  { icon: '', label: 'Positive', backHref: '/onboarding/room-visit/light' },
+  shadow: { icon: '', label: 'Negative',  backHref: '/onboarding/room-visit/shadow' },
 }
 
 function RoomChatViewContent({ type }: { type: 'light' | 'shadow' }) {

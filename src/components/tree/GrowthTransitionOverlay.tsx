@@ -70,7 +70,7 @@ export default function GrowthTransitionOverlay({
           style={{
             fontSize: message?.titleSize ?? 17,
             fontWeight: 700,
-            color: '#3B2F1E',
+            color: '#111111',
             margin: '0 0 6px',
             lineHeight: 1.55,
             opacity: phase >= 3 ? 1 : 0,
@@ -84,7 +84,7 @@ export default function GrowthTransitionOverlay({
           style={{
             fontSize: message?.subtitleSize ?? 13,
             fontWeight: 700,
-            color: '#3B2F1E',
+            color: '#111111',
             margin: 0,
             lineHeight: 1.6,
             opacity: phase >= 4 ? 1 : 0,
@@ -106,7 +106,7 @@ export default function GrowthTransitionOverlay({
             <circle
               cx="50" cy="50" r="42"
               fill="none"
-              stroke="#4A7C59"
+              stroke="#1A1A1A"
               strokeWidth="2.5"
               strokeDasharray="264"
               strokeLinecap="round"
@@ -119,7 +119,7 @@ export default function GrowthTransitionOverlay({
               <polyline
                 points="28,52 44,68 72,34"
                 fill="none"
-                stroke="#4A7C59"
+                stroke="#1A1A1A"
                 strokeWidth="4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -141,7 +141,7 @@ export default function GrowthTransitionOverlay({
             position: 'fixed', inset: 0, zIndex: 500,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             padding: '0 24px',
-            background: 'rgba(59,47,30,0.4)',
+            background: 'rgba(0,0,0,0.35)',
             animation: 'gt-popup-bg 0.4s ease both',
           }}
         >
@@ -159,14 +159,14 @@ export default function GrowthTransitionOverlay({
               <>
                 <p
                   style={{
-                    fontSize: quote.fontSize ?? 18, fontWeight: 700, color: '#3B2F1E',
+                    fontSize: quote.fontSize ?? 18, fontWeight: 700, color: '#111111',
                     lineHeight: 1.75, margin: 0, whiteSpace: 'pre-line',
                   }}
                 >
                   {quote.text}
                 </p>
                 {quote.author && (
-                  <p style={{ fontSize: 12, color: '#8B6914', margin: '10px 0 0' }}>
+                  <p style={{ fontSize: 12, color: '#555555', margin: '10px 0 0' }}>
                     — {quote.author}
                   </p>
                 )}
@@ -179,7 +179,7 @@ export default function GrowthTransitionOverlay({
                 padding: '10px 32px',
                 borderRadius: 9999,
                 border: 'none',
-                background: '#3B2F1E',
+                background: '#111111',
                 color: '#FFFFFF',
                 fontSize: 14,
                 fontWeight: 700,
@@ -201,7 +201,7 @@ export default function GrowthTransitionOverlay({
             width: '100%', maxWidth: 280,
             padding: '14px',
             borderRadius: 24, border: 'none',
-            background: '#4A7C59', color: '#FFFFFF',
+            background: '#1A1A1A', color: '#FFFFFF',
             fontSize: 15, fontWeight: 700, cursor: 'pointer',
             animation: 'gt-fade-up 0.5s ease both',
           }}

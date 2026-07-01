@@ -33,9 +33,9 @@ function getBarConfig(gp: number): BarConfig {
       trackColor: NEGATIVE.deep,
       fillColor:  NEGATIVE.deep,
       progress:   1,
-      label:      '満開に到達！🌸',
-      leftEmoji:  '🌸',
-      rightEmoji: '🌸',
+      label:      '満開に到達！',
+      leftEmoji:  '',
+      rightEmoji: '',
     }
   }
 
@@ -45,8 +45,8 @@ function getBarConfig(gp: number): BarConfig {
       fillColor:  NEGATIVE.deep,
       progress:   (gp - 20) / 10,  // gp=20 → 0%, gp=30 → 100%
       label:      `次のステージまで あと${30 - gp}pt`,
-      leftEmoji:  '🌼',
-      rightEmoji: '🌸',
+      leftEmoji:  '',
+      rightEmoji: '',
     }
   }
 
@@ -56,8 +56,8 @@ function getBarConfig(gp: number): BarConfig {
       fillColor:  NEGATIVE.base,
       progress:   (gp - 10) / 10,  // gp=10 → 0%, gp=20 → 100%
       label:      `次のステージまで あと${20 - gp}pt`,
-      leftEmoji:  '🌿',
-      rightEmoji: '🌼',
+      leftEmoji:  '',
+      rightEmoji: '',
     }
   }
 
@@ -66,8 +66,8 @@ function getBarConfig(gp: number): BarConfig {
     fillColor:  NEGATIVE.soft,
     progress:   gp / 10,  // gp=0 → 0%, gp=10 → 100%
     label:      `次のステージまで あと${10 - gp}pt`,
-    leftEmoji:  '🌱',
-    rightEmoji: '🌿',
+    leftEmoji:  '',
+    rightEmoji: '',
   }
 }
 
@@ -86,7 +86,7 @@ export default function BubbleGrowthIndicator({ growthPoint }: BubbleGrowthIndic
     <div style={{ margin: '0 20px 20px' }}>
       <p style={{
         fontSize: 12,
-        color: 'rgba(59,47,30,0.6)',
+        color: 'rgba(0,0,0,0.5)',
         margin: '0 0 8px',
         textAlign: 'center',
       }}>

@@ -28,17 +28,6 @@ export default function GrowthWelcomeMessage({ onNext, zIndex = 300 }: GrowthWel
         transition: 'opacity 0.4s ease',
       }}
     >
-      <div
-        style={{
-          fontSize: 48, lineHeight: 1, marginBottom: 28,
-          opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0)' : 'translateY(10px)',
-          transition: 'opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s',
-        }}
-      >
-        🌼
-      </div>
-
       <p
         style={{
           fontSize: 21, fontWeight: 700, color: '#E0708A',
@@ -52,7 +41,7 @@ export default function GrowthWelcomeMessage({ onNext, zIndex = 300 }: GrowthWel
       </p>
       <p
         style={{
-          fontSize: 15, color: '#3B2F1E',
+          fontSize: 15, color: '#111111',
           margin: '0 0 56px', lineHeight: 1.7, textAlign: 'center',
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0)' : 'translateY(10px)',
@@ -66,7 +55,7 @@ export default function GrowthWelcomeMessage({ onNext, zIndex = 300 }: GrowthWel
         onClick={onNext}
         style={{
           width: '100%', padding: '14px', borderRadius: 24, border: 'none',
-          background: '#4A7C59', color: '#FFFFFF',
+          background: '#1A1A1A', color: '#FFFFFF',
           fontSize: 15, fontWeight: 700, cursor: 'pointer',
           opacity: visible ? 1 : 0,
           transition: 'opacity 0.5s ease 0.4s',

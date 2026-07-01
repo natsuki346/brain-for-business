@@ -71,12 +71,12 @@ export function RoomInviteModal({
               <DaisyIcon size={32} stage={4} />
             </div>
             <p style={{
-              color: '#3B2F1E', fontSize: 16, fontWeight: 600,
+              color: '#111111', fontSize: 16, fontWeight: 600,
               lineHeight: 1.65, margin: '0 0 28px',
             }}>
               Positiveを訪れてみますか？
             </p>
-            <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.55)', margin: '0 0 20px', lineHeight: 1.6 }}>
+            <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.5)', margin: '0 0 20px', lineHeight: 1.6 }}>
               あなたと同じアイデンティティを持つ人と<br />話せます！
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -92,7 +92,7 @@ export function RoomInviteModal({
                 onClick={toShadow}
                 style={{
                   padding: '12px', borderRadius: 30, border: 'none',
-                  background: '#C4B49A', color: '#3B2F1E',
+                  background: '#E8E8E8', color: '#333333',
                   fontSize: 14, cursor: 'pointer',
                 }}
               >訪れない</button>
@@ -103,14 +103,14 @@ export function RoomInviteModal({
         {/* ── 影ステップ ── */}
         {!isLight && (
           <>
-            <p style={{ fontSize: 32, margin: '0 0 12px' }}>🌱</p>
+            <p style={{ fontSize: 32, margin: '0 0 12px' }}>✦</p>
             <p style={{
-              color: '#3B2F1E', fontSize: 16, fontWeight: 600,
+              color: '#111111', fontSize: 16, fontWeight: 600,
               lineHeight: 1.65, margin: '0 0 28px',
             }}>
               Negativeも覗いてみますか？
             </p>
-            <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.55)', margin: '0 0 20px', lineHeight: 1.6 }}>
+            <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.5)', margin: '0 0 20px', lineHeight: 1.6 }}>
               同じ境遇を持つ人と打ち明けられます！
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -126,7 +126,7 @@ export function RoomInviteModal({
                 onClick={onShadowDecline}
                 style={{
                   padding: '12px', borderRadius: 30, border: 'none',
-                  background: '#C4B49A', color: '#3B2F1E',
+                  background: '#E8E8E8', color: '#333333',
                   fontSize: 14, cursor: 'pointer',
                 }}
               >一回抜ける</button>

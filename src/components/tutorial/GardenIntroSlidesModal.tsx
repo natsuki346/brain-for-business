@@ -22,7 +22,7 @@ const FRAME_STYLE: React.CSSProperties = {
   width: PREVIEW_WIDTH, height: PREVIEW_HEIGHT, margin: '0 auto',
   borderRadius: 16, overflow: 'clip',
   border: '1px solid rgba(139,115,85,0.18)',
-  boxShadow: '0 4px 16px rgba(59,47,30,0.10)',
+  boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
   position: 'relative', background: '#FFFFFF',
 }
 
@@ -116,7 +116,7 @@ function MiniBubbleGrowthPreview({ onFirstPlaybackDone }: { onFirstPlaybackDone?
           <DaisyBubble size={size} />
         </div>
       </div>
-      <p style={{ fontSize: 13, color: '#4A7C59', fontWeight: 600, margin: 0, textAlign: 'center' }}>
+      <p style={{ fontSize: 13, color: '#1A1A1A', fontWeight: 600, margin: 0, textAlign: 'center' }}>
         ルームを訪れるたびに、こんな風に膨らんでいくよ
       </p>
     </div>
@@ -124,10 +124,10 @@ function MiniBubbleGrowthPreview({ onFirstPlaybackDone }: { onFirstPlaybackDone?
 }
 
 const GROWTH_STAGES = [
-  { emoji: '🌱', label: 'タネ', bg: NEGATIVE_STAGES[0], ptRange: '0〜9pt' },
-  { emoji: '🌿', label: '芽',   bg: NEGATIVE_STAGES[1], ptRange: '10〜19pt' },
-  { emoji: '🌼', label: '蕾',   bg: NEGATIVE_STAGES[2], ptRange: '20〜29pt' },
-  { emoji: '🌸', label: '花',   bg: NEGATIVE_STAGES[3], ptRange: '30pt以上' },
+  { emoji: '', label: 'タネ', bg: NEGATIVE_STAGES[0], ptRange: '0〜9pt' },
+  { emoji: '', label: '成長',   bg: NEGATIVE_STAGES[1], ptRange: '10〜19pt' },
+  { emoji: '', label: '上昇',   bg: NEGATIVE_STAGES[2], ptRange: '20〜29pt' },
+  { emoji: '', label: '満開',   bg: NEGATIVE_STAGES[3], ptRange: '30pt以上' },
 ]
 
 const POINT_ACTIONS: { icon: string; label: string; key: ActionDepth }[] = [
@@ -144,7 +144,7 @@ function GrowthStageList() {
         <div key={label} style={{
           background: '#FFFFFF', borderRadius: 14, padding: '10px 14px',
           display: 'flex', alignItems: 'center', gap: 12,
-          border: '1px solid rgba(139,105,20,0.1)',
+          border: '1px solid rgba(0,0,0,0.07)',
         }}>
           <div style={{
             width: 36, height: 36, borderRadius: '50%', background: bg, flexShrink: 0,
@@ -152,7 +152,7 @@ function GrowthStageList() {
           }}>
             {emoji}
           </div>
-          <span style={{ fontSize: 13, fontWeight: 700, color: '#3B2F1E' }}>{label}</span>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#111111' }}>{label}</span>
           <span style={{
             fontSize: 11, fontWeight: 600, color: NEGATIVE.textDeep,
             background: bg, padding: '2px 8px', borderRadius: 99, marginLeft: 'auto',
@@ -161,24 +161,24 @@ function GrowthStageList() {
           </span>
         </div>
       ))}
-      <p style={{ fontSize: 12, fontWeight: 700, color: '#4A7C59', textAlign: 'center', margin: '6px 0 0' }}>
-        合計30ptで満開🌸まで到達
+      <p style={{ fontSize: 12, fontWeight: 700, color: '#1A1A1A', textAlign: 'center', margin: '6px 0 0' }}>
+        合計30ptで満開まで到達
       </p>
 
-      <p style={{ fontSize: 12.5, fontWeight: 700, color: '#3B2F1E', textAlign: 'center', margin: '14px 0 0' }}>
+      <p style={{ fontSize: 12.5, fontWeight: 700, color: '#111111', textAlign: 'center', margin: '14px 0 0' }}>
         ポイントのつき方
       </p>
       {POINT_ACTIONS.map(({ icon, label, key }) => (
         <div key={key} style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           background: '#FFFFFF', borderRadius: 10, padding: '8px 14px',
-          border: '1px solid rgba(139,105,20,0.1)',
+          border: '1px solid rgba(0,0,0,0.07)',
         }}>
-          <span style={{ fontSize: 12.5, color: '#3B2F1E' }}>{icon} {label}</span>
-          <span style={{ fontSize: 12.5, fontWeight: 700, color: '#4A7C59' }}>+{ACTION_POINTS[key]}pt</span>
+          <span style={{ fontSize: 12.5, color: '#111111' }}>{icon} {label}</span>
+          <span style={{ fontSize: 12.5, fontWeight: 700, color: '#1A1A1A' }}>+{ACTION_POINTS[key]}pt</span>
         </div>
       ))}
-      <p style={{ fontSize: 11, color: 'rgba(59,47,30,0.55)', lineHeight: 1.6, textAlign: 'center', margin: '4px 0 0' }}>
+      <p style={{ fontSize: 11, color: 'rgba(0,0,0,0.5)', lineHeight: 1.6, textAlign: 'center', margin: '4px 0 0' }}>
         1回の訪問につき、最も深く進んだアクションのポイントだけが加算されます
       </p>
     </div>
@@ -211,7 +211,7 @@ function MiniBubbleDetailPreview() {
   if (!tag) {
     return (
       <div style={{ ...FRAME_STYLE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-        <p style={{ fontSize: 12.5, color: 'rgba(59,47,30,0.45)', textAlign: 'center', margin: 0, lineHeight: 1.6 }}>
+        <p style={{ fontSize: 12.5, color: 'rgba(0,0,0,0.4)', textAlign: 'center', margin: 0, lineHeight: 1.6 }}>
           {checked
             ? '🔖 保存した言葉やメモが、ここに集まっていくよ'
             : '読み込み中...'}
@@ -273,7 +273,7 @@ export default function GardenIntroSlidesModal({ onNext }: GardenIntroSlidesModa
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 260,
-        background: visible ? 'rgba(59,47,30,0.55)' : 'rgba(59,47,30,0)',
+        background: visible ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0)',
         transition: 'background 0.3s ease',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '0 16px',
@@ -306,10 +306,10 @@ export default function GardenIntroSlidesModal({ onNext }: GardenIntroSlidesModa
         <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '32px 24px 16px', textAlign: 'center' }}>
           {slideIndex === 0 && (
             <>
-              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#3B2F1E', lineHeight: 1.6, margin: '0 0 16px' }}>
-                🌿 ガーデンとは
+              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#111111', lineHeight: 1.6, margin: '0 0 16px' }}>
+                ガーデンとは
               </h2>
-              <p style={{ fontSize: 15, color: 'rgba(59,47,30,0.7)', lineHeight: 1.8, margin: '0 0 16px' }}>
+              <p style={{ fontSize: 15, color: 'rgba(0,0,0,0.55)', lineHeight: 1.8, margin: '0 0 16px' }}>
                 ここがガーデン。<br />ルームで交わした言葉が、ひとつひとつの<br />バブルとなって育っていく場所です
               </p>
               <MiniGardenScene />
@@ -318,10 +318,10 @@ export default function GardenIntroSlidesModal({ onNext }: GardenIntroSlidesModa
 
           {slideIndex === 1 && (
             <>
-              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#3B2F1E', lineHeight: 1.6, margin: '0 0 16px' }}>
+              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#111111', lineHeight: 1.6, margin: '0 0 16px' }}>
                 🫧 膨らむということ
               </h2>
-              <p style={{ fontSize: 14, color: 'rgba(59,47,30,0.7)', lineHeight: 1.8, margin: '0 0 8px' }}>
+              <p style={{ fontSize: 14, color: 'rgba(0,0,0,0.55)', lineHeight: 1.8, margin: '0 0 8px' }}>
                 ルームを訪れて、仲間と言葉を交わすたびに、<br />バブルは少しずつ膨らんでいきます
               </p>
               <MiniBubbleGrowthPreview onFirstPlaybackDone={() => setPreviewReady(true)} />
@@ -330,10 +330,10 @@ export default function GardenIntroSlidesModal({ onNext }: GardenIntroSlidesModa
 
           {slideIndex === 2 && (
             <>
-              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#3B2F1E', lineHeight: 1.6, margin: '0 0 12px' }}>
-                🌿 育ち方
+              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#111111', lineHeight: 1.6, margin: '0 0 12px' }}>
+                育ち方
               </h2>
-              <p style={{ fontSize: 14, color: 'rgba(59,47,30,0.7)', lineHeight: 1.7, margin: '0 0 16px' }}>
+              <p style={{ fontSize: 14, color: 'rgba(0,0,0,0.55)', lineHeight: 1.7, margin: '0 0 16px' }}>
                 ポイントが貯まるごとに、バブルは<br />4つの段階を経て育っていきます
               </p>
               <GrowthStageList />
@@ -342,10 +342,10 @@ export default function GardenIntroSlidesModal({ onNext }: GardenIntroSlidesModa
 
           {slideIndex === 3 && (
             <>
-              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#3B2F1E', lineHeight: 1.6, margin: '0 0 12px' }}>
+              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#111111', lineHeight: 1.6, margin: '0 0 12px' }}>
                 🔍 中を開いたら
               </h2>
-              <p style={{ fontSize: 14, color: 'rgba(59,47,30,0.7)', lineHeight: 1.7, margin: '0 0 16px' }}>
+              <p style={{ fontSize: 14, color: 'rgba(0,0,0,0.55)', lineHeight: 1.7, margin: '0 0 16px' }}>
                 バブルをタップすると、訪問履歴や<br />保存した言葉・メモを見ることができます
               </p>
               <MiniBubbleDetailPreview />
@@ -358,7 +358,7 @@ export default function GardenIntroSlidesModal({ onNext }: GardenIntroSlidesModa
           {Array.from({ length: SLIDE_COUNT }).map((_, i) => (
             <div key={i} style={{
               width: i === slideIndex ? 18 : 6, height: 6, borderRadius: 3,
-              background: i === slideIndex ? '#4A7C59' : 'rgba(74,124,89,0.25)',
+              background: i === slideIndex ? '#1A1A1A' : 'rgba(74,124,89,0.25)',
               transition: 'all 0.25s ease',
             }} />
           ))}
@@ -369,8 +369,8 @@ export default function GardenIntroSlidesModal({ onNext }: GardenIntroSlidesModa
           <button
             onClick={close}
             style={{
-              flex: 1, padding: '14px', borderRadius: 30, border: '1px solid rgba(59,47,30,0.2)',
-              background: 'transparent', color: 'rgba(59,47,30,0.6)',
+              flex: 1, padding: '14px', borderRadius: 30, border: '1px solid rgba(0,0,0,0.15)',
+              background: 'transparent', color: 'rgba(0,0,0,0.5)',
               fontSize: 14, fontWeight: 600, cursor: 'pointer',
             }}
           >スキップ</button>
@@ -379,7 +379,7 @@ export default function GardenIntroSlidesModal({ onNext }: GardenIntroSlidesModa
             disabled={!previewReady}
             style={{
               flex: 2, padding: '14px', borderRadius: 30, border: 'none',
-              background: previewReady ? '#4A7C59' : 'rgba(74,124,89,0.4)',
+              background: previewReady ? '#1A1A1A' : 'rgba(74,124,89,0.4)',
               color: '#FFFFFF',
               fontSize: 14, fontWeight: 700,
               cursor: previewReady ? 'pointer' : 'not-allowed',

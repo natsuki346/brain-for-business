@@ -107,7 +107,7 @@ export default function SeedQuoteModal({ tagId, onClose, zIndex = 400, fixedQuot
         alignItems: 'center',
         justifyContent: 'center',
         padding: '0 24px',
-        background: visible ? 'rgba(59,47,30,0.4)' : 'rgba(59,47,30,0)',
+        background: visible ? 'rgba(0,0,0,0.35)' : 'rgba(0,0,0,0)',
         transition: 'background 0.3s ease',
       }}
     >
@@ -133,7 +133,7 @@ export default function SeedQuoteModal({ tagId, onClose, zIndex = 400, fixedQuot
         <p style={{
           fontSize: 16,
           fontWeight: 500,
-          color: '#4A7C59',
+          color: '#1A1A1A',
           margin: '0 0 20px',
           lineHeight: 1.5,
         }}>
@@ -144,7 +144,7 @@ export default function SeedQuoteModal({ tagId, onClose, zIndex = 400, fixedQuot
         <p style={{
           fontSize: quote.fontSize ?? 22,
           fontWeight: 500,
-          color: '#3B2F1E',
+          color: '#111111',
           lineHeight: 1.6,
           margin: 0,
           padding: '24px 0',
@@ -158,7 +158,7 @@ export default function SeedQuoteModal({ tagId, onClose, zIndex = 400, fixedQuot
         {/* 著者名 */}
         <p style={{
           fontSize: 14,
-          color: '#8B6914',
+          color: '#555555',
           margin: '0 0 20px',
         }}>
           ― {quote.author}
@@ -186,8 +186,8 @@ export default function SeedQuoteModal({ tagId, onClose, zIndex = 400, fixedQuot
               width="24"
               height="24"
               viewBox="0 0 24 24"
-              fill={isSaved ? '#4A7C59' : 'none'}
-              stroke={isSaved ? '#4A7C59' : '#3B2F1E'}
+              fill={isSaved ? '#1A1A1A' : 'none'}
+              stroke={isSaved ? '#1A1A1A' : '#111111'}
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -206,7 +206,7 @@ export default function SeedQuoteModal({ tagId, onClose, zIndex = 400, fixedQuot
               padding: '14px',
               borderRadius: 12,
               border: 'none',
-              background: '#4A7C59',
+              background: '#1A1A1A',
               color: '#FFFFFF',
               fontSize: 15,
               fontWeight: 700,

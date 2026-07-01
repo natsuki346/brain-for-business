@@ -128,11 +128,11 @@ export default function SubTagListSheet({
           <div style={{ display: 'inline-block', minWidth: 120 }}>
             <button
               onClick={close}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 14, color: '#3B2F1E', padding: 0 }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 14, color: '#333333', padding: 0 }}
             >← 戻る</button>
           </div>
 
-          <p style={{ flex: 1, margin: 0, fontSize: 15, fontWeight: 700, color: '#3B2F1E', textAlign: 'center' }}>
+          <p style={{ flex: 1, margin: 0, fontSize: 15, fontWeight: 700, color: '#111111', textAlign: 'center' }}>
             {formatHashtag(tag.text)}
           </p>
 
@@ -140,7 +140,7 @@ export default function SubTagListSheet({
             onClick={() => setShowMembers(true)}
             style={{
               background: 'none', border: 'none', cursor: 'pointer',
-              fontSize: 22, padding: 4, color: '#4A7C59',
+              fontSize: 22, padding: 4, color: '#333333',
             }}
             aria-label="メンバー一覧"
           >👥</button>
@@ -154,16 +154,16 @@ export default function SubTagListSheet({
               onClick={() => handleSelect({ subTagId: null, name: tag.text })}
               style={{
                 display: 'flex', alignItems: 'center', width: '100%', height: 56, padding: '0 20px',
-                background: '#D4EED8', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.06)',
+                background: '#F5F5F5', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.06)',
                 cursor: 'pointer', textAlign: 'left',
               }}
             >
-              <span style={{ fontSize: 14, fontWeight: 600, color: '#4A7C59' }}>💬 ALL</span>
+              <span style={{ fontSize: 14, fontWeight: 600, color: '#111111' }}>💬 ALL</span>
             </button>
           </div>
 
           {loading ? (
-            <p style={{ textAlign: 'center', fontSize: 13, color: 'rgba(59,47,30,0.5)', marginTop: 24 }}>読み込み中...</p>
+            <p style={{ textAlign: 'center', fontSize: 13, color: 'rgba(0,0,0,0.4)', marginTop: 24 }}>読み込み中...</p>
           ) : (
             subTags.map(st => (
               <button
@@ -175,8 +175,8 @@ export default function SubTagListSheet({
                   cursor: 'pointer', textAlign: 'left',
                 }}
               >
-                <span style={{ color: '#8B6914', fontSize: 14, fontWeight: 600 }}>#</span>
-                <span style={{ fontSize: 14, color: '#3B2F1E' }}>{st.name}</span>
+                <span style={{ color: '#555555', fontSize: 14, fontWeight: 600 }}>#</span>
+                <span style={{ fontSize: 14, color: '#111111' }}>{st.name}</span>
               </button>
             ))
           )}
@@ -186,7 +186,7 @@ export default function SubTagListSheet({
             style={{
               display: 'block', width: '100%', padding: 16, textAlign: 'left',
               background: 'none', border: 'none',
-              color: '#4A7C59', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+              color: '#111111', fontSize: 14, fontWeight: 600, cursor: 'pointer',
             }}
           >＋ チャンネルを作る</button>
         </div>
@@ -205,30 +205,30 @@ export default function SubTagListSheet({
         <>
           <div
             onClick={() => setShowMembers(false)}
-            style={{ position: 'fixed', inset: 0, background: 'rgba(59,47,30,0.4)', zIndex: 50 }}
+            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 50 }}
           />
           <div style={{
             position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
             width: '100%', maxWidth: 390,
             background: '#FFFFFF', borderRadius: '20px 20px 0 0',
-            borderTop: '1px solid #D4B896', zIndex: 51,
+            borderTop: '1px solid #CCCCCC', zIndex: 51,
             paddingBottom: 40,
           }}>
-            <div style={{ width: 36, height: 4, background: 'rgba(139,105,20,.25)', borderRadius: 2, margin: '10px auto 0' }} />
+            <div style={{ width: 36, height: 4, background: 'rgba(0,0,0,0.2)', borderRadius: 2, margin: '10px auto 0' }} />
             <div style={{ padding: '12px 16px 8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <h3 style={{ fontSize: 14, color: '#8B6914', fontWeight: 700, margin: 0 }}>
+              <h3 style={{ fontSize: 14, color: '#333333', fontWeight: 700, margin: 0 }}>
                 👥 メンバー（{members.length}人）
               </h3>
               <button
                 onClick={() => setShowMembers(false)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: '#A09070' }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, color: '#888888' }}
               >✕</button>
             </div>
             <div style={{ maxHeight: 360, overflowY: 'auto' }}>
               {membersLoading ? (
-                <p style={{ textAlign: 'center', padding: 24, fontSize: 13, color: '#A09070' }}>読み込み中...</p>
+                <p style={{ textAlign: 'center', padding: 24, fontSize: 13, color: '#888888' }}>読み込み中...</p>
               ) : members.length === 0 ? (
-                <p style={{ textAlign: 'center', padding: 24, fontSize: 13, color: '#A09070' }}>まだメンバーがいません</p>
+                <p style={{ textAlign: 'center', padding: 24, fontSize: 13, color: '#888888' }}>まだメンバーがいません</p>
               ) : (
                 members.map(member => (
                   <div
@@ -242,12 +242,12 @@ export default function SubTagListSheet({
                     style={{
                       display: 'flex', alignItems: 'center', gap: 12,
                       padding: '12px 16px', cursor: 'pointer',
-                      borderBottom: '0.5px solid rgba(139,105,20,0.1)',
+                      borderBottom: '0.5px solid rgba(0,0,0,0.08)',
                     }}
                   >
                     <div style={{
                       width: 40, height: 40, borderRadius: '50%',
-                      background: '#4A7C59', display: 'flex', alignItems: 'center',
+                      background: '#333333', display: 'flex', alignItems: 'center',
                       justifyContent: 'center', color: '#FFFFFF',
                       fontSize: 16, fontWeight: 'bold', overflow: 'hidden', flexShrink: 0,
                     }}>
@@ -258,14 +258,14 @@ export default function SubTagListSheet({
                       }
                     </div>
                     <div>
-                      <p style={{ fontSize: 14, fontWeight: 500, color: '#3B2F1E', margin: 0 }}>
+                      <p style={{ fontSize: 14, fontWeight: 500, color: '#111111', margin: 0 }}>
                         {member.username}
                       </p>
-                      <p style={{ fontSize: 11, color: '#8B6914', margin: '2px 0 0' }}>
+                      <p style={{ fontSize: 11, color: '#666666', margin: '2px 0 0' }}>
                         @{member.username}
                       </p>
                     </div>
-                    <div style={{ marginLeft: 'auto', color: '#D4B896', fontSize: 16 }}>›</div>
+                    <div style={{ marginLeft: 'auto', color: '#BBBBBB', fontSize: 16 }}>›</div>
                   </div>
                 ))
               )}

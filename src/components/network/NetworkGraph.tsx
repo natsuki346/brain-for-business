@@ -9,23 +9,23 @@ import { radiusForNode, useForceLayout } from './useForceLayout'
 import type { SimNode } from './types'
 
 const GRAPH_HEIGHT = 460
-const FRIEND_COLOR = '#4A7C59'
+const FRIEND_COLOR = '#1A1A1A'
 
 function nodeFill(node: SimNode): string {
-  if (node.kind === 'self') return '#3B2F1E'
+  if (node.kind === 'self') return '#111111'
   if (node.kind === 'person') return FRIEND_COLOR
   return node.type === 'light' ? POSITIVE.base : NEGATIVE.base
 }
 
 function nodeBorder(node: SimNode): string {
-  if (node.kind === 'self') return '#3B2F1E'
+  if (node.kind === 'self') return '#111111'
   if (node.kind === 'person') return FRIEND_COLOR
   return node.type === 'light' ? POSITIVE.deep : NEGATIVE.deep
 }
 
 function linkColor(kind: string): string {
   if (kind === 'person-thought') return withAlpha(POSITIVE.base, 0.35)
-  return 'rgba(59,47,30,0.18)'
+  return 'rgba(0,0,0,0.12)'
 }
 
 export default function NetworkGraph() {
@@ -37,7 +37,7 @@ export default function NetworkGraph() {
 
   if (loading) {
     return (
-      <p style={{ textAlign: 'center', padding: '48px 24px', fontSize: 13, color: '#A09070' }}>
+      <p style={{ textAlign: 'center', padding: '48px 24px', fontSize: 13, color: '#888888' }}>
         読み込み中...
       </p>
     )
@@ -46,7 +46,7 @@ export default function NetworkGraph() {
   // 自分以外に1つでもノードがあるか（data===nullの場合もここでまとめて弾く）
   if (!data || data.nodes.length <= 1) {
     return (
-      <div style={{ textAlign: 'center', padding: '48px 24px', color: '#A09070', fontSize: 14 }}>
+      <div style={{ textAlign: 'center', padding: '48px 24px', color: '#888888', fontSize: 14 }}>
         <p>まだつながりがありません</p>
         <p style={{ fontSize: 12, marginTop: 8 }}>
           PositiveやNegativeのルームで話しかけたり、タグを増やしてみよう
@@ -121,14 +121,14 @@ export default function NetworkGraph() {
               ) : null}
             </div>
             <span style={{
-              fontSize: 9.5, fontWeight: 600, color: 'rgba(59,47,30,0.55)',
+              fontSize: 9.5, fontWeight: 600, color: 'rgba(0,0,0,0.5)',
               maxWidth: r * 2 + 36, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
               textAlign: 'center',
             }}>
               {label}
             </span>
             {node.kind === 'thought' && node.sharedCount > 0 && (
-              <span style={{ fontSize: 8.5, color: 'rgba(59,47,30,0.4)' }}>
+              <span style={{ fontSize: 8.5, color: 'rgba(0,0,0,0.35)' }}>
                 同じ気持ちの人 {node.sharedCount}人
               </span>
             )}

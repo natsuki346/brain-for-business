@@ -35,12 +35,6 @@ const FRIEND_LEVEL_COLORS: Record<1 | 2 | 3, { bg: string; text: string }> = {
   3: { bg: '#D0D0D0', text: '#1A1A1A' },
 }
 
-function getDaisyEmoji(gp: number): string {
-  if (gp <= 2) return '🌱'
-  if (gp <= 5) return '🌸'
-  return '🌼'
-}
-
 // growth_point に応じて青→紫→赤へ滑らかに変化する背景色
 // 最大値は HEAVY_THRESHOLDS の上限（growthPoint.ts 参照）
 const NEGATIVE_MAX_GROWTH = 60
@@ -252,14 +246,14 @@ function generatePositions(
 }
 
 const DAISY_LEGEND = [
-  { emoji: '🌱', label: 'はじめて' },
-  { emoji: '🌸', label: 'なじんでる' },
-  { emoji: '🌼', label: 'つながれた' },
+  { emoji: '', label: 'はじめて' },
+  { emoji: '', label: 'なじんでる' },
+  { emoji: '', label: 'つながれた' },
 ]
 const SEED_LEGEND = [
-  { emoji: '🌱', label: 'negative' },
-  { emoji: '🌿', label: 'sprout' },
-  { emoji: '🌼', label: 'bloom' },
+  { emoji: '', label: 'タネ' },
+  { emoji: '', label: '成長中' },
+  { emoji: '', label: '成熟' },
 ]
 const FRIEND_LEGEND = [
   { emoji: '🤝', label: 'つながった' },
@@ -558,7 +552,7 @@ export default function GardenDisplay() {
         }}>
           <div>
             <h1 style={{ fontSize: 20, fontWeight: 700, color: '#111111', margin: '0 0 2px' }}>
-              🌿 わたしのガーデン
+              わたしのガーデン
             </h1>
             <p style={{ fontSize: 12, color: 'rgba(0,0,0,0.4)', margin: 0 }}>
               タグをタップしてルームへ
@@ -601,7 +595,7 @@ export default function GardenDisplay() {
           {(['light', 'shadow', 'friend'] as TabType[]).map(t => {
             const tabBorder = t === 'light' ? POSITIVE.base : t === 'shadow' ? NEGATIVE.base : '#888888'
             const tabText = t === 'light' ? POSITIVE.text : t === 'shadow' ? NEGATIVE.text : '#333333'
-            const tabLabel = t === 'light' ? '🌼 Positive' : t === 'shadow' ? '🌱 Negative' : '🤝 Friend'
+            const tabLabel = t === 'light' ? 'Positive' : t === 'shadow' ? 'Negative' : 'Friend'
             return (
               <button
                 key={t}

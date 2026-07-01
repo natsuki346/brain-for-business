@@ -15,15 +15,15 @@ const COPY: Record<RoomType, { icon: string; title: string; sub: string; visitBg
     visitBg: POSITIVE.base,
   },
   shadow: {
-    icon: '🌱',
+    icon: '',
     title: 'Negativeを訪れてみますか？',
     sub: '同じ根を持つ人だけが集まる、静かな場所です',
     visitBg: NEGATIVE.base,
   },
 }
 
-const DECLINE_BG   = '#C4B49A'
-const DECLINE_TEXT = '#3B2F1E'
+const DECLINE_BG   = '#E8E8E8'
+const DECLINE_TEXT = '#333333'
 
 export function RoomVisitModal({
   type,
@@ -90,13 +90,13 @@ export function RoomVisitModal({
           <div style={{ margin: '0 0 12px', display: 'flex', justifyContent: 'center' }}>
             {type === 'light' ? <DaisyIcon size={32} stage={4} /> : <span style={{ fontSize: 32 }}>{copy.icon}</span>}
           </div>
-          <p style={{ color: '#3B2F1E', fontSize: 16, fontWeight: 700, lineHeight: 1.6, margin: '0 0 6px' }}>
+          <p style={{ color: '#111111', fontSize: 16, fontWeight: 700, lineHeight: 1.6, margin: '0 0 6px' }}>
             {copy.title}
           </p>
-          <p style={{ fontSize: 12, fontWeight: 600, color: '#A89880', margin: '0 0 16px' }}>
+          <p style={{ fontSize: 12, fontWeight: 600, color: '#888888', margin: '0 0 16px' }}>
             {tagText}
           </p>
-          <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.55)', margin: '0 0 24px', lineHeight: 1.6 }}>
+          <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.5)', margin: '0 0 24px', lineHeight: 1.6 }}>
             {copy.sub}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>

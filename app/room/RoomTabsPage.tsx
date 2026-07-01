@@ -20,8 +20,8 @@ type RoomType = 'light' | 'shadow' | 'friend'
 const TAB_ORDER: RoomType[] = ['light', 'shadow', 'friend']
 
 const TAB_CONFIG: Record<RoomType, { label: string; icon: string }> = {
-  light:  { label: 'Positive', icon: '🌼' },
-  shadow: { label: 'Negative', icon: '🌱' },
+  light:  { label: 'Positive', icon: '' },
+  shadow: { label: 'Negative', icon: '' },
   friend: { label: 'Friend', icon: '👥' },
 }
 
@@ -30,10 +30,10 @@ const TAB_CONFIG: Record<RoomType, { label: string; icon: string }> = {
 const TAB_STYLES: Record<RoomType, { activeBorder: string; activeText: string }> = {
   light:  { activeBorder: POSITIVE.base, activeText: POSITIVE.text },
   shadow: { activeBorder: NEGATIVE.base, activeText: NEGATIVE.text },
-  friend: { activeBorder: '#4A7C59',     activeText: '#3B6B47' },
+  friend: { activeBorder: '#1A1A1A',     activeText: '#000000' },
 }
-const TAB_INACTIVE_BORDER = 'rgba(59,47,30,0.15)'
-const TAB_INACTIVE_TEXT   = 'rgba(59,47,30,0.4)'
+const TAB_INACTIVE_BORDER = 'rgba(0,0,0,0.12)'
+const TAB_INACTIVE_TEXT   = 'rgba(0,0,0,0.4)'
 
 type TutorialPhase = 'room_intro' | null
 
@@ -106,7 +106,7 @@ export default function RoomTabsPage({ type }: { type: RoomType }) {
           {type === 'light'
             ? <DaisyIcon size={22} stage={4} active />
             : <span style={{ fontSize: 22 }}>{TAB_CONFIG[type].icon}</span>}
-          <h1 className="text-xl font-bold" style={{ color: '#3B2F1E' }}>ありのままで繋がる場所</h1>
+          <h1 className="text-xl font-bold" style={{ color: '#111111' }}>ありのままで繋がる場所</h1>
         </div>
 
         {/* 成長のしかたヘルプ */}
@@ -116,7 +116,7 @@ export default function RoomTabsPage({ type }: { type: RoomType }) {
           style={{
             position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)',
             width: 32, height: 32, borderRadius: '50%',
-            border: 'none', background: '#FFFFFF', color: '#4A7C59',
+            border: 'none', background: '#FFFFFF', color: '#333333',
             fontSize: 15, fontWeight: 700, lineHeight: 1,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer', boxShadow: '0 2px 6px rgba(0,0,0,0.08)',

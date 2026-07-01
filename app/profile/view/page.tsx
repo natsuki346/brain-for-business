@@ -145,7 +145,7 @@ function OtherProfileContent() {
   if (loading) {
     return (
       <div style={{ background: '#FFFFFF', maxWidth: 390, margin: '0 auto', minHeight: '100svh' }}>
-        <p style={{ textAlign: 'center', paddingTop: 80, fontSize: 13, color: '#A09070' }}>読み込み中...</p>
+        <p style={{ textAlign: 'center', paddingTop: 80, fontSize: 13, color: '#888888' }}>読み込み中...</p>
       </div>
     )
   }
@@ -155,11 +155,11 @@ function OtherProfileContent() {
       <div style={{ background: '#FFFFFF', maxWidth: 390, margin: '0 auto', minHeight: '100svh', padding: '24px 16px' }}>
         <button
           onClick={() => router.back()}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20, color: '#8B6914', padding: 0, marginBottom: 16 }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20, color: '#555555', padding: 0, marginBottom: 16 }}
         >
           ‹ 戻る
         </button>
-        <p style={{ textAlign: 'center', paddingTop: 60, fontSize: 14, color: '#A09070' }}>
+        <p style={{ textAlign: 'center', paddingTop: 60, fontSize: 14, color: '#888888' }}>
           このユーザーは表示できません
         </p>
       </div>
@@ -167,10 +167,10 @@ function OtherProfileContent() {
   }
 
   const BUTTON_CONFIG: Record<ConnectionStatus, { label: string; bg: string; color: string; disabled: boolean; onClick?: () => void }> = {
-    none:     { label: '繋がる 🌼',        bg: '#4A7C59', color: '#FFFFFF', disabled: false, onClick: sendRequest },
-    pending:  { label: '申請中…',          bg: '#D4B896', color: '#5C3A1E', disabled: true },
-    received: { label: '承認する ✓',       bg: '#4A7C59', color: '#FFFFFF', disabled: false, onClick: acceptRequest },
-    accepted: { label: '繋がっています 🌼', bg: '#F5D78E', color: '#8B6914', disabled: true },
+    none:     { label: '繋がる',        bg: '#1A1A1A', color: '#FFFFFF', disabled: false, onClick: sendRequest },
+    pending:  { label: '申請中…',       bg: '#E0E0E0', color: '#555555', disabled: true },
+    received: { label: '承認する ✓',    bg: '#1A1A1A', color: '#FFFFFF', disabled: false, onClick: acceptRequest },
+    accepted: { label: '繋がっています', bg: '#F5F5F5', color: '#333333', disabled: true },
   }
   const buttonConfig = BUTTON_CONFIG[status]
 
@@ -189,7 +189,7 @@ function OtherProfileContent() {
         onClick={() => router.back()}
         style={{
           background: 'none', border: 'none', cursor: 'pointer',
-          fontSize: 20, color: '#8B6914', lineHeight: 1, padding: 0,
+          fontSize: 20, color: '#555555', lineHeight: 1, padding: 0,
           marginBottom: 16,
         }}
       >
@@ -200,10 +200,10 @@ function OtherProfileContent() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
         <UserAvatar username={user?.username} avatarUrl={user?.avatar_url} size={64} />
         <div style={{ flex: 1 }}>
-          <p style={{ fontSize: 18, fontWeight: 'bold', color: '#3B2F1E', margin: 0 }}>
+          <p style={{ fontSize: 18, fontWeight: 'bold', color: '#111111', margin: 0 }}>
             {user?.username ?? ''}
           </p>
-          <p style={{ fontSize: 13, color: '#8B6914', margin: '4px 0 0' }}>
+          <p style={{ fontSize: 13, color: '#777777', margin: '4px 0 0' }}>
             @{user?.username ?? ''}
           </p>
         </div>
@@ -225,14 +225,14 @@ function OtherProfileContent() {
       {/* 共通のタグ */}
       {(commonDaisy.length > 0 || commonSeed.length > 0) && (
         <div style={{ marginBottom: 24 }}>
-          <h2 style={{ fontSize: 14, color: '#8B6914', fontWeight: 700, margin: '0 0 12px' }}>
+          <h2 style={{ fontSize: 14, color: '#333333', fontWeight: 700, margin: '0 0 12px' }}>
             🤝 共通のタグ
           </h2>
 
           {/* 共通Positive */}
           {commonDaisy.length > 0 && (
             <div style={{ marginBottom: 12 }}>
-              <p style={{ fontSize: 11, color: '#8B6914', margin: '0 0 6px' }}>🌼 Positive</p>
+              <p style={{ fontSize: 11, color: '#555555', margin: '0 0 6px' }}>Positive</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {commonDaisy.slice(0, 5).map(tag => (
                   <span key={tag.id} style={{
@@ -257,7 +257,7 @@ function OtherProfileContent() {
           {/* 共通Negative */}
           {commonSeed.length > 0 && (
             <div>
-              <p style={{ fontSize: 11, color: '#8B6914', margin: '0 0 6px' }}>🌱 Negative</p>
+              <p style={{ fontSize: 11, color: '#555555', margin: '0 0 6px' }}>Negative</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {commonSeed.slice(0, 5).map(tag => (
                   <span key={tag.id} style={{
@@ -291,15 +291,15 @@ function OtherProfileContent() {
             padding: '0 0 12px',
           }}
         >
-          <h2 style={{ fontSize: 14, color: '#8B6914', fontWeight: 700, margin: 0 }}>
-            🌼 Positive（{daisyTags.length}）
+          <h2 style={{ fontSize: 14, color: '#333333', fontWeight: 700, margin: 0 }}>
+            Positive（{daisyTags.length}）
           </h2>
-          <span style={{ fontSize: 16, color: '#8B6914' }}>{daisyOpen ? '∧' : '∨'}</span>
+          <span style={{ fontSize: 16, color: '#555555' }}>{daisyOpen ? '∧' : '∨'}</span>
         </button>
         {daisyOpen && (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {daisyTags.length === 0 ? (
-              <p style={{ fontSize: 12, color: '#A09070', margin: 0 }}>まだありません</p>
+              <p style={{ fontSize: 12, color: '#888888', margin: 0 }}>まだありません</p>
             ) : (
               daisyTags.map(tag => (
                 <span key={tag.id} style={{
@@ -317,7 +317,7 @@ function OtherProfileContent() {
       {/* 共通タグ全表示モーダル */}
       {showAllCommon && (() => {
         const tags = showAllCommon === 'daisy' ? commonDaisy : commonSeed
-        const label = showAllCommon === 'daisy' ? '🌼 Positive 共通タグ' : '🌱 Negative 共通タグ'
+        const label = showAllCommon === 'daisy' ? 'Positive 共通タグ' : 'Negative 共通タグ'
         const bg = showAllCommon === 'daisy' ? POSITIVE.base : NEGATIVE.base
         const color = '#FFFFFF'
         return (
@@ -326,18 +326,18 @@ function OtherProfileContent() {
               onClick={() => setShowAllCommon(null)}
               style={{
                 position: 'fixed', inset: 0,
-                background: 'rgba(59,47,30,0.4)', zIndex: 100,
+                background: 'rgba(0,0,0,0.4)', zIndex: 100,
               }}
             />
             <div style={{
               position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)',
               width: '100%', maxWidth: 390,
               background: '#FFFFFF', borderRadius: '20px 20px 0 0',
-              borderTop: '1px solid #D4B896', zIndex: 101,
+              borderTop: '1px solid #CCCCCC', zIndex: 101,
               padding: '20px 20px 48px',
             }}>
-              <div style={{ width: 36, height: 4, background: 'rgba(139,105,20,.25)', borderRadius: 2, margin: '0 auto 16px' }} />
-              <h3 style={{ fontSize: 14, color: '#8B6914', fontWeight: 700, margin: '0 0 16px' }}>
+              <div style={{ width: 36, height: 4, background: 'rgba(0,0,0,0.2)', borderRadius: 2, margin: '0 auto 16px' }} />
+              <h3 style={{ fontSize: 14, color: '#333333', fontWeight: 700, margin: '0 0 16px' }}>
                 {label}（{tags.length}個）
               </h3>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>

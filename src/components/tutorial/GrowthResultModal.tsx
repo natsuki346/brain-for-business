@@ -23,7 +23,7 @@ export default function GrowthResultModal({ onNext }: GrowthResultModalProps) {
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 260,
-        background: visible ? 'rgba(59,47,30,0.55)' : 'rgba(59,47,30,0)',
+        background: visible ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0)',
         transition: 'background 0.3s ease',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '0 24px',
@@ -42,14 +42,14 @@ export default function GrowthResultModal({ onNext }: GrowthResultModalProps) {
           boxShadow: '0 16px 48px rgba(0,0,0,0.25)',
         }}
       >
-        <p style={{ fontSize: 40, margin: '0 0 12px' }}>🌱</p>
-        <h2 style={{ fontSize: 18, fontWeight: 700, color: '#3B2F1E', lineHeight: 1.6, margin: '0 0 8px' }}>
+        <p style={{ fontSize: 40, margin: '0 0 12px' }}>✦</p>
+        <h2 style={{ fontSize: 18, fontWeight: 700, color: '#111111', lineHeight: 1.6, margin: '0 0 8px' }}>
           成長した！
         </h2>
-        <p style={{ fontSize: 15, fontWeight: 600, color: '#4A7C59', margin: '0 0 20px' }}>
+        <p style={{ fontSize: 15, fontWeight: 600, color: '#1A1A1A', margin: '0 0 20px' }}>
           ちゃんと向き合えたね。
         </p>
-        <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.7)', lineHeight: 1.7, margin: '0 0 24px' }}>
+        <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.55)', lineHeight: 1.7, margin: '0 0 24px' }}>
           言葉にする、誰かと分かち合う——<br />
           そのひとつひとつが、<br />
           あなたの根っことなって育っています。
@@ -58,7 +58,7 @@ export default function GrowthResultModal({ onNext }: GrowthResultModalProps) {
           onClick={handleNext}
           style={{
             width: '100%', padding: '14px', borderRadius: 30, border: 'none',
-            background: '#4A7C59', color: '#FFFFFF',
+            background: '#1A1A1A', color: '#FFFFFF',
             fontSize: 14, fontWeight: 700, cursor: 'pointer',
           }}
         >次へ</button>

@@ -17,9 +17,9 @@ export default function LightRoomVisitPage() {
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
         <DaisyIcon size={22} stage={4} active />
-        <h1 style={{ fontSize: 20, fontWeight: 700, color: '#3B2F1E', margin: 0 }}>Positive</h1>
+        <h1 style={{ fontSize: 20, fontWeight: 700, color: '#111111', margin: 0 }}>Positive</h1>
       </div>
-      <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.55)', marginBottom: 28, marginTop: 0 }}>
+      <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.5)', marginBottom: 28, marginTop: 0 }}>
         タグを選んで入室してみよう
       </p>
 
@@ -36,7 +36,7 @@ export default function LightRoomVisitPage() {
           onClick={() => router.push('/onboarding/room-visit/shadow')}
           style={{
             width: '100%', padding: '14px', borderRadius: 24, border: 'none',
-            background: '#4A7C59', color: '#FFFFFF',
+            background: '#1A1A1A', color: '#FFFFFF',
             fontSize: 15, fontWeight: 700, cursor: 'pointer',
           }}
         >

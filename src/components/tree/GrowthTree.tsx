@@ -2,10 +2,10 @@
 
 import type { GrowthStage } from './useGrowthStage'
 
-const STEM_COLOR = '#4A7C59'
+const STEM_COLOR = '#1A1A1A'
 const LEAF_COLOR = '#5A9C6A'
-const ROOT_COLOR = '#8B6914'
-const SEED_COLOR = '#D4B896'
+const ROOT_COLOR = '#555555'
+const SEED_COLOR = '#CCCCCC'
 const BLOOM_COLOR = '#E8A020'
 const BLOOM_GLOW = '#F5D060'
 

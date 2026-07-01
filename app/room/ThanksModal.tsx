@@ -24,7 +24,7 @@ export default function ThanksModal({ onClose }: ThanksModalProps) {
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 270,
-        background: visible ? 'rgba(59,47,30,0.55)' : 'rgba(59,47,30,0)',
+        background: visible ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0)',
         transition: 'background 0.3s ease',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '0 24px',
@@ -44,10 +44,10 @@ export default function ThanksModal({ onClose }: ThanksModalProps) {
         }}
       >
         <p style={{ fontSize: 32, margin: '0 0 12px' }}>💧</p>
-        <p style={{ color: '#3B2F1E', fontSize: 16, fontWeight: 700, lineHeight: 1.6, margin: '0 0 6px' }}>
+        <p style={{ color: '#111111', fontSize: 16, fontWeight: 700, lineHeight: 1.6, margin: '0 0 6px' }}>
           ご協力ありがとう！
         </p>
-        <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.55)', margin: '0 0 24px', lineHeight: 1.65 }}>
+        <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.5)', margin: '0 0 24px', lineHeight: 1.65 }}>
           根に水が撒かれました。
           <br />
           またNegativeに来てくださいね。

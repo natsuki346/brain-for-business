@@ -18,8 +18,8 @@ type RoomCard = {
 }
 
 const TYPE_STYLE: Record<'light' | 'shadow', { border: string; accent: string; icon: string }> = {
-  light:  { border: POSITIVE.base, accent: POSITIVE.text, icon: '🌿' },
-  shadow: { border: NEGATIVE.base, accent: NEGATIVE.text, icon: '🌱' },
+  light:  { border: POSITIVE.base, accent: POSITIVE.text, icon: '' },
+  shadow: { border: NEGATIVE.base, accent: NEGATIVE.text, icon: '' },
 }
 
 function RoomTypeIcon({ type }: { type: 'light' | 'shadow' }) {
@@ -105,11 +105,11 @@ export default function RoomCardList({ type }: { type: 'light' | 'shadow' }) {
   }, [type])
 
   if (loading) {
-    return <p className="text-sm text-center" style={{ color: 'rgba(120,100,70,0.5)' }}>読み込み中...</p>
+    return <p className="text-sm text-center" style={{ color: 'rgba(0,0,0,0.4)' }}>読み込み中...</p>
   }
 
   if (cards.length === 0) {
-    return <p className="text-sm text-center" style={{ color: 'rgba(120,100,70,0.5)' }}>タグが見つかりません</p>
+    return <p className="text-sm text-center" style={{ color: 'rgba(0,0,0,0.4)' }}>タグが見つかりません</p>
   }
 
   const style = TYPE_STYLE[type]

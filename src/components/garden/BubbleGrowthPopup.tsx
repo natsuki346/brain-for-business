@@ -25,12 +25,12 @@ export default function BubbleGrowthPopup({ cx, cy }: BubbleGrowthPopupProps) {
         borderRadius: 12,
         padding: '12px 16px',
         fontSize: 13,
-        color: '#3B2F1E',
+        color: '#111111',
         whiteSpace: 'nowrap',
         boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
         fontWeight: 500,
       }}>
-        ルームを訪れたので育ちました🌱
+        ルームを訪れたので育ちました
       </div>
 
       {/* 吹き出し三角（下向き） */}

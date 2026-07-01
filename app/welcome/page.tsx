@@ -77,7 +77,7 @@ export default function WelcomePage() {
           onClick={handleStart}
           style={{
             width: '100%',
-            background: '#4A7C59', color: '#FFFFFF',
+            background: '#1A1A1A', color: '#FFFFFF',
             border: 'none', borderRadius: 24,
             padding: '14px 0', fontSize: 15, fontWeight: 500,
             cursor: 'pointer',
@@ -102,7 +102,7 @@ export default function WelcomePage() {
         }}
       >
         <p style={{
-          fontSize: 72, fontStyle: 'italic', fontWeight: 600, color: '#3B2F1E', margin: 0,
+          fontSize: 72, fontStyle: 'italic', fontWeight: 600, color: '#111111', margin: 0,
           fontFamily: "'Cormorant Garamond', serif", letterSpacing: '0.02em',
         }}>
           Brain
@@ -116,22 +116,22 @@ export default function WelcomePage() {
         position: 'fixed', inset: 0, zIndex: 500,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '0 24px',
-        background: 'rgba(59,47,30,0.35)',
+        background: 'rgba(0,0,0,0.3)',
       }}>
         <div style={{
           width: '100%', maxWidth: 342,
           background: '#FFFFFF', borderRadius: 20,
           padding: 32, textAlign: 'center',
         }}>
-          <h2 style={{ fontSize: 18, fontWeight: 600, color: '#3B2F1E', margin: 0 }}>
-            まず4つの質問に答えてみよう🌱
+          <h2 style={{ fontSize: 18, fontWeight: 600, color: '#111111', margin: 0 }}>
+            まず4つの質問に答えてみよう
           </h2>
           <button
             onClick={handleStartPopup}
             style={{
               width: '100%', padding: '14px', marginTop: 24,
               borderRadius: 24, border: 'none',
-              background: '#4A7C59', color: '#FFFFFF',
+              background: '#1A1A1A', color: '#FFFFFF',
               fontSize: 15, fontWeight: 700, cursor: 'pointer',
             }}
           >

@@ -26,7 +26,7 @@ export default function GrowthHelpModal({ onClose, buttonText = 'とじる' }: {
       onClick={close}
       style={{
         position: 'fixed', inset: 0, zIndex: 280,
-        background: visible ? 'rgba(59,47,30,0.55)' : 'rgba(59,47,30,0)',
+        background: visible ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0)',
         transition: 'background 0.3s ease',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '0 24px',
@@ -46,14 +46,14 @@ export default function GrowthHelpModal({ onClose, buttonText = 'とじる' }: {
           boxShadow: '0 16px 48px rgba(0,0,0,0.25)',
         }}
       >
-        <h2 style={{ margin: '0 0 4px', fontSize: 17, fontWeight: 700, color: '#3B2F1E', textAlign: 'center' }}>
-          🌱 成長のしかた
+        <h2 style={{ margin: '0 0 4px', fontSize: 17, fontWeight: 700, color: '#111111', textAlign: 'center' }}>
+          成長のしかた
         </h2>
-        <p style={{ margin: '0 0 20px', fontSize: 12, color: '#4A7C59', fontWeight: 600, textAlign: 'center' }}>
+        <p style={{ margin: '0 0 20px', fontSize: 12, color: '#1A1A1A', fontWeight: 600, textAlign: 'center' }}>
           ありのままの自分を愛でるために
         </p>
 
-        <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.75)', lineHeight: 1.8, margin: '0 0 16px' }}>
+        <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.6)', lineHeight: 1.8, margin: '0 0 16px' }}>
           PositiveやNegativeは、あなたが部屋に訪れたり、誰かと言葉を交わすたびに、少しずつ育っていきます。
         </p>
 
@@ -66,16 +66,16 @@ export default function GrowthHelpModal({ onClose, buttonText = 'とじる' }: {
                 background: '#FFFFFF', borderRadius: 12, padding: '10px 14px',
               }}
             >
-              <span style={{ fontSize: 13, color: '#3B2F1E' }}>{item.icon} {item.label}</span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: '#4A7C59' }}>{item.point}</span>
+              <span style={{ fontSize: 13, color: '#111111' }}>{item.icon} {item.label}</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: '#1A1A1A' }}>{item.point}</span>
             </div>
           ))}
         </div>
 
-        <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.75)', lineHeight: 1.8, margin: '0 0 4px' }}>
+        <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.6)', lineHeight: 1.8, margin: '0 0 4px' }}>
           ポイントが貯まるごとに、タネ → 芽 → つぼみ → 満開 へと育っていきます。
         </p>
-        <p style={{ fontSize: 12, color: 'rgba(59,47,30,0.55)', lineHeight: 1.8, margin: '0 0 24px' }}>
+        <p style={{ fontSize: 12, color: 'rgba(0,0,0,0.5)', lineHeight: 1.8, margin: '0 0 24px' }}>
           無理に変わろうとしなくて大丈夫。ありのままのあなたの言葉が、ここでは育っていく糧になります。
         </p>
 
@@ -83,7 +83,7 @@ export default function GrowthHelpModal({ onClose, buttonText = 'とじる' }: {
           onClick={close}
           style={{
             width: '100%', padding: '14px', borderRadius: 30, border: 'none',
-            background: '#4A7C59', color: '#FFFFFF',
+            background: '#1A1A1A', color: '#FFFFFF',
             fontSize: 14, fontWeight: 700, cursor: 'pointer',
           }}
         >

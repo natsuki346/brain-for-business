@@ -36,10 +36,10 @@ type TourStep = 'saved' | 'journal' | 'back' | 'done'
 
 function getStageInfo(growthPoint: number, tagType: 'light' | 'shadow'): { emoji: string; label: string; bg: string } {
   const stages = tagType === 'light' ? POSITIVE_STAGES : NEGATIVE_STAGES
-  if (growthPoint >= 30) return { emoji: '🌸', label: '花',  bg: stages[3] }
-  if (growthPoint >= 20) return { emoji: '🌼', label: '蕾',  bg: stages[2] }
-  if (growthPoint >= 10) return { emoji: '🌿', label: '芽',  bg: stages[1] }
-  return                        { emoji: '🌱', label: 'タネ', bg: stages[0] }
+  if (growthPoint >= 30) return { emoji: '', label: '満開',  bg: stages[3] }
+  if (growthPoint >= 20) return { emoji: '', label: '上昇',  bg: stages[2] }
+  if (growthPoint >= 10) return { emoji: '', label: '成長',  bg: stages[1] }
+  return                        { emoji: '', label: 'タネ', bg: stages[0] }
 }
 
 function formatDate(iso: string): string {
@@ -48,23 +48,23 @@ function formatDate(iso: string): string {
 }
 
 // 初めて訪れたユーザー向けの案内ツールチップ（吹き出し＋上向き矢印）。
-// HelpModalと同じ配色（#8B6914／#3B2F1E／白系）に合わせている。
+// HelpModalと同じ配色（#555555／#111111／白系）に合わせている。
 function GuideTooltip({ text, onClose }: { text: string; onClose: () => void }) {
   return (
     <div style={{ position: 'absolute', top: 30, left: 0, zIndex: 10, width: 260 }}>
       <div style={{
         position: 'relative',
         background: '#FFFFFF',
-        border: '1.5px solid #8B6914',
+        border: '1.5px solid #CCCCCC',
         borderRadius: 12,
         padding: '10px 14px 26px 14px',
-        boxShadow: '0 4px 14px rgba(139,105,20,0.22)',
+        boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
       }}>
         {/* 上向きの矢印：すぐ上のセクション見出しを指し示す */}
         <div style={{
           position: 'absolute', top: -7, left: 14, width: 0, height: 0,
           borderLeft: '7px solid transparent', borderRight: '7px solid transparent',
-          borderBottom: '7px solid #8B6914',
+          borderBottom: '7px solid #CCCCCC',
         }} />
         <div style={{
           position: 'absolute', top: -5.3, left: 15.5, width: 0, height: 0,
@@ -72,7 +72,7 @@ function GuideTooltip({ text, onClose }: { text: string; onClose: () => void }) 
           borderBottom: '5.5px solid #FFFFFF',
         }} />
 
-        <p style={{ fontSize: 12.5, color: '#3B2F1E', lineHeight: 1.55, margin: 0, fontWeight: 500 }}>
+        <p style={{ fontSize: 12.5, color: '#222222', lineHeight: 1.55, margin: 0, fontWeight: 500 }}>
           {text}
         </p>
 
@@ -82,7 +82,7 @@ function GuideTooltip({ text, onClose }: { text: string; onClose: () => void }) 
           style={{
             position: 'absolute', bottom: 6, right: 8,
             background: 'none', border: 'none', cursor: 'pointer',
-            fontSize: 11, color: 'rgba(59,47,30,0.4)', lineHeight: 1, padding: 2,
+            fontSize: 11, color: 'rgba(0,0,0,0.35)', lineHeight: 1, padding: 2,
           }}
         >
           ✕
@@ -209,7 +209,7 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
               onClick={onClose}
               style={{
                 background: 'none', border: 'none', cursor: 'pointer',
-                fontSize: 14, color: '#3B2F1E', padding: 0,
+                fontSize: 14, color: '#333333', padding: 0,
                 display: 'flex', alignItems: 'center', gap: 4,
               }}
             >← 戻る</button>
@@ -230,19 +230,19 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
 
             {stageInfo && (
               <span style={{
-                background: stageInfo.bg, color: '#3B2F1E',
+                background: stageInfo.bg, color: '#222222',
                 padding: '4px 10px', borderRadius: 20, fontSize: 12, fontWeight: 600,
               }}>{stageInfo.emoji} {stageInfo.label}</span>
             )}
           </div>
 
-          <p style={{ fontSize: 11, color: 'rgba(59,47,30,0.45)', margin: '6px 0 0' }}>
+          <p style={{ fontSize: 11, color: 'rgba(0,0,0,0.4)', margin: '6px 0 0' }}>
             {lastVisit ? `最終訪問：${formatDate(lastVisit)}` : 'まだ訪問していません'}
           </p>
         </div>
 
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '40px 0', color: 'rgba(59,47,30,0.4)', fontSize: 13 }}>
+          <div style={{ textAlign: 'center', padding: '40px 0', color: 'rgba(0,0,0,0.35)', fontSize: 13 }}>
             読み込み中...
           </div>
         ) : (
@@ -251,7 +251,7 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
             <div style={{
               display: 'flex', margin: '0 20px 20px',
               background: '#FFFFFF', borderRadius: 16,
-              overflow: 'hidden', border: '1px solid rgba(139,105,20,0.12)',
+              overflow: 'hidden', border: '1px solid rgba(0,0,0,0.08)',
             }}>
               {[
                 { label: '訪問回数',     value: `${visitCount}回` },
@@ -260,10 +260,10 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
               ].map(({ label, value }, i) => (
                 <div key={label} style={{
                   flex: 1, padding: '14px 4px', textAlign: 'center',
-                  borderLeft: i > 0 ? '1px solid rgba(139,105,20,0.1)' : 'none',
+                  borderLeft: i > 0 ? '1px solid rgba(0,0,0,0.07)' : 'none',
                 }}>
-                  <p style={{ fontSize: 17, fontWeight: 700, color: '#3B2F1E', margin: 0 }}>{value}</p>
-                  <p style={{ fontSize: 10, color: 'rgba(59,47,30,0.5)', margin: '2px 0 0' }}>{label}</p>
+                  <p style={{ fontSize: 17, fontWeight: 700, color: '#111111', margin: 0 }}>{value}</p>
+                  <p style={{ fontSize: 10, color: 'rgba(0,0,0,0.4)', margin: '2px 0 0' }}>{label}</p>
                 </div>
               ))}
             </div>
@@ -285,9 +285,9 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
               {savedMessages.length === 0 ? (
                 <div style={{
                   background: '#FFFFFF', borderRadius: 12, padding: '16px',
-                  border: '1px dashed rgba(139,105,20,0.2)', textAlign: 'center',
+                  border: '1px dashed rgba(0,0,0,0.15)', textAlign: 'center',
                 }}>
-                  <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.35)', margin: 0 }}>
+                  <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.3)', margin: 0 }}>
                     まだ保存した言葉がありません
                   </p>
                 </div>
@@ -296,12 +296,12 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
                   {savedMessages.map(sm => (
                     <div key={sm.id} style={{
                       background: '#FFFFFF', borderRadius: 12, padding: '12px 14px',
-                      border: '1px solid rgba(139,105,20,0.12)',
+                      border: '1px solid rgba(0,0,0,0.08)',
                     }}>
-                      <p style={{ fontSize: 14, color: '#3B2F1E', margin: '0 0 4px', lineHeight: 1.5 }}>
+                      <p style={{ fontSize: 14, color: '#111111', margin: '0 0 4px', lineHeight: 1.5 }}>
                         {sm.content}
                       </p>
-                      <p style={{ fontSize: 11, color: 'rgba(59,47,30,0.4)', margin: 0 }}>
+                      <p style={{ fontSize: 11, color: 'rgba(0,0,0,0.35)', margin: 0 }}>
                         {formatDate(sm.created_at)}
                       </p>
                     </div>
@@ -324,10 +324,10 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
               {journals.length === 0 ? (
                 <div style={{
                   background: '#FFFFFF', borderRadius: 12, padding: '16px',
-                  border: '1px dashed rgba(139,105,20,0.2)', textAlign: 'center',
+                  border: '1px dashed rgba(0,0,0,0.15)', textAlign: 'center',
                   marginBottom: 12,
                 }}>
-                  <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.35)', margin: 0 }}>
+                  <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.3)', margin: 0 }}>
                     まだメモがありません
                   </p>
                 </div>
@@ -339,7 +339,7 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
                       style={{
                         background: '#FFFFFF', borderRadius: 12,
                         padding: '12px 16px',
-                        border: '1px solid rgba(139,105,20,0.12)',
+                        border: '1px solid rgba(0,0,0,0.08)',
                         position: 'relative',
                       }}
                     >
@@ -350,7 +350,7 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
                         style={{
                           position: 'absolute', top: 8, right: 8,
                           background: 'none', border: 'none', cursor: 'pointer',
-                          fontSize: 12, color: 'rgba(59,47,30,0.35)',
+                          fontSize: 12, color: 'rgba(0,0,0,0.3)',
                           lineHeight: 1, padding: 2,
                         }}
                       >
@@ -358,14 +358,14 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
                       </button>
 
                       <p style={{
-                        fontSize: 13, color: '#3B2F1E',
+                        fontSize: 13, color: '#111111',
                         lineHeight: 1.6, margin: '0 0 6px',
                         paddingRight: 20,
                         whiteSpace: 'pre-wrap',
                       }}>
                         {j.content}
                       </p>
-                      <p style={{ fontSize: 11, color: '#8B6914', margin: 0, textAlign: 'right' }}>
+                      <p style={{ fontSize: 11, color: '#888888', margin: 0, textAlign: 'right' }}>
                         {formatDate(j.created_at)}
                       </p>
                     </div>
@@ -377,7 +377,7 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
               <div style={{
                 background: '#FFFFFF', borderRadius: 12,
                 padding: '12px',
-                border: '1px solid rgba(139,105,20,0.12)',
+                border: '1px solid rgba(0,0,0,0.08)',
               }}>
                 <textarea
                   value={journalText}
@@ -387,7 +387,7 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
                     width: '100%', minHeight: 80,
                     border: 'none', outline: 'none', resize: 'none',
                     background: 'transparent',
-                    fontSize: 13, color: '#3B2F1E', lineHeight: 1.6,
+                    fontSize: 13, color: '#111111', lineHeight: 1.6,
                     fontFamily: 'inherit',
                     boxSizing: 'border-box',
                   }}
@@ -398,7 +398,7 @@ export default function BubbleDetailModal({ tagId, tagText, tagType, onClose, pr
                     disabled={savingJournal || !journalText.trim()}
                     style={{
                       padding: '8px 18px', borderRadius: 10, border: 'none',
-                      background: journalText.trim() ? '#4A7C59' : 'rgba(74,124,89,0.3)',
+                      background: journalText.trim() ? '#1A1A1A' : 'rgba(0,0,0,0.2)',
                       color: '#FFFFFF',
                       fontSize: 13, fontWeight: 700,
                       cursor: journalText.trim() ? 'pointer' : 'default',

@@ -121,7 +121,7 @@ function FriendChatContent() {
   if (loading) {
     return (
       <div style={{ background: '#FFFFFF', maxWidth: 390, margin: '0 auto', minHeight: '100svh' }}>
-        <p style={{ textAlign: 'center', paddingTop: 80, fontSize: 13, color: '#A09070' }}>読み込み中...</p>
+        <p style={{ textAlign: 'center', paddingTop: 80, fontSize: 13, color: '#888888' }}>読み込み中...</p>
       </div>
     )
   }
@@ -131,20 +131,20 @@ function FriendChatContent() {
       {/* Header */}
       <div style={{
         flexShrink: 0, padding: '16px 20px',
-        borderBottom: '1px solid #D4B896',
+        borderBottom: '1px solid #CCCCCC',
         background: '#FFFFFF',
         display: 'flex', alignItems: 'center', gap: 12,
       }}>
         <button
           onClick={() => router.back()}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20, color: '#8B6914', lineHeight: 1, padding: 0 }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 20, color: '#555555', lineHeight: 1, padding: 0 }}
         >‹</button>
         <div
           onClick={() => router.push(`/profile/view?userId=${friendId}`)}
           style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}
         >
           <UserAvatar username={friend?.username} avatarUrl={friend?.avatar_url} size={36} />
-          <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#3B2F1E' }}>
+          <p style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#111111' }}>
             {friend?.username}
           </p>
         </div>
@@ -158,11 +158,11 @@ function FriendChatContent() {
             <div key={msg.id}>
               {shouldShowDateDivider(messages, index) && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '12px 0 8px' }}>
-                  <div style={{ flex: 1, height: .5, background: 'rgba(139,105,20,0.2)' }} />
-                  <span style={{ fontSize: 11, color: 'rgba(139,105,20,0.55)', whiteSpace: 'nowrap' }}>
+                  <div style={{ flex: 1, height: .5, background: 'rgba(0,0,0,0.12)' }} />
+                  <span style={{ fontSize: 11, color: 'rgba(0,0,0,0.4)', whiteSpace: 'nowrap' }}>
                     {formatDateLabel(msg.created_at)}
                   </span>
-                  <div style={{ flex: 1, height: .5, background: 'rgba(139,105,20,0.2)' }} />
+                  <div style={{ flex: 1, height: .5, background: 'rgba(0,0,0,0.12)' }} />
                 </div>
               )}
               <div
@@ -179,9 +179,9 @@ function FriendChatContent() {
                 <div style={{
                   maxWidth: '72%', padding: '10px 14px',
                   borderRadius: mine ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-                  background: mine ? '#4A7C59' : '#FFFFFF',
-                  color: mine ? '#FFFFFF' : '#3B2F1E',
-                  border: mine ? 'none' : '1px solid #D4B896',
+                  background: mine ? '#1A1A1A' : '#FFFFFF',
+                  color: mine ? '#FFFFFF' : '#111111',
+                  border: mine ? 'none' : '1px solid #CCCCCC',
                   fontSize: 14, lineHeight: 1.5,
                 }}>
                   <p style={{ margin: 0 }}>{msg.content}</p>
@@ -204,7 +204,7 @@ function FriendChatContent() {
       {/* Input */}
       <div style={{
         flexShrink: 0, padding: '10px 16px 28px',
-        borderTop: '1px solid #D4B896',
+        borderTop: '1px solid #CCCCCC',
         display: 'flex', gap: 10, alignItems: 'center',
         background: '#FFFFFF',
       }}>
@@ -215,16 +215,16 @@ function FriendChatContent() {
           placeholder="メッセージを入力..."
           style={{
             flex: 1, padding: '10px 14px', borderRadius: 20,
-            border: '1.5px solid #D4B896', outline: 'none',
-            fontSize: 14, color: '#3B2F1E', background: '#FFFFFF',
+            border: '1.5px solid #CCCCCC', outline: 'none',
+            fontSize: 14, color: '#111111', background: '#FFFFFF',
           }}
         />
         <button
           onClick={handleSend}
           style={{
             width: 38, height: 38, borderRadius: '50%', border: 'none',
-            background: input.trim() ? '#4A7C59' : 'rgba(139,105,20,0.12)',
-            color: input.trim() ? '#FFFFFF' : 'rgba(139,105,20,0.35)',
+            background: input.trim() ? '#1A1A1A' : 'rgba(0,0,0,0.08)',
+            color: input.trim() ? '#FFFFFF' : 'rgba(0,0,0,0.3)',
             fontSize: 16, cursor: input.trim() ? 'pointer' : 'default',
             display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
           }}

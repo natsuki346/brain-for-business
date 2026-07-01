@@ -33,18 +33,18 @@ export function RoomCompleteModal({ onReturn }: { onReturn: () => void }) {
           boxShadow: '0 16px 48px rgba(0,0,0,0.25)',
         }}
       >
-        <p style={{ fontSize: 32, margin: '0 0 12px' }}>🌿</p>
-        <p style={{ color: '#3B2F1E', fontSize: 16, fontWeight: 700, lineHeight: 1.6, margin: '0 0 6px' }}>
+        <p style={{ fontSize: 32, margin: '0 0 12px' }}>✓</p>
+        <p style={{ color: '#111111', fontSize: 16, fontWeight: 700, lineHeight: 1.6, margin: '0 0 6px' }}>
           今日のガーデンめぐりが終わりました
         </p>
-        <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.55)', margin: '0 0 24px', lineHeight: 1.6 }}>
+        <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.5)', margin: '0 0 24px', lineHeight: 1.6 }}>
           あなたのガーデンに戻りましょう
         </p>
         <button
           onClick={onReturn}
           style={{
             width: '100%', padding: '14px', borderRadius: 30, border: 'none',
-            background: '#4A7C59', color: '#FFFFFF',
+            background: '#1A1A1A', color: '#FFFFFF',
             fontSize: 14, fontWeight: 700, cursor: 'pointer',
           }}
         >ガーデンに帰る</button>

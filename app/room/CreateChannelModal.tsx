@@ -42,7 +42,7 @@ export default function CreateChannelModal({
       }}
     >
       <div style={{ width: '100%', maxWidth: 320, background: '#FFFFFF', borderRadius: 16, padding: 24 }}>
-        <h2 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700, color: '#3B2F1E' }}>
+        <h2 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700, color: '#111111' }}>
           新しいチャンネルを作る
         </h2>
         <input
@@ -52,8 +52,8 @@ export default function CreateChannelModal({
           maxLength={MAX_LEN}
           style={{
             width: '100%', boxSizing: 'border-box', padding: 12, borderRadius: 12,
-            border: '1px solid #D4B896', outline: 'none',
-            fontSize: 14, color: '#3B2F1E', marginBottom: 16,
+            border: '1px solid #CCCCCC', outline: 'none',
+            fontSize: 14, color: '#111111', marginBottom: 16,
           }}
         />
         <button
@@ -61,7 +61,7 @@ export default function CreateChannelModal({
           disabled={!valid || submitting}
           style={{
             width: '100%', padding: 14, borderRadius: 24, border: 'none',
-            background: '#4A7C59', color: '#FFFFFF',
+            background: '#1A1A1A', color: '#FFFFFF',
             fontSize: 14, fontWeight: 700,
             opacity: valid && !submitting ? 1 : 0.5,
             cursor: valid && !submitting ? 'pointer' : 'default',
@@ -72,7 +72,7 @@ export default function CreateChannelModal({
           style={{
             display: 'block', width: '100%', marginTop: 8, padding: 0,
             background: 'none', border: 'none',
-            color: '#8B6914', fontSize: 13, cursor: 'pointer',
+            color: '#555555', fontSize: 13, cursor: 'pointer',
           }}
         >キャンセル</button>
       </div>

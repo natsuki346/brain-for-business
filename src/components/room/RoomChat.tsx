@@ -41,7 +41,7 @@ type Reaction = { emoji: string; count: number; reacted: boolean }
 type ReactionsMap = Record<string, Reaction[]>
 type RealtimeRow = { id: string; tag_id: string; sub_tag_id: string | null; user_id: string }
 
-const QUICK_EMOJIS = ['🌼', '🌱', '✨', '💛', '🤍']
+const QUICK_EMOJIS = ['✨', '💛', '🤍']
 const EMOJI_CATS = [
   { icon: '😀', label: '顔・感情', emojis: ['😀','😃','😄','😁','😆','😅','🤣','😂','🙂','😉','😊','😇','🥰','😍','🤩','😘','😚','😋','😛','😜','🤪','😝','🤑','🤗','🤔','😐','😑','😶','😏','😒','🙄','😬','😔','😪','😴','😷','🤒','🤕','🤢','🤧','🥵','🥶','😵','🤯','🤠','😳','🥺','😦','😧','😨','😰','😥','😢','😭','😱','😖','😣','😞','😓','😩','😫','🥱','😈','👿','👹','👺','💀','👻','👽','👾','🤖','❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💔','💕','💞','💓','💗','💖','💘','💝'] },
   { icon: '👋', label: '手・人', emojis: ['👋','🤚','🖐️','✋','🖖','👌','🤌','✌️','🤞','🤟','🤘','👈','👉','👆','👇','☝️','👍','👎','✊','👊','🤛','🤜','👏','🙌','🫶','🤝','🙏','💪','🦾','👀','👅','👄','👶','🧒','👦','👧','🧑','👱','👨','👩','🧓','👴','👵','🙍','🙎','🙅','🙆','💁','🙋','🙇','🤦','🤷'] },
@@ -112,12 +112,12 @@ function SaveGuideTooltip({
       <div style={{
         position: 'relative',
         background: '#FFFFFF',
-        border: '1.5px solid #8B6914',
+        border: '1.5px solid #555555',
         borderRadius: 12,
         padding: '10px 14px 12px',
-        boxShadow: '0 4px 14px rgba(139,105,20,0.22)',
+        boxShadow: '0 4px 14px rgba(0,0,0,0.1)',
       }}>
-        <p style={{ fontSize: 12.5, color: '#3B2F1E', lineHeight: 1.55, margin: '0 0 10px', fontWeight: 500 }}>
+        <p style={{ fontSize: 12.5, color: '#111111', lineHeight: 1.55, margin: '0 0 10px', fontWeight: 500 }}>
           🔖 気に入った言葉は、メッセージの保存ボタンから残せるよ
         </p>
 
@@ -125,7 +125,7 @@ function SaveGuideTooltip({
           onClick={onClose}
           style={{
             width: '100%', padding: '7px', borderRadius: 8, border: 'none',
-            background: '#4A7C59', color: '#FFFFFF',
+            background: '#1A1A1A', color: '#FFFFFF',
             fontSize: 12, fontWeight: 700, cursor: 'pointer',
           }}
         >
@@ -138,7 +138,7 @@ function SaveGuideTooltip({
             <div style={{
               position: 'absolute', top: '50%', right: -7, transform: 'translateY(-50%)', width: 0, height: 0,
               borderTop: '7px solid transparent', borderBottom: '7px solid transparent',
-              borderLeft: '7px solid #8B6914',
+              borderLeft: '7px solid #555555',
             }} />
             <div style={{
               position: 'absolute', top: '50%', right: -5.3, transform: 'translateY(-50%)', width: 0, height: 0,
@@ -151,7 +151,7 @@ function SaveGuideTooltip({
             <div style={{
               position: 'absolute', top: '50%', left: -7, transform: 'translateY(-50%)', width: 0, height: 0,
               borderTop: '7px solid transparent', borderBottom: '7px solid transparent',
-              borderRight: '7px solid #8B6914',
+              borderRight: '7px solid #555555',
             }} />
             <div style={{
               position: 'absolute', top: '50%', left: -5.3, transform: 'translateY(-50%)', width: 0, height: 0,
@@ -509,7 +509,7 @@ export default function RoomChat({
         }}
         style={{
           width: 36, height: 36, borderRadius: '50%',
-          background: '#4A7C59', overflow: 'hidden', flexShrink: 0,
+          background: '#1A1A1A', overflow: 'hidden', flexShrink: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           color: '#FFFFFF', fontSize: 15, fontWeight: 'bold', cursor: 'pointer',
         }}
@@ -555,7 +555,7 @@ export default function RoomChat({
           >‹</div>
         )}
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 16, fontWeight: 'bold', color: '#3B2F1E' }}>{header.title}</div>
+          <div style={{ fontSize: 16, fontWeight: 'bold', color: '#111111' }}>{header.title}</div>
           {header.subtitle && <div style={{ fontSize: 11, color: theme.text, marginTop: 1 }}>{header.subtitle}</div>}
         </div>
       </div>
@@ -604,7 +604,7 @@ export default function RoomChat({
                         fontSize: 13, fontWeight: 600,
                         color: mine ? theme.deep : theme.text,
                       }}>{user?.username ?? (mine ? 'あなた' : '匿名')}</span>
-                      <span style={{ fontSize: 11, color: '#A09070' }}>{formatTime(msg.created_at)}</span>
+                      <span style={{ fontSize: 11, color: '#888888' }}>{formatTime(msg.created_at)}</span>
                     </div>
                   )}
 
@@ -614,7 +614,7 @@ export default function RoomChat({
                     onPointerUp={cancelLongPress}
                     onPointerLeave={cancelLongPress}
                     onPointerCancel={cancelLongPress}
-                    style={{ fontSize: 14, lineHeight: 1.5, color: '#3B2F1E', wordBreak: 'break-word', userSelect: 'none', WebkitUserSelect: 'none' }}
+                    style={{ fontSize: 14, lineHeight: 1.5, color: '#111111', wordBreak: 'break-word', userSelect: 'none', WebkitUserSelect: 'none' }}
                   >
                     {msg.content.split(/(@\w+)/g).map((part, i) =>
                       /^@\w+$/.test(part)
@@ -632,7 +632,7 @@ export default function RoomChat({
                           background: r.reacted ? theme.pale : '#FFFFFF',
                           border: `1px solid ${r.reacted ? theme.text : theme.soft}`,
                           borderRadius: 20, padding: '2px 8px', fontSize: 12,
-                          cursor: 'pointer', color: '#3B2F1E',
+                          cursor: 'pointer', color: '#111111',
                           display: 'flex', alignItems: 'center', gap: 3,
                         }}
                       >{r.emoji} <span style={{ fontSize: 11, color: theme.text }}>{r.count}</span></button>
@@ -642,14 +642,14 @@ export default function RoomChat({
                       onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
                       onMouseLeave={e => (e.currentTarget.style.opacity = '0.4')}
                       style={{
-                        background: 'transparent', border: '1px solid rgba(139,105,20,0.25)',
+                        background: 'transparent', border: '1px solid rgba(0,0,0,0.18)',
                         borderRadius: 20, padding: '3px 7px',
                         cursor: 'pointer', display: 'flex', alignItems: 'center',
                         opacity: 0.4,
                       }}
                       aria-label="リアクション"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B2F1E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                         <circle cx="12" cy="12" r="10"/>
                         <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
                         <line x1="9" y1="9" x2="9.01" y2="9"/>
@@ -660,14 +660,14 @@ export default function RoomChat({
                       <button
                         onClick={() => handleToggleSave(msg.id, msg.content)}
                         style={{
-                          background: 'transparent', border: '1px solid rgba(139,105,20,0.25)',
+                          background: 'transparent', border: '1px solid rgba(0,0,0,0.18)',
                           borderRadius: 20, padding: '3px 7px',
                           cursor: 'pointer', display: 'flex', alignItems: 'center',
                           opacity: savedIds.has(msg.id) ? 1 : 0.4,
                         }}
                         aria-label="保存"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill={savedIds.has(msg.id) ? theme.base : 'none'} stroke={savedIds.has(msg.id) ? theme.base : '#3B2F1E'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill={savedIds.has(msg.id) ? theme.base : 'none'} stroke={savedIds.has(msg.id) ? theme.base : '#111111'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
                         </svg>
                       </button>
@@ -706,7 +706,7 @@ export default function RoomChat({
                       setMentionQuery(null)
                     }}
                     style={{
-                      padding: '10px 16px', fontSize: 14, color: '#3B2F1E',
+                      padding: '10px 16px', fontSize: 14, color: '#111111',
                       cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
                       borderBottom: `1px solid ${theme.soft}`,
                     }}
@@ -734,7 +734,7 @@ export default function RoomChat({
               style={{
                 flex: 1, background: '#FFFFFF', border: `1px solid ${theme.soft}`,
                 borderRadius: 20, padding: '10px 16px', fontSize: 14,
-                color: '#3B2F1E', outline: 'none',
+                color: '#111111', outline: 'none',
               }}
             />
             <button
@@ -756,20 +756,20 @@ export default function RoomChat({
         <>
           <div
             onClick={() => setLongPressedMsgId(null)}
-            style={{ position: 'absolute', inset: 0, background: 'rgba(59,47,30,0.35)', zIndex: 10 }}
+            style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', zIndex: 10 }}
           />
           <div style={{
             position: 'absolute', bottom: 0, left: 0, right: 0,
             background: '#FFFFFF', borderRadius: '20px 20px 0 0',
             borderTop: `1px solid ${theme.soft}`, zIndex: 11, paddingBottom: 32,
           }}>
-            <div style={{ width: 36, height: 4, background: 'rgba(139,105,20,.25)', borderRadius: 2, margin: '10px auto 8px' }} />
+            <div style={{ width: 36, height: 4, background: 'rgba(0,0,0,0.2)', borderRadius: 2, margin: '10px auto 8px' }} />
             <button
               onClick={() => { setOpenPickerMsgId(longPressedMsgId); setActiveCatIndex(0); setLongPressedMsgId(null) }}
               style={{
                 display: 'flex', alignItems: 'center', gap: 12, width: '100%',
                 padding: '14px 24px', background: 'none', border: 'none',
-                cursor: 'pointer', fontSize: 15, color: '#3B2F1E', fontWeight: 500,
+                cursor: 'pointer', fontSize: 15, color: '#111111', fontWeight: 500,
               }}
             >
               <span style={{ fontSize: 22 }}>😊</span> リアクション
@@ -783,19 +783,19 @@ export default function RoomChat({
         <>
           <div
             onClick={() => setOpenPickerMsgId(null)}
-            style={{ position: 'absolute', inset: 0, background: 'rgba(59,47,30,0.35)', zIndex: 10 }}
+            style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.3)', zIndex: 10 }}
           />
           <div style={{
             position: 'absolute', bottom: 0, left: 0, right: 0,
             background: '#FFFFFF', borderRadius: '20px 20px 0 0',
             borderTop: `1px solid ${theme.soft}`, zIndex: 11,
           }}>
-            <div style={{ width: 36, height: 4, background: 'rgba(139,105,20,.25)', borderRadius: 2, margin: '10px auto 0' }} />
+            <div style={{ width: 36, height: 4, background: 'rgba(0,0,0,0.2)', borderRadius: 2, margin: '10px auto 0' }} />
             <div style={{ fontSize: 13, color: theme.text, textAlign: 'center', padding: '8px 0 4px', fontWeight: 500 }}>
               リアクションを選ぶ
             </div>
             {/* クイック5つ */}
-            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', padding: '8px 16px 12px', borderBottom: '.5px solid rgba(139,105,20,.15)' }}>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', padding: '8px 16px 12px', borderBottom: '.5px solid rgba(0,0,0,0.08)' }}>
               {QUICK_EMOJIS.map(emoji => (
                 <button key={emoji}
                   onClick={() => {
@@ -807,7 +807,7 @@ export default function RoomChat({
               ))}
             </div>
             {/* カテゴリタブ */}
-            <div style={{ display: 'flex', overflowX: 'auto', borderBottom: '.5px solid rgba(139,105,20,.15)', padding: '4px 8px 0' }}>
+            <div style={{ display: 'flex', overflowX: 'auto', borderBottom: '.5px solid rgba(0,0,0,0.08)', padding: '4px 8px 0' }}>
               {EMOJI_CATS.map((cat, i) => (
                 <button key={i}
                   onClick={() => {
@@ -839,7 +839,7 @@ export default function RoomChat({
             >
               {EMOJI_CATS.map((cat, catIdx) => (
                 <div key={catIdx} id={`cat-${catIdx}`}>
-                  <div style={{ fontSize: 11, color: '#8B6914', fontWeight: 500, padding: '8px 0 4px' }}>{cat.label}</div>
+                  <div style={{ fontSize: 11, color: '#555555', fontWeight: 500, padding: '8px 0 4px' }}>{cat.label}</div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 2 }}>
                     {cat.emojis.map(emoji => (
                       <button key={emoji}

@@ -122,7 +122,7 @@ export default function CanvasPage() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '44px 20px 12px',
       }}>
-        <h1 style={{ fontSize: 19, fontWeight: 600, color: '#3B2F1E', margin: 0 }}>
+        <h1 style={{ fontSize: 19, fontWeight: 600, color: '#111111', margin: 0 }}>
           あなたのガーデン
         </h1>
       </div>

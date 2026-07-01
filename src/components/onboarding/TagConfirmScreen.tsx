@@ -60,15 +60,14 @@ export default function TagConfirmScreen({ lightTags, shadowTags }: Props) {
       }}
     >
       <div style={{ paddingTop: 60, flex: 1 }}>
-        <p style={{ fontSize: 13, color: 'rgba(59,47,30,0.45)', textAlign: 'center', marginBottom: 36, letterSpacing: '0.04em' }}>
+        <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.4)', textAlign: 'center', marginBottom: 36, letterSpacing: '0.04em' }}>
           登録されたタグ
         </p>
 
         {/* Light タグ */}
         <div style={{ marginBottom: 32, textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 14 }}>
-            <span style={{ fontSize: 20 }}>🌼</span>
-            <span style={{ fontSize: 15, fontWeight: 700, color: '#3B2F1E' }}>Positive</span>
+            <span style={{ fontSize: 15, fontWeight: 700, color: '#111111' }}>Positive</span>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
             {lightTags.map((tag, i) => (
@@ -80,8 +79,7 @@ export default function TagConfirmScreen({ lightTags, shadowTags }: Props) {
         {/* Negative タグ */}
         <div style={{ marginBottom: 40, textAlign: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 14 }}>
-            <span style={{ fontSize: 20 }}>🌱</span>
-            <span style={{ fontSize: 15, fontWeight: 700, color: '#3B2F1E' }}>Negative</span>
+            <span style={{ fontSize: 15, fontWeight: 700, color: '#111111' }}>Negative</span>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center' }}>
             {shadowTags.map((tag, i) => (
@@ -96,7 +94,7 @@ export default function TagConfirmScreen({ lightTags, shadowTags }: Props) {
         style={{
           width: '100%', padding: '14px',
           borderRadius: 24, border: 'none',
-          background: '#4A7C59', color: '#FFFFFF',
+          background: '#1A1A1A', color: '#FFFFFF',
           fontSize: 15, fontWeight: 700, cursor: 'pointer',
           flexShrink: 0,
         }}

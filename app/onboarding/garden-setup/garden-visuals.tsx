@@ -230,14 +230,14 @@ export function RootNodeView({
       <div style={{
         width: 10, height: 10, borderRadius: '50%',
         background: isTop ? NEGATIVE.deep : NEGATIVE.base,
-        border: selected ? '2px solid #4A7C59' : '2px solid rgba(255,255,255,0.6)',
+        border: selected ? '2px solid #1A1A1A' : '2px solid rgba(255,255,255,0.6)',
         boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
       }} />
       <span style={{
         fontSize: 10, marginTop: 3, padding: '2px 8px', borderRadius: 999,
         whiteSpace: 'nowrap', color: '#fff', fontWeight: 600,
         background: isTop ? colorForRootTag(node.tag ?? node.label) : withAlpha(NEGATIVE.deep, 0.8),
-        outline: selected ? '2px solid #4A7C59' : 'none',
+        outline: selected ? '2px solid #1A1A1A' : 'none',
       }}>
         {isTop ? formatHashtag(node.label) : node.label}
       </span>

@@ -15,7 +15,7 @@ const BUTTON_LABELS: Record<1 | 2 | 3, string> = {
 }
 
 const HIGHLIGHT = '#C0392B'
-const DONE = '#4A7C59'
+const DONE = '#1A1A1A'
 
 type Props = {
   onStart: () => void
@@ -60,7 +60,7 @@ export default function WhyModal({ onStart, currentStep, completedStep, onComple
         position: 'fixed', inset: 0, zIndex: 500,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '0 24px',
-        background: 'rgba(59,47,30,0.35)',
+        background: 'rgba(0,0,0,0.3)',
         opacity: visible ? 1 : 0,
         transition: 'opacity 0.4s ease',
       }}
@@ -89,7 +89,7 @@ export default function WhyModal({ onStart, currentStep, completedStep, onComple
             margin: '0 0 28px',
             fontSize: 22,
             fontWeight: 800,
-            color: '#3B2F1E',
+            color: '#111111',
             lineHeight: 1.45,
             textAlign: 'center',
             letterSpacing: '0.02em',
@@ -110,7 +110,7 @@ export default function WhyModal({ onStart, currentStep, completedStep, onComple
                   style={{
                     fontSize: 17,
                     fontWeight: 800,
-                    color: checked ? DONE : active ? HIGHLIGHT : '#4A7C59',
+                    color: checked ? DONE : active ? HIGHLIGHT : '#1A1A1A',
                     width: 26,
                     height: 26,
                     flexShrink: 0,
@@ -131,7 +131,7 @@ export default function WhyModal({ onStart, currentStep, completedStep, onComple
                     num
                   )}
                 </span>
-                <span style={{ fontSize: 15, fontWeight: 600, color: checked ? '#3B2F1E' : active ? HIGHLIGHT : '#3B2F1E', flex: 1 }}>
+                <span style={{ fontSize: 15, fontWeight: 600, color: checked ? '#111111' : active ? HIGHLIGHT : '#111111', flex: 1 }}>
                   {label}
                 </span>
                 {active && (
@@ -163,7 +163,7 @@ export default function WhyModal({ onStart, currentStep, completedStep, onComple
             padding: '14px',
             borderRadius: 24,
             border: 'none',
-            background: '#4A7C59',
+            background: '#1A1A1A',
             color: '#FFFFFF',
             fontSize: 15,
             fontWeight: 700,

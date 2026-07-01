@@ -201,7 +201,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div style={{ background: '#FFFFFF', maxWidth: 390, margin: '0 auto', minHeight: '100svh' }}>
-        <p style={{ textAlign: 'center', paddingTop: 80, fontSize: 13, color: '#A09070' }}>読み込み中...</p>
+        <p style={{ textAlign: 'center', paddingTop: 80, fontSize: 13, color: '#888888' }}>読み込み中...</p>
       </div>
     )
   }
@@ -228,7 +228,7 @@ export default function ProfilePage() {
             <div
               style={{
                 width: 80, height: 80, borderRadius: '50%',
-                background: '#4A7C59', color: '#FFFFFF',
+                background: '#333333', color: '#FFFFFF',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 32, fontWeight: 700,
               }}
@@ -243,7 +243,7 @@ export default function ProfilePage() {
             style={{
               position: 'absolute', bottom: -2, right: -2,
               width: 28, height: 28, borderRadius: '50%',
-              border: '1px solid #D4B896', background: '#FFFFFF',
+              border: '1px solid #CCCCCC', background: '#FFFFFF',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 14, cursor: uploading ? 'default' : 'pointer',
               opacity: uploading ? 0.5 : 1,
@@ -260,10 +260,10 @@ export default function ProfilePage() {
           />
         </div>
         <div>
-          <p style={{ fontSize: 20, fontWeight: 'bold', color: '#3B2F1E', margin: 0 }}>
+          <p style={{ fontSize: 20, fontWeight: 'bold', color: '#111111', margin: 0 }}>
             {user?.username ?? ''}
           </p>
-          <p style={{ fontSize: 13, color: '#8B6914', margin: '4px 0 0' }}>
+          <p style={{ fontSize: 13, color: '#777777', margin: '4px 0 0' }}>
             @{user?.username ?? ''}
           </p>
         </div>
@@ -271,7 +271,7 @@ export default function ProfilePage() {
 
       {/* ② タグ一覧 */}
       <div style={{ marginBottom: 24 }}>
-        <h2 style={{ fontSize: 14, color: '#8B6914', fontWeight: 700, margin: '0 0 12px' }}>
+        <h2 style={{ fontSize: 14, color: '#333333', fontWeight: 700, margin: '0 0 12px' }}>
           あなたの言葉
         </h2>
 
@@ -286,7 +286,7 @@ export default function ProfilePage() {
             }}
           >
             <span style={{ fontSize: 12, color: POSITIVE.text, fontWeight: 600 }}>
-              🌼 Positive（{lightTags.length}）
+              Positive（{lightTags.length}）
             </span>
             <span style={{ fontSize: 12, color: POSITIVE.text }}>{daisyOpen ? '∧' : '∨'}</span>
           </div>
@@ -300,7 +300,7 @@ export default function ProfilePage() {
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, padding: '12px 0' }}>
               {lightTags.length === 0 ? (
-                <p style={{ fontSize: 12, color: '#A09070', margin: 0 }}>まだありません</p>
+                <p style={{ fontSize: 12, color: '#888888', margin: 0 }}>まだありません</p>
               ) : (
                 lightTags.map(tag => (
                   <span
@@ -329,7 +329,7 @@ export default function ProfilePage() {
             }}
           >
             <span style={{ fontSize: 12, color: NEGATIVE.text, fontWeight: 600 }}>
-              🌱 Negative（{shadowTags.length}）
+              Negative（{shadowTags.length}）
             </span>
             <span style={{ fontSize: 12, color: NEGATIVE.text }}>{seedOpen ? '∧' : '∨'}</span>
           </div>
@@ -343,7 +343,7 @@ export default function ProfilePage() {
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, padding: '12px 0' }}>
               {shadowTags.length === 0 ? (
-                <p style={{ fontSize: 12, color: '#A09070', margin: 0 }}>まだありません</p>
+                <p style={{ fontSize: 12, color: '#888888', margin: 0 }}>まだありません</p>
               ) : (
                 shadowTags.map(tag => (
                   <span
@@ -364,23 +364,23 @@ export default function ProfilePage() {
 
       {/* ③ つながり */}
       <div style={{ marginBottom: 24 }}>
-        <h2 style={{ fontSize: 14, color: '#8B6914', fontWeight: 700, margin: '0 0 12px' }}>
+        <h2 style={{ fontSize: 14, color: '#555555', fontWeight: 700, margin: '0 0 12px' }}>
           つながり
         </h2>
 
-        <div style={{ border: '1px solid #D4B896', borderRadius: 12, padding: '0 12px' }}>
+        <div style={{ border: '1px solid #CCCCCC', borderRadius: 12, padding: '0 12px' }}>
           <div
             onClick={() => setConnectionsOpen(o => !o)}
             style={{
-              background: '#FFFFFF', borderBottom: '1px solid #D4B896',
+              background: '#FFFFFF', borderBottom: '1px solid #CCCCCC',
               padding: '12px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
               cursor: 'pointer',
             }}
           >
-            <span style={{ fontSize: 12, color: '#8B6914', fontWeight: 600 }}>
+            <span style={{ fontSize: 12, color: '#444444', fontWeight: 600 }}>
               つながり（{connections.length}）
             </span>
-            <span style={{ fontSize: 12, color: '#8B6914' }}>{connectionsOpen ? '∧' : '∨'}</span>
+            <span style={{ fontSize: 12, color: '#444444' }}>{connectionsOpen ? '∧' : '∨'}</span>
           </div>
           <div
             style={{
@@ -392,8 +392,8 @@ export default function ProfilePage() {
           >
             <div style={{ padding: '12px 0' }}>
               {connections.length === 0 ? (
-                <p style={{ fontSize: 13, color: '#A09070', textAlign: 'center', margin: 0 }}>
-                  まだつながりがありません。ルームで話しかけてみよう🌼
+                <p style={{ fontSize: 13, color: '#888888', textAlign: 'center', margin: 0 }}>
+                  まだつながりがありません。ルームで話しかけてみよう
                 </p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -408,7 +408,7 @@ export default function ProfilePage() {
                       >
                         <UserAvatar username={other?.username} avatarUrl={other?.avatar_url} size={40} />
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: '#3B2F1E' }}>
+                          <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: '#111111' }}>
                             {other?.username}
                           </p>
                           {common.length > 0 && (
@@ -417,8 +417,8 @@ export default function ProfilePage() {
                                 <span
                                   key={text}
                                   style={{
-                                    background: 'rgba(59,47,30,0.08)', borderRadius: 12, padding: '2px 10px',
-                                    fontSize: 11, color: '#3B2F1E',
+                                    background: 'rgba(0,0,0,0.06)', borderRadius: 12, padding: '2px 10px',
+                                    fontSize: 11, color: '#333333',
                                   }}
                                 >
                                   {formatHashtag(text)}
@@ -440,7 +440,7 @@ export default function ProfilePage() {
       {/* ④ つながり申請 */}
       {pending.length > 0 && (
         <div style={{ marginBottom: 24 }}>
-          <h2 style={{ fontSize: 14, color: '#8B6914', fontWeight: 700, margin: '0 0 12px' }}>
+          <h2 style={{ fontSize: 14, color: '#333333', fontWeight: 700, margin: '0 0 12px' }}>
             つながり申請（{pending.length}）
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -448,7 +448,7 @@ export default function ProfilePage() {
               <div key={req.id} style={{ background: '#FFFFFF', borderRadius: 12, padding: 12 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
                   <UserAvatar username={req.requester?.username} avatarUrl={req.requester?.avatar_url} size={40} />
-                  <p style={{ margin: 0, fontSize: 13, color: '#3B2F1E' }}>
+                  <p style={{ margin: 0, fontSize: 13, color: '#333333' }}>
                     {req.requester?.username}さんから申請が届いています
                   </p>
                 </div>
@@ -457,7 +457,7 @@ export default function ProfilePage() {
                     onClick={() => handleAccept(req.id)}
                     style={{
                       flex: 1, padding: '8px 0', borderRadius: 20, border: 'none',
-                      background: '#4A7C59', color: '#FFFFFF',
+                      background: '#1A1A1A', color: '#FFFFFF',
                       fontSize: 13, fontWeight: 700, cursor: 'pointer',
                     }}
                   >
@@ -467,7 +467,7 @@ export default function ProfilePage() {
                     onClick={() => handleReject(req.id)}
                     style={{
                       flex: 1, padding: '8px 0', borderRadius: 20,
-                      border: '1px solid #8B6914', background: 'transparent', color: '#8B6914',
+                      border: '1px solid #AAAAAA', background: 'transparent', color: '#555555',
                       fontSize: 13, fontWeight: 700, cursor: 'pointer',
                     }}
                   >
@@ -485,8 +485,8 @@ export default function ProfilePage() {
         <button
           onClick={handleLogout}
           style={{
-            background: 'transparent', border: '1px solid #8B6914',
-            color: '#8B6914', borderRadius: 20, padding: '10px 32px',
+            background: 'transparent', border: '1px solid #AAAAAA',
+            color: '#555555', borderRadius: 20, padding: '10px 32px',
             fontSize: 13, fontWeight: 600, cursor: 'pointer',
           }}
         >

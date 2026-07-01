@@ -36,7 +36,7 @@ export default function WelcomeModal({ username, onNext, zIndex = 500, title, su
         maxWidth: 390, margin: '0 auto',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '0 24px',
-        background: visible ? 'rgba(59,47,30,0.4)' : 'rgba(59,47,30,0)',
+        background: visible ? 'rgba(0,0,0,0.35)' : 'rgba(0,0,0,0)',
         transition: 'background 0.3s ease',
       }}
     >
@@ -60,7 +60,7 @@ export default function WelcomeModal({ username, onNext, zIndex = 500, title, su
           padding: '40px 24px 28px',
           textAlign: 'center',
           overflow: 'hidden',
-          boxShadow: '0 8px 28px rgba(139,105,20,0.25)',
+          boxShadow: '0 8px 28px rgba(0,0,0,0.12)',
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.96)',
           transition: 'opacity 0.35s ease, transform 0.35s ease',
@@ -100,7 +100,7 @@ export default function WelcomeModal({ username, onNext, zIndex = 500, title, su
           onClick={onNext}
           style={{
             width: '100%', padding: '14px', borderRadius: 24, border: 'none',
-            background: '#4A7C59', color: '#FFFFFF',
+            background: '#1A1A1A', color: '#FFFFFF',
             fontSize: 15, fontWeight: 700, cursor: 'pointer',
             boxShadow: '0 4px 14px rgba(74,124,89,0.35)',
           }}

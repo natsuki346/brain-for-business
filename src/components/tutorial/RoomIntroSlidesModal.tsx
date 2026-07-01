@@ -35,8 +35,8 @@ const PREVIEW_HEIGHT  = BASE_HEIGHT * SCALE
 // 既存の本物のチャット画面（RoomChat）をそのまま縮小・非操作で埋め込むデモ
 function MiniRoomPreview({ type, onFirstPlaybackDone }: { type: 'light' | 'shadow'; onFirstPlaybackDone?: () => void }) {
   const info = type === 'light'
-    ? { title: 'Positiveの部屋', subtitle: '🌼 Positive' }
-    : { title: 'Negativeの部屋',  subtitle: '🌱 Negative' }
+    ? { title: 'Positiveの部屋', subtitle: 'Positive' }
+    : { title: 'Negativeの部屋',  subtitle: 'Negative' }
 
   // Seedルームでは「訪問時に名言が表示される」演出をループ実演する
   const [showQuoteDemo, setShowQuoteDemo] = useState(false)
@@ -71,7 +71,7 @@ function MiniRoomPreview({ type, onFirstPlaybackDone }: { type: 'light' | 'shado
         // スクロールコンテナにならない 'clip' を使う
         borderRadius: 16, overflow: 'clip',
         border: '1px solid rgba(139,115,85,0.18)',
-        boxShadow: '0 4px 16px rgba(59,47,30,0.10)',
+        boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
         position: 'relative', background: '#FFFFFF',
       }}
     >
@@ -136,7 +136,7 @@ export default function RoomIntroSlidesModal({ onNext }: RoomIntroSlidesModalPro
     <div
       style={{
         position: 'fixed', inset: 0, zIndex: 260,
-        background: visible ? 'rgba(59,47,30,0.55)' : 'rgba(59,47,30,0)',
+        background: visible ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0)',
         transition: 'background 0.3s ease',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '0 16px',
@@ -160,26 +160,26 @@ export default function RoomIntroSlidesModal({ onNext }: RoomIntroSlidesModalPro
         <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '32px 24px 16px', textAlign: 'center' }}>
           {slideIndex === 0 && (
             <>
-              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#3B2F1E', lineHeight: 1.6, margin: '0 0 16px' }}>
+              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#111111', lineHeight: 1.6, margin: '0 0 16px' }}>
                 🏠 ルームとは
               </h2>
               <div style={{ display: 'flex', justifyContent: 'center', gap: 24, margin: '0 0 20px' }}>
                 <DaisyBubble size={58} />
                 <SeedBubbleIllustration size={58} />
               </div>
-              <p style={{ fontSize: 15, color: 'rgba(59,47,30,0.7)', lineHeight: 1.8, margin: '0 0 28px' }}>
+              <p style={{ fontSize: 15, color: 'rgba(0,0,0,0.55)', lineHeight: 1.8, margin: '0 0 28px' }}>
                 自分と同じタグを持つ仲間が<br />集まり、言葉を交わせる場所です
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16, textAlign: 'center' }}>
                 <div>
-                  <p style={{ fontSize: 16, fontWeight: 700, color: '#3B2F1E', margin: '0 0 4px' }}>🌼 Positive</p>
-                  <p style={{ fontSize: 15, color: 'rgba(59,47,30,0.65)', lineHeight: 1.6, margin: 0 }}>
+                  <p style={{ fontSize: 16, fontWeight: 700, color: '#111111', margin: '0 0 4px' }}>Positive</p>
+                  <p style={{ fontSize: 15, color: 'rgba(0,0,0,0.55)', lineHeight: 1.6, margin: 0 }}>
                     あなたの好きやワクワクで繋がれる😊
                   </p>
                 </div>
                 <div>
-                  <p style={{ fontSize: 16, fontWeight: 700, color: '#3B2F1E', margin: '0 0 4px' }}>🌱 Negative</p>
-                  <p style={{ fontSize: 15, color: 'rgba(59,47,30,0.65)', lineHeight: 1.6, margin: 0 }}>
+                  <p style={{ fontSize: 16, fontWeight: 700, color: '#111111', margin: '0 0 4px' }}>Negative</p>
+                  <p style={{ fontSize: 15, color: 'rgba(0,0,0,0.55)', lineHeight: 1.6, margin: 0 }}>
                     あなたが持つ悩みで共に成長する💪🔥
                   </p>
                 </div>
@@ -189,10 +189,10 @@ export default function RoomIntroSlidesModal({ onNext }: RoomIntroSlidesModalPro
 
           {slideIndex === 1 && (
             <>
-              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#3B2F1E', lineHeight: 1.6, margin: '0 0 12px' }}>
-                🌼 Positiveルーム
+              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#111111', lineHeight: 1.6, margin: '0 0 12px' }}>
+                Positiveルーム
               </h2>
-              <p style={{ fontSize: 14, color: 'rgba(59,47,30,0.7)', lineHeight: 1.7, margin: '0 0 20px' }}>
+              <p style={{ fontSize: 14, color: 'rgba(0,0,0,0.55)', lineHeight: 1.7, margin: '0 0 20px' }}>
                 Positive（光）は、あなたの好きなことや<br />ワクワクすること。同じ光を持つ仲間と<br />気軽に言葉を交わせます
               </p>
               <MiniRoomPreview type="light" />
@@ -201,14 +201,14 @@ export default function RoomIntroSlidesModal({ onNext }: RoomIntroSlidesModalPro
 
           {slideIndex === 2 && (
             <>
-              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#3B2F1E', lineHeight: 1.6, margin: '0 0 12px' }}>
-                🌱 Negativeルーム
+              <h2 style={{ fontSize: 19, fontWeight: 700, color: '#111111', lineHeight: 1.6, margin: '0 0 12px' }}>
+                Negativeルーム
               </h2>
-              <p style={{ fontSize: 12.5, color: 'rgba(59,47,30,0.7)', lineHeight: 1.7, margin: '0 0 12px' }}>
+              <p style={{ fontSize: 12.5, color: 'rgba(0,0,0,0.55)', lineHeight: 1.7, margin: '0 0 12px' }}>
                 Negative（影）は、あなたが抱える悩みや弱さ。<br />そこに向き合うことは、それ自体がすごいことです。
               </p>
-              <p style={{ fontSize: 13, color: '#4A7C59', fontWeight: 600, lineHeight: 1.7, margin: '0 0 20px' }}>
-                訪れるたびに、励ましの言葉が届きます🌱
+              <p style={{ fontSize: 13, color: '#1A1A1A', fontWeight: 600, lineHeight: 1.7, margin: '0 0 20px' }}>
+                訪れるたびに、励ましの言葉が届きます
               </p>
               <MiniRoomPreview type="shadow" onFirstPlaybackDone={() => setPreviewReady(true)} />
             </>
@@ -220,7 +220,7 @@ export default function RoomIntroSlidesModal({ onNext }: RoomIntroSlidesModalPro
           {Array.from({ length: SLIDE_COUNT }).map((_, i) => (
             <div key={i} style={{
               width: i === slideIndex ? 18 : 6, height: 6, borderRadius: 3,
-              background: i === slideIndex ? '#4A7C59' : 'rgba(74,124,89,0.25)',
+              background: i === slideIndex ? '#1A1A1A' : 'rgba(74,124,89,0.25)',
               transition: 'all 0.25s ease',
             }} />
           ))}
@@ -231,8 +231,8 @@ export default function RoomIntroSlidesModal({ onNext }: RoomIntroSlidesModalPro
           <button
             onClick={close}
             style={{
-              flex: 1, padding: '14px', borderRadius: 30, border: '1px solid rgba(59,47,30,0.2)',
-              background: 'transparent', color: 'rgba(59,47,30,0.6)',
+              flex: 1, padding: '14px', borderRadius: 30, border: '1px solid rgba(0,0,0,0.15)',
+              background: 'transparent', color: 'rgba(0,0,0,0.5)',
               fontSize: 14, fontWeight: 600, cursor: 'pointer',
             }}
           >スキップ</button>
@@ -241,7 +241,7 @@ export default function RoomIntroSlidesModal({ onNext }: RoomIntroSlidesModalPro
             disabled={!previewReady}
             style={{
               flex: 2, padding: '14px', borderRadius: 30, border: 'none',
-              background: previewReady ? '#4A7C59' : 'rgba(74,124,89,0.4)',
+              background: previewReady ? '#1A1A1A' : 'rgba(74,124,89,0.4)',
               color: '#FFFFFF',
               fontSize: 14, fontWeight: 700,
               cursor: previewReady ? 'pointer' : 'not-allowed',
