@@ -215,7 +215,8 @@ export default function GardenDisplay() {
       ])
       if (tagsRes.data) {
         const newLight  = tagsRes.data.filter((t: any) => t.type === 'light')
-        const newShadow = tagsRes.data.filter((t: any) => t.type === 'shadow')
+        // growth_point >= 30 の昇華済みタグはホーム画面から除外する
+        const newShadow = tagsRes.data.filter((t: any) => t.type === 'shadow' && (t.growth_point ?? 0) < 30)
         setLightTags(newLight)
         setShadowTags(newShadow)
 
@@ -317,12 +318,16 @@ export default function GardenDisplay() {
         (payload: any) => {
           const updated = payload.new
           if (updated.type === 'shadow') {
-            setShadowTags(prev => prev.map(t => {
-              if (t.id !== updated.id) return t
-              const newGp = updated.growth_point ?? 0
-              if (newGp > (t.growth_point ?? 0)) triggerGrowthPulse(t.id)
-              return { ...t, growth_point: newGp, seed_weight: String(updated.seed_weight ?? ''), stage: updated.stage ?? null }
-            }))
+            setShadowTags(prev => prev
+              .map(t => {
+                if (t.id !== updated.id) return t
+                const newGp = updated.growth_point ?? 0
+                if (newGp > (t.growth_point ?? 0)) triggerGrowthPulse(t.id)
+                return { ...t, growth_point: newGp, seed_weight: String(updated.seed_weight ?? ''), stage: updated.stage ?? null }
+              })
+              // 昇華済み（growth_point >= 30）になったタグはホームから即時除外
+              .filter(t => (t.growth_point ?? 0) < 30),
+            )
           } else if (updated.type === 'light') {
             setLightTags(prev => prev.map(t => {
               if (t.id !== updated.id) return t

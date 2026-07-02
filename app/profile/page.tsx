@@ -42,6 +42,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState<UserRow | null>(null)
   const [lightTags, setLightTags] = useState<Tag[]>([])
   const [shadowTags, setShadowTags] = useState<Tag[]>([])
+  const [sublimatedTags, setSublimatedTags] = useState<Tag[]>([])
   const [connections, setConnections] = useState<Connection[]>([])
   const [commonTags, setCommonTags] = useState<Record<string, string[]>>({})
   const [pending, setPending] = useState<Connection[]>([])
@@ -49,10 +50,11 @@ export default function ProfilePage() {
   const [uploading, setUploading] = useState(false)
   const [daisyOpen, setDaisyOpen] = useState(false)
   const [seedOpen, setSeedOpen] = useState(false)
+  const [sublimatedOpen, setSublimatedOpen] = useState(false)
   const [connectionsOpen, setConnectionsOpen] = useState(false)
 
   const loadProfile = async (uid: string) => {
-    const [userRes, lightRes, shadowRes, connRes, pendingRes] = await Promise.all([
+    const [userRes, lightRes, shadowRes, sublimatedRes, connRes, pendingRes] = await Promise.all([
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (supabase.from('users') as any)
         .select('id, username, avatar_url')
@@ -65,12 +67,22 @@ export default function ProfilePage() {
         .eq('type', 'light')
         .eq('is_active', true)
         .order('created_at', { ascending: true }),
+      // growth_point < 30 の未昇華タグのみ表示
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (supabase.from('tags') as any)
         .select('id, text')
         .eq('user_id', uid)
         .eq('type', 'shadow')
         .eq('is_active', true)
+        .lt('growth_point', 30)
+        .order('created_at', { ascending: true }),
+      // growth_point >= 30 の昇華済みタグ（is_active 問わず）
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (supabase.from('tags') as any)
+        .select('id, text')
+        .eq('user_id', uid)
+        .eq('type', 'shadow')
+        .gte('growth_point', 30)
         .order('created_at', { ascending: true }),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (supabase.from('connections') as any)
@@ -89,6 +101,7 @@ export default function ProfilePage() {
     const shadow = (shadowRes.data as Tag[]) ?? []
     setLightTags(light)
     setShadowTags(shadow)
+    setSublimatedTags((sublimatedRes.data as Tag[]) ?? [])
     setPending((pendingRes.data as Connection[]) ?? [])
 
     const conns = (connRes.data as Connection[]) ?? []
@@ -362,7 +375,57 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* ③ つながり */}
+      {/* ③ 自分図鑑 */}
+      <div style={{ marginBottom: 24 }}>
+        <h2 style={{ fontSize: 14, color: '#333333', fontWeight: 700, margin: '0 0 12px' }}>
+          自分図鑑
+        </h2>
+
+        <div style={{ border: `1px solid ${POSITIVE.soft}`, borderRadius: 12, padding: '0 12px' }}>
+          <div
+            onClick={() => setSublimatedOpen(o => !o)}
+            style={{
+              background: POSITIVE.pale, borderBottom: `1px solid ${POSITIVE.soft}`,
+              padding: '12px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              cursor: 'pointer',
+            }}
+          >
+            <span style={{ fontSize: 12, color: POSITIVE.text, fontWeight: 600 }}>
+              乗り越えてきたこと（{sublimatedTags.length}）
+            </span>
+            <span style={{ fontSize: 12, color: POSITIVE.text }}>{sublimatedOpen ? '∧' : '∨'}</span>
+          </div>
+          <div
+            style={{
+              maxHeight: sublimatedOpen ? 1000 : 0,
+              opacity: sublimatedOpen ? 1 : 0,
+              overflow: 'hidden',
+              transition: 'max-height 0.3s ease, opacity 0.3s ease',
+            }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, padding: '12px 0' }}>
+              {sublimatedTags.length === 0 ? (
+                <p style={{ fontSize: 12, color: '#888888', margin: 0 }}>まだありません</p>
+              ) : (
+                sublimatedTags.map(tag => (
+                  <span
+                    key={tag.id}
+                    style={{
+                      background: POSITIVE.pale, borderRadius: 12, padding: '8px 12px',
+                      fontSize: 12, color: POSITIVE.text, boxSizing: 'border-box',
+                      border: `1px solid ${POSITIVE.soft}`,
+                    }}
+                  >
+                    {formatHashtag(tag.text)}
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ④ つながり */}
       <div style={{ marginBottom: 24 }}>
         <h2 style={{ fontSize: 14, color: '#555555', fontWeight: 700, margin: '0 0 12px' }}>
           つながり
@@ -437,7 +500,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* ④ つながり申請 */}
+      {/* ⑤ つながり申請 */}
       {pending.length > 0 && (
         <div style={{ marginBottom: 24 }}>
           <h2 style={{ fontSize: 14, color: '#333333', fontWeight: 700, margin: '0 0 12px' }}>
@@ -480,7 +543,7 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* ⑤ ログアウト */}
+      {/* ⑥ ログアウト */}
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24 }}>
         <button
           onClick={handleLogout}
