@@ -156,22 +156,6 @@ function simulatePositions(
   return nodes.map(n => ({ x: n.x - n.r, y: n.y - n.r }))
 }
 
-const DAISY_LEGEND = [
-  { emoji: '', label: 'はじめて' },
-  { emoji: '', label: 'なじんでる' },
-  { emoji: '', label: 'つながれた' },
-]
-const SEED_LEGEND = [
-  { emoji: '', label: 'タネ' },
-  { emoji: '', label: '成長中' },
-  { emoji: '', label: '成熟' },
-]
-const FRIEND_LEGEND = [
-  { emoji: '🤝', label: 'つながった' },
-  { emoji: '💛', label: 'なかよし' },
-  { emoji: '❤️', label: 'しんゆう' },
-]
-
 // canvasH は positions から動的に算出するため定数不要
 
 export default function GardenDisplay() {
@@ -421,7 +405,6 @@ export default function GardenDisplay() {
 
   const activeBg   = tab === 'light' ? POSITIVE.pale : tab === 'shadow' ? NEGATIVE.pale : '#E0E0E0'
   const activeText = tab === 'light' ? POSITIVE.text : tab === 'shadow' ? NEGATIVE.text : '#333333'
-  const legend     = tab === 'light' ? DAISY_LEGEND : tab === 'shadow' ? SEED_LEGEND : FRIEND_LEGEND
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
@@ -441,10 +424,10 @@ export default function GardenDisplay() {
         }}>
           <div>
             <h1 style={{ fontSize: 20, fontWeight: 700, color: '#111111', margin: '0 0 2px' }}>
-              わたしのガーデン
+              マイブレイン
             </h1>
             <p style={{ fontSize: 12, color: 'rgba(0,0,0,0.4)', margin: 0 }}>
-              タグをタップしてルームへ
+              タグをタップしてつながりへ
             </p>
           </div>
           <button
@@ -652,17 +635,6 @@ export default function GardenDisplay() {
               </button>
             )
           })}
-        </div>
-      </div>
-
-      {/* ── 凡例 ── */}
-      <div style={{ padding: '10px 20px 16px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          {legend.map(({ emoji, label }) => (
-            <span key={label} style={{ fontSize: 11, color: 'rgba(0,0,0,0.4)' }}>
-              {emoji} {label}
-            </span>
-          ))}
         </div>
       </div>
 
